@@ -1,0 +1,2682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Biblioteca de la Meiga</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-void: #151014;
+      --bg-plum: #241B22;
+      --bg-panel: #1F161D;
+      --ink: #120D11;
+      --gold-glow: #F6C453;
+      --parchment: #F3EAD8;
+      --parchment-dark: #DECDB0;
+      --cabinet-white: #FBF7EE;
+      --cabinet-shade: #E2D9C6;
+      --sage-frame: #98A192;
+      --sage-dark: #778171;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-void);
+      background-image:
+        radial-gradient(circle at 50% 14%, rgba(114, 78, 102, 0.24) 0%, transparent 55%),
+        radial-gradient(circle at 12% 48%, rgba(246, 196, 83, 0.08) 0%, transparent 42%),
+        radial-gradient(circle at 88% 52%, rgba(152, 161, 146, 0.1) 0%, transparent 42%),
+        repeating-linear-gradient(
+          90deg,
+          rgba(18, 13, 17, 0.36) 0px,
+          rgba(18, 13, 17, 0.36) 2px,
+          transparent 2px,
+          transparent 48px
+        ),
+        linear-gradient(180deg, #1A1319 0%, #241B22 48%, #151014 100%);
+      color: #F4EDE2;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .font-witchy {
+      font-family: 'Cinzel Decorative', serif;
+    }
+
+    .font-serif-label {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* Trazo ilustrado estilo dibujo a tinta */
+    .ink-box {
+      border: 2.5px solid var(--ink);
+      box-shadow: 3px 4px 0px var(--ink);
+    }
+
+    .ink-btn {
+      border: 2px solid var(--ink);
+      box-shadow: 2px 3px 0px var(--ink);
+      transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+    }
+    .ink-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 4px 0px var(--ink);
+      filter: brightness(1.06);
+    }
+    .ink-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px var(--ink);
+    }
+
+    /* Estancia principal rodeada de elementos brujeriles */
+    .sanctum-wall {
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(246, 196, 83, 0.12) 0%, transparent 62%),
+        linear-gradient(180deg, #231920 0%, #1B1319 65%, #151014 100%);
+      border: 3px solid var(--ink);
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.78),
+        inset 0 0 65px rgba(9, 6, 8, 0.78);
+      position: relative;
+    }
+
+    /* 4 Vitrinas blancas dibujadas a mano */
+    .white-cabinet {
+      background:
+        repeating-linear-gradient(
+          -18deg,
+          rgba(38, 28, 24, 0.035) 0px,
+          rgba(38, 28, 24, 0.035) 1px,
+          transparent 1px,
+          transparent 6px
+        ),
+        var(--cabinet-white);
+      border: 3px solid var(--ink);
+      border-radius: 10px 10px 4px 4px / 7px 7px 3px 3px;
+      box-shadow:
+        3px 4px 0px var(--ink),
+        0 14px 28px rgba(0, 0, 0, 0.65),
+        0 0 22px rgba(251, 211, 141, 0.14),
+        inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.9);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .white-cabinet.cabinet-selected {
+      outline: 3px solid #F6C453;
+      outline-offset: 2px;
+      box-shadow:
+        3px 4px 0px var(--ink),
+        0 0 28px rgba(246, 196, 83, 0.45);
+    }
+
+    .cabinet-cornice {
+      background:
+        repeating-linear-gradient(
+          12deg,
+          rgba(24, 17, 21, 0.04) 0px,
+          rgba(24, 17, 21, 0.04) 1px,
+          transparent 1px,
+          transparent 5px
+        ),
+        linear-gradient(180deg, #FFFDF8 0%, var(--cabinet-white) 62%, var(--cabinet-shade) 100%);
+      border-bottom: 2.5px solid var(--ink);
+    }
+
+    .cabinet-interior {
+      background: radial-gradient(circle at 50% 15%, #F6F0E4 0%, #E2D6BF 100%);
+      box-shadow:
+        inset 0 5px 12px rgba(34, 22, 18, 0.22),
+        inset 0 0 0 1px rgba(22, 16, 19, 0.2);
+      position: relative;
+    }
+
+    .shelf-plank {
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(22, 16, 19, 0.07) 0px,
+          rgba(22, 16, 19, 0.07) 1px,
+          transparent 1px,
+          transparent 7px
+        ),
+        linear-gradient(180deg, var(--cabinet-white) 0%, var(--cabinet-shade) 100%);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.85);
+      border-bottom: 2.5px solid var(--ink);
+      box-shadow: 0 2.5px 0 rgba(18, 13, 17, 0.32);
+    }
+
+    .glass-reflection {
+      background: linear-gradient(
+        118deg,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.04) 36%,
+        transparent 37%,
+        rgba(255, 255, 255, 0.1) 66%,
+        transparent 68%
+      );
+      pointer-events: none;
+    }
+
+    /* Vitrina verde salvia grisáceo de Tarots (12 cubículos) */
+    .tarot-cabinet {
+      background:
+        repeating-linear-gradient(
+          -15deg,
+          rgba(18, 13, 17, 0.05) 0px,
+          rgba(18, 13, 17, 0.05) 1px,
+          transparent 1px,
+          transparent 6px
+        ),
+        var(--sage-frame);
+      border: 3px solid var(--ink);
+      border-radius: 9px 9px 4px 4px / 6px 6px 3px 3px;
+      box-shadow:
+        4px 5px 0px var(--ink),
+        0 18px 34px rgba(0, 0, 0, 0.72),
+        0 0 24px rgba(251, 211, 141, 0.14),
+        inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.35);
+      transition: box-shadow 0.25s ease;
+    }
+
+    .tarot-cabinet.cabinet-selected {
+      outline: 3px solid #A8D59D;
+      outline-offset: 2px;
+      box-shadow:
+        4px 5px 0px var(--ink),
+        0 0 28px rgba(168, 213, 157, 0.45);
+    }
+
+    .tarot-interior {
+      background:
+        repeating-linear-gradient(
+          22deg,
+          rgba(18, 13, 17, 0.05) 0px,
+          rgba(18, 13, 17, 0.05) 1px,
+          transparent 1px,
+          transparent 8px
+        ),
+        radial-gradient(circle at 50% 10%, #B7BEB2 0%, #8B9486 100%);
+      box-shadow: inset 0 7px 16px rgba(18, 22, 17, 0.36);
+    }
+
+    .tarot-cubby {
+      background: rgba(255, 255, 255, 0.09);
+      border: 2px solid var(--ink);
+      box-shadow:
+        inset 2px 3px 6px rgba(18, 22, 17, 0.26),
+        1px 1px 0 rgba(255, 255, 255, 0.16);
+      transition: all 0.22s ease;
+      cursor: pointer;
+    }
+    .tarot-cubby:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .cubby-plaque {
+      background: linear-gradient(180deg, #FBF6EA 0%, #DFD1B6 100%);
+      border: 1.5px solid var(--ink);
+      box-shadow: 1px 1.5px 0 var(--ink);
+      color: #1D1519;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    /* Estante clickable */
+    .shelf-zone {
+      cursor: pointer;
+      transition: background-color 0.2s ease, outline 0.2s ease;
+    }
+    .shelf-zone:hover {
+      background-color: rgba(246, 196, 83, 0.14);
+    }
+    .shelf-active-selection {
+      background-color: rgba(246, 196, 83, 0.22) !important;
+      outline: 2px dashed #C88A1E;
+      outline-offset: -2px;
+    }
+
+    /* Lomos de libros y cajas de tarot dibujados a tinta */
+    .book-spine {
+      border: 1.8px solid var(--ink);
+      border-radius: 2px 2px 1px 1px;
+      box-shadow:
+        1.5px 0 0 rgba(18, 13, 17, 0.45),
+        inset 1.5px 0 0 rgba(255, 255, 255, 0.24),
+        inset -1.5px 0 0 rgba(0, 0, 0, 0.22);
+      transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .book-spine:hover {
+      transform: translateY(-4px) scale(1.05);
+      z-index: 30;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.45), 0 0 8px rgba(246, 196, 83, 0.55);
+    }
+
+    .tarot-box {
+      border: 1.8px solid var(--ink);
+      border-radius: 3px;
+      box-shadow:
+        2px 2px 0 var(--ink),
+        inset 1px 1px 0 rgba(255, 255, 255, 0.28);
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .tarot-box:hover {
+      transform: translateY(-3px) scale(1.06);
+      z-index: 30;
+      box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.55), 0 0 10px rgba(246, 196, 83, 0.6);
+    }
+
+    .witch-trinket {
+      transition: transform 0.18s ease, filter 0.18s ease;
+      cursor: pointer;
+      filter: drop-shadow(1px 2px 0px var(--ink));
+    }
+    .witch-trinket:hover {
+      transform: translateY(-3px) scale(1.12);
+      z-index: 30;
+      filter: drop-shadow(1px 3px 0px var(--ink)) drop-shadow(0 0 7px rgba(246, 196, 83, 0.78));
+    }
+
+    /* Halo dorado localizador */
+    @keyframes goldenPulse {
+      0%, 100% {
+        box-shadow:
+          inset 0 0 18px rgba(246, 196, 83, 0.85),
+          0 0 18px rgba(246, 196, 83, 0.9),
+          0 0 32px rgba(246, 196, 83, 0.55);
+      }
+      50% {
+        box-shadow:
+          inset 0 0 28px rgba(255, 224, 130, 1),
+          0 0 26px rgba(246, 196, 83, 1),
+          0 0 46px rgba(246, 196, 83, 0.75);
+      }
+    }
+
+    .shelf-highlighted {
+      background-color: rgba(246, 196, 83, 0.3) !important;
+      outline: 2.5px solid #F6C453 !important;
+      outline-offset: -2px;
+      animation: goldenPulse 1.5s infinite ease-in-out;
+      z-index: 25;
+    }
+
+    .item-highlighted {
+      outline: 2.5px solid #FFE082 !important;
+      outline-offset: 1px;
+      transform: translateY(-4px) scale(1.08) !important;
+      box-shadow: 0 0 14px #F6C453, 0 0 24px rgba(246, 196, 83, 0.85) !important;
+      z-index: 35 !important;
+    }
+
+    .item-dimmed {
+      opacity: 0.28;
+      filter: grayscale(0.55);
+    }
+
+    /* Animaciones suaves de vela y bola de cristal en los márgenes */
+    @keyframes candleFlicker {
+      0%, 100% { transform: scale(1) rotate(-1deg); opacity: 0.95; }
+      35% { transform: scale(1.06, 0.96) rotate(1.5deg); opacity: 1; }
+      70% { transform: scale(0.95, 1.05) rotate(-0.5deg); opacity: 0.88; }
+    }
+    .flame-anim {
+      transform-origin: center bottom;
+      animation: candleFlicker 2.4s infinite ease-in-out;
+    }
+
+    @keyframes orbGlow {
+      0%, 100% { filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6)); }
+      50% { filter: drop-shadow(0 0 16px rgba(216, 180, 254, 0.95)); }
+    }
+    .orb-anim {
+      animation: orbGlow 3.6s infinite ease-in-out;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #151014;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #483643;
+      border-radius: 4px;
+      border: 1px solid #120D11;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #664D5E;
+    }
+  </style>
+</head>
+<body class="pb-12">
+
+  <!-- Inputs ocultos para importar archivos CSV o JSON -->
+  <input type="file" id="csvFileInput" accept=".csv,text/csv" class="hidden" onchange="handleCSVFileSelected(event)" />
+  <input type="file" id="jsonFileInput" accept=".json,application/json" class="hidden" onchange="handleJSONFileSelected(event)" />
+
+  <!-- CABECERA PRINCIPAL -->
+  <header class="max-w-[1720px] mx-auto px-3 sm:px-6 pt-4 pb-3">
+    <div class="bg-[#21181F]/95 rounded-2xl p-4 sm:p-5 ink-box relative overflow-hidden">
+      <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
+        <!-- Título y contadores directos -->
+        <div class="flex items-center gap-3.5">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-[#2E212B] ink-box flex items-center justify-center shrink-0">
+            <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none">
+              <path d="M29 9C21.5 10.5 16 17.1 16 25C16 32.9 21.5 39.5 29 41C20.5 41.8 12 35.2 12 25C12 14.8 20.5 8.2 29 9Z" fill="#F6C453" stroke="#120D11" stroke-width="2.2" stroke-linejoin="round"/>
+              <path d="M33 14L34.4 17.6L38 19L34.4 20.4L33 24L31.6 20.4L28 19L31.6 17.6L33 14Z" fill="#FFF3C4" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M24 34C28 31 33 28 38 25" stroke="#8FBC8F" stroke-width="2" stroke-linecap="round"/>
+              <ellipse cx="31" cy="27" rx="3" ry="1.6" transform="rotate(-35 31 27)" fill="#8FBC8F" stroke="#120D11" stroke-width="1.3"/>
+              <ellipse cx="35" cy="30" rx="3" ry="1.6" transform="rotate(15 35 30)" fill="#8FBC8F" stroke="#120D11" stroke-width="1.3"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="font-witchy text-xl sm:text-3xl text-[#F7E7C4] tracking-wide drop-shadow-[0_2px_0_#120D11]">
+              La Biblioteca de la Meiga
+            </h1>
+            <div class="flex flex-wrap items-center gap-2 mt-1.5 text-xs sm:text-sm">
+              <span class="px-2.5 py-0.5 rounded-full bg-[#2E222B] border border-[#120D11] text-[#F3EAD8] font-medium">
+                📚 <strong id="countBooks" class="text-[#F6C453]">0</strong> Libros
+              </span>
+              <span class="px-2.5 py-0.5 rounded-full bg-[#262D25] border border-[#120D11] text-[#E4EDE0] font-medium">
+                🃏 <strong id="countTarots" class="text-[#A8D59D]">0</strong> Tarots y Oráculos
+              </span>
+              <span class="px-2.5 py-0.5 rounded-full bg-[#2E202E] border border-[#120D11] text-[#EEDCF5] font-medium">
+                🔮 <strong id="countObjects" class="text-[#D8B4FE]">0</strong> Objetos
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Acciones principales + Exportar/Importar CSV y Copia JSON -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="openAddModal()" class="ink-btn px-3.5 py-2 rounded-xl bg-[#F6C453] text-[#171115] font-bold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer">
+            <span>✦</span> <span>+ Añadir</span>
+          </button>
+          <button onclick="exportCSV()" class="ink-btn px-3.5 py-2 rounded-xl bg-[#A8D59D] text-[#151014] font-bold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer" title="Descargar toda tu biblioteca en formato CSV">
+            <span>📊</span> <span>Exportar CSV</span>
+          </button>
+          <button onclick="triggerCSVImport()" class="ink-btn px-3 py-2 rounded-xl bg-[#2B1F28] text-[#DCE6D6] font-semibold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer" title="Cargar un archivo CSV guardado">
+            <span>📂</span> <span>Importar CSV</span>
+          </button>
+          <button onclick="exportJSON()" class="ink-btn px-3 py-2 rounded-xl bg-[#2B1F28] text-[#E6D7E2] font-semibold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer" title="Descargar copia de seguridad JSON">
+            <span>📥</span> <span>Copia</span>
+          </button>
+          <button onclick="triggerJSONImport()" class="ink-btn px-3 py-2 rounded-xl bg-[#2B1F28] text-[#D7C4CE] font-semibold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer" title="Restaurar copia JSON">
+            <span>📤</span> <span>Restaurar JSON</span>
+          </button>
+          <button onclick="confirmClearExamples()" class="ink-btn px-3 py-2 rounded-xl bg-[#2B1F28] text-[#E3C8B8] font-medium text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer" title="Dejar los estantes vacíos para meter los tuyos">
+            <span>🧹</span> <span>Vaciar ejemplos</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- BUSCADOR ERGONÓMICO CON MENÚ POR TIPO Y CATEGORÍA -->
+      <div class="mt-4 pt-3.5 border-t border-[#392935]">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-2.5 items-center">
+          <!-- Campo de búsqueda general (título, autor, editorial, temática o nota) -->
+          <div class="relative sm:col-span-2 lg:col-span-4">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#F6C453] text-sm pointer-events-none">🔍</span>
+            <input
+              id="searchInput"
+              type="text"
+              placeholder="Buscar en título, autor, editorial, temática o nota..."
+              class="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#151014] text-[#F6EFE4] placeholder-[#8E7A85] border-2 border-[#120D11] focus:outline-none focus:border-[#F6C453] text-sm"
+              oninput="handleSearch()"
+            />
+            <button
+              id="clearTextBtn"
+              type="button"
+              onclick="clearSearchText()"
+              title="Borrar texto"
+              class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg bg-[#382934] text-xs font-bold text-[#F3EAD8] hover:bg-[#4B3746] flex items-center justify-center cursor-pointer"
+            >
+              ✕
+            </button>
+          </div>
+
+          <!-- Menú desplegable de Tipo -->
+          <div class="lg:col-span-2">
+            <label for="typeFilterSelect" class="sr-only">Filtrar por tipo</label>
+            <select
+              id="typeFilterSelect"
+              onchange="handleFilterSelects()"
+              class="w-full px-3 py-2.5 rounded-xl bg-[#151014] text-[#F6EFE4] border-2 border-[#120D11] focus:outline-none focus:border-[#F6C453] text-sm font-medium cursor-pointer"
+            >
+              <option value="all">✦ Todos los tipos</option>
+              <option value="book">📚 Libros</option>
+              <option value="tarot">🃏 Tarots y Oráculos</option>
+              <option value="object">🔮 Objetos</option>
+            </select>
+          </div>
+
+          <!-- Menú desplegable de Categoría / Temática agrupado -->
+          <div class="lg:col-span-2">
+            <label for="categoryFilterSelect" class="sr-only">Filtrar por categoría</label>
+            <select
+              id="categoryFilterSelect"
+              onchange="handleFilterSelects()"
+              class="w-full px-3 py-2.5 rounded-xl bg-[#151014] text-[#F6EFE4] border-2 border-[#120D11] focus:outline-none focus:border-[#F6C453] text-sm font-medium cursor-pointer"
+            >
+              <!-- Generado dinámicamente con optgroup -->
+            </select>
+          </div>
+
+          <!-- Menú desplegable de Editoriales (solo libros) -->
+          <div class="lg:col-span-2">
+            <label for="publisherFilterSelect" class="sr-only">Filtrar por editorial (solo libros)</label>
+            <select
+              id="publisherFilterSelect"
+              onchange="handleFilterSelects()"
+              class="w-full px-3 py-2.5 rounded-xl bg-[#151014] text-[#F6EFE4] border-2 border-[#120D11] focus:outline-none focus:border-[#F6C453] text-sm font-medium cursor-pointer"
+            >
+              <!-- Generado dinámicamente -->
+            </select>
+          </div>
+
+          <!-- Menú desplegable de Autores (solo libros) -->
+          <div class="sm:col-span-2 lg:col-span-2 flex items-center gap-2">
+            <label for="authorFilterSelect" class="sr-only">Filtrar por autor (solo libros)</label>
+            <select
+              id="authorFilterSelect"
+              onchange="handleFilterSelects()"
+              class="w-full px-3 py-2.5 rounded-xl bg-[#151014] text-[#F6EFE4] border-2 border-[#120D11] focus:outline-none focus:border-[#F6C453] text-sm font-medium cursor-pointer"
+            >
+              <!-- Generado dinámicamente -->
+            </select>
+
+            <button
+              id="resetAllFiltersBtn"
+              type="button"
+              onclick="clearAllFilters()"
+              class="hidden ink-btn shrink-0 px-3 py-2.5 rounded-xl bg-[#7F2D36] text-white font-bold text-xs cursor-pointer"
+              title="Restablecer búsqueda y filtros"
+            >
+              Limpiar
+            </button>
+          </div>
+        </div>
+
+        <!-- Barra de estado de resultados iluminados -->
+        <div id="searchFeedbackBar" class="hidden mt-2.5 px-3 py-1.5 rounded-xl bg-[#2A1E27] border border-[#473342] flex flex-wrap items-center justify-between gap-2 text-xs">
+          <span id="searchFeedbackText" class="font-semibold text-[#F6C453]"></span>
+          <button type="button" onclick="clearAllFilters()" class="text-[#E6D7E2] underline hover:text-[#F6C453] cursor-pointer">
+            Mostrar toda la biblioteca
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ESTANCIA PRINCIPAL RODEADA DE ELEMENTOS BRUJERILES -->
+  <main class="max-w-[1720px] mx-auto px-3 sm:px-6 space-y-6">
+    <section id="sanctumArena" class="sanctum-wall rounded-3xl pt-14 sm:pt-16 pb-7 px-3 sm:px-8 xl:px-14 overflow-hidden">
+
+      <!-- PLANTAS Y COSAS BRUJERILES EN LAS ESQUINAS SUPERIORES -->
+      <svg class="pointer-events-none absolute top-0 left-0 w-28 h-28 sm:w-36 sm:h-36 opacity-90 z-10" viewBox="0 0 140 140" fill="none">
+        <path d="M4 4 C28 18, 46 42, 64 76" stroke="#4D6E52" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M8 26 C34 24, 58 34, 86 52" stroke="#5E8563" stroke-width="2.1" stroke-linecap="round"/>
+        <path d="M22 8 C28 34, 40 58, 56 88" stroke="#3E5C43" stroke-width="2" stroke-linecap="round"/>
+        <ellipse cx="32" cy="18" rx="8" ry="4.2" transform="rotate(-22 32 18)" fill="#6C9671" stroke="#120D11" stroke-width="1.4"/>
+        <ellipse cx="48" cy="40" rx="8.5" ry="4.4" transform="rotate(18 48 40)" fill="#5E8563" stroke="#120D11" stroke-width="1.4"/>
+        <ellipse cx="62" cy="64" rx="7.5" ry="4" transform="rotate(34 62 64)" fill="#4D6E52" stroke="#120D11" stroke-width="1.4"/>
+        <ellipse cx="68" cy="38" rx="8" ry="4" transform="rotate(12 68 38)" fill="#73A179" stroke="#120D11" stroke-width="1.4"/>
+        <path d="M42 74 L44 80 L50 82 L44 84 L42 90 L40 84 L34 82 L40 80 Z" fill="#F6C453" stroke="#120D11" stroke-width="1.2"/>
+      </svg>
+
+      <svg class="pointer-events-none absolute top-0 right-0 w-28 h-28 sm:w-36 sm:h-36 opacity-90 z-10 scale-x-[-1]" viewBox="0 0 140 140" fill="none">
+        <path d="M4 4 C28 18, 46 42, 64 76" stroke="#4D6E52" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M8 26 C34 24, 58 34, 86 52" stroke="#5E8563" stroke-width="2.1" stroke-linecap="round"/>
+        <path d="M22 8 C28 34, 40 58, 56 88" stroke="#3E5C43" stroke-width="2" stroke-linecap="round"/>
+        <ellipse cx="32" cy="18" rx="8" ry="4.2" transform="rotate(-22 32 18)" fill="#6C9671" stroke="#120D11" stroke-width="1.4"/>
+        <ellipse cx="48" cy="40" rx="8.5" ry="4.4" transform="rotate(18 48 40)" fill="#5E8563" stroke="#120D11" stroke-width="1.4"/>
+        <ellipse cx="62" cy="64" rx="7.5" ry="4" transform="rotate(34 62 64)" fill="#4D6E52" stroke="#120D11" stroke-width="1.4"/>
+        <ellipse cx="68" cy="38" rx="8" ry="4" transform="rotate(12 68 38)" fill="#73A179" stroke="#120D11" stroke-width="1.4"/>
+        <path d="M42 74 L44 80 L50 82 L44 84 L42 90 L40 84 L34 82 L40 80 Z" fill="#F6C453" stroke="#120D11" stroke-width="1.2"/>
+      </svg>
+
+      <!-- ARCO GÓTICO TALLADO CON VOLUTAS Y ENREDADERAS EN EL BORDE SUPERIOR -->
+      <div class="pointer-events-none absolute top-0 inset-x-0 flex justify-center z-10" aria-hidden="true">
+        <svg class="w-full max-w-6xl h-16 sm:h-20" viewBox="0 0 1000 84" preserveAspectRatio="none" fill="none">
+          <path d="M0 14 Q260 6 500 52 Q740 6 1000 14 L1000 0 L0 0 Z" fill="#151014" stroke="#120D11" stroke-width="2.5"/>
+          <path d="M20 18 Q265 11 500 56 Q735 11 980 18" stroke="#463340" stroke-width="2" fill="none"/>
+          <path d="M455 34 C440 20, 420 26, 428 40 C434 49, 448 44, 445 35" stroke="#8C6D53" stroke-width="2" fill="none"/>
+          <path d="M545 34 C560 20, 580 26, 572 40 C566 49, 552 44, 555 35" stroke="#8C6D53" stroke-width="2" fill="none"/>
+          <path d="M500 22 L504 33 L515 37 L504 41 L500 52 L496 41 L485 37 L496 33 Z" fill="#F6C453" stroke="#120D11" stroke-width="1.8"/>
+          <!-- Enredaderas colgantes -->
+          <path d="M165 14 C172 34, 158 50, 168 68" stroke="#4D6E52" stroke-width="2.2" stroke-linecap="round"/>
+          <ellipse cx="161" cy="30" rx="6" ry="3.2" transform="rotate(-25 161 30)" fill="#5E8563" stroke="#120D11" stroke-width="1.3"/>
+          <ellipse cx="171" cy="46" rx="6" ry="3.2" transform="rotate(28 171 46)" fill="#4D6E52" stroke="#120D11" stroke-width="1.3"/>
+          <ellipse cx="162" cy="61" rx="5.5" ry="3" transform="rotate(-20 162 61)" fill="#6C9671" stroke="#120D11" stroke-width="1.3"/>
+
+          <path d="M835 14 C828 36, 842 52, 830 70" stroke="#4D6E52" stroke-width="2.2" stroke-linecap="round"/>
+          <ellipse cx="839" cy="29" rx="6" ry="3.2" transform="rotate(25 839 29)" fill="#5E8563" stroke="#120D11" stroke-width="1.3"/>
+          <ellipse cx="829" cy="46" rx="6" ry="3.2" transform="rotate(-28 829 46)" fill="#4D6E52" stroke="#120D11" stroke-width="1.3"/>
+          <ellipse cx="837" cy="62" rx="5.5" ry="3" transform="rotate(20 837 62)" fill="#6C9671" stroke="#120D11" stroke-width="1.3"/>
+        </svg>
+      </div>
+
+      <!-- DECORACIÓN BRUJERIL EN EL MARGEN IZQUIERDO -->
+      <div class="hidden xl:flex flex-col items-center justify-between pointer-events-none absolute left-2 top-28 bottom-10 w-11 z-10 select-none" aria-hidden="true">
+        <svg class="w-10 h-20" viewBox="0 0 44 84" fill="none">
+          <rect x="8" y="24" width="28" height="52" rx="6" fill="#4E7566" stroke="#120D11" stroke-width="2.2"/>
+          <rect x="16" y="15" width="12" height="10" fill="#4E7566" stroke="#120D11" stroke-width="2"/>
+          <rect x="17" y="9" width="10" height="7" rx="1.5" fill="#B5895A" stroke="#120D11" stroke-width="1.8"/>
+          <rect x="12" y="38" width="20" height="18" rx="1.5" fill="#F3EAD8" stroke="#120D11" stroke-width="1.5"/>
+          <line x1="15" y1="44" x2="29" y2="44" stroke="#3A2B26" stroke-width="1.4"/>
+          <line x1="15" y1="50" x2="26" y2="50" stroke="#3A2B26" stroke-width="1.4"/>
+          <line x1="2" y1="77" x2="42" y2="77" stroke="#5A4338" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+
+        <svg class="w-11 h-20" viewBox="0 0 48 84" fill="none">
+          <polygon points="10,72 16,38 24,72" fill="#9D65D0" stroke="#120D11" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="19,72 27,26 35,72" fill="#B983EA" stroke="#120D11" stroke-width="2.2" stroke-linejoin="round"/>
+          <polygon points="30,72 37,44 43,72" fill="#7E48B0" stroke="#120D11" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M27 14 L28.5 18 L32.5 19.5 L28.5 21 L27 25 L25.5 21 L21.5 19.5 L25.5 18 Z" fill="#FFE082"/>
+          <line x1="3" y1="74" x2="45" y2="74" stroke="#5A4338" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+
+        <svg class="w-11 h-24" viewBox="0 0 48 92" fill="none">
+          <rect x="12" y="34" width="14" height="40" rx="2" fill="#F5EAD6" stroke="#120D11" stroke-width="2.2"/>
+          <g class="flame-anim">
+            <path d="M19 10 C25 19, 26 27, 19 31 C12 27, 13 19, 19 10 Z" fill="#F6C453" stroke="#120D11" stroke-width="1.8"/>
+            <path d="M19 17 C22 22, 22 27, 19 29 C16 27, 16 22, 19 17 Z" fill="#FFF7D6"/>
+          </g>
+          <ellipse cx="19" cy="77" rx="15" ry="5" fill="#C8963E" stroke="#120D11" stroke-width="2"/>
+          <path d="M35 80 L36 68 L40 68 L41 80 Z" fill="#E8DCC8" stroke="#120D11" stroke-width="1.6"/>
+          <path d="M29 69 C29 59, 47 59, 47 69 Z" fill="#A64B4B" stroke="#120D11" stroke-width="1.8"/>
+          <line x1="2" y1="82" x2="46" y2="82" stroke="#5A4338" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <!-- DECORACIÓN BRUJERIL EN EL MARGEN DERECHO -->
+      <div class="hidden xl:flex flex-col items-center justify-between pointer-events-none absolute right-2 top-28 bottom-10 w-11 z-10 select-none" aria-hidden="true">
+        <svg class="w-11 h-22 orb-anim" viewBox="0 0 48 86" fill="none">
+          <circle cx="24" cy="36" r="19" fill="#6D3B9E" stroke="#120D11" stroke-width="2.2"/>
+          <circle cx="24" cy="36" r="14.5" fill="#8B54C4"/>
+          <path d="M24 36 C24 33, 28 33, 28 36 C28 40, 20 40, 20 35 C20 29, 31 29, 31 36" stroke="#E9D5FF" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <path d="M14 26 C17 22, 21 20, 25 20" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.85"/>
+          <path d="M11 54 L37 54 L41 68 L7 68 Z" fill="#2B1F27" stroke="#120D11" stroke-width="2" stroke-linejoin="round"/>
+          <line x1="3" y1="70" x2="45" y2="70" stroke="#5A4338" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+
+        <svg class="w-11 h-20" viewBox="0 0 48 84" fill="none">
+          <circle cx="24" cy="52" r="18" fill="#9E563B" stroke="#120D11" stroke-width="2.2"/>
+          <rect x="19" y="27" width="10" height="8" fill="#9E563B" stroke="#120D11" stroke-width="2"/>
+          <rect x="20" y="21" width="8" height="7" rx="1.5" fill="#B5895A" stroke="#120D11" stroke-width="1.8"/>
+          <rect x="14" y="45" width="20" height="12" rx="1.5" fill="#F3EAD8" stroke="#120D11" stroke-width="1.5"/>
+          <path d="M24 48 L25.2 50.5 L28 51 L25.8 52.8 L26.3 55.5 L24 54.2 L21.7 55.5 L22.2 52.8 L20 51 L22.8 50.5 Z" fill="#9E563B"/>
+          <line x1="3" y1="72" x2="45" y2="72" stroke="#5A4338" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+
+        <svg class="w-11 h-22" viewBox="0 0 48 86" fill="none">
+          <rect x="22" y="34" width="18" height="40" rx="4" fill="#684C78" stroke="#120D11" stroke-width="2"/>
+          <rect x="26" y="26" width="10" height="8" fill="#684C78" stroke="#120D11" stroke-width="1.8"/>
+          <rect x="27" y="20" width="8" height="7" rx="1" fill="#B5895A" stroke="#120D11" stroke-width="1.6"/>
+          <path d="M11 74 L12 60 L16 60 L17 74 Z" fill="#E8DCC8" stroke="#120D11" stroke-width="1.6"/>
+          <path d="M4 61 C4 50, 24 50, 24 61 Z" fill="#B87A4B" stroke="#120D11" stroke-width="1.8"/>
+          <line x1="2" y1="76" x2="46" y2="76" stroke="#5A4338" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <!-- DISTRIBUCIÓN DE VITRINAS: 4 VITRINAS BLANCAS (IZQ/CENTRO) + 1 VITRINA VERDE DE TAROTS (DERECHA) -->
+      <div class="grid grid-cols-1 2xl:grid-cols-12 gap-6 items-end relative z-20">
+
+        <!-- BLOQUE IZQUIERDO (8 cols en 2xl): 4 VITRINAS BLANCAS DE 4 ESTANTES -->
+        <div class="2xl:col-span-8">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5 px-1">
+            <h2 class="font-serif-label text-lg sm:text-xl font-bold text-[#F3EAD8] tracking-wide flex items-center gap-2">
+              <span class="text-[#F6C453]">✦</span> Vitrinas de Libros y Curiosidades
+            </h2>
+            <span class="text-[11px] text-[#C4B0BC]">Pulsa cualquier estante, armario o título de vitrina para ver su contenido</span>
+          </div>
+
+          <div id="whiteCabinetsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <!-- Generado dinámicamente por JS -->
+          </div>
+        </div>
+
+        <!-- BLOQUE DERECHO (4 cols en 2xl): VITRINA VERDE SALVIA DE TAROTS (12 CUBÍCULOS) -->
+        <div class="2xl:col-span-4 flex flex-col items-center">
+          <div class="w-full max-w-[500px] flex items-center justify-between mb-2.5 px-1">
+            <button onclick="selectTarotCabinetScope()" class="font-serif-label text-lg sm:text-xl font-bold text-[#DCE6D6] hover:text-[#A8D59D] tracking-wide flex items-center gap-2 cursor-pointer transition">
+              <span class="text-[#A8D59D]">☾</span> Vitrina de Tarots y Oráculos
+            </button>
+            <span class="text-[11px] text-[#A4B09E]">Pulsa un cubículo</span>
+          </div>
+
+          <article id="tarotCabinetUnit" class="tarot-cabinet w-full max-w-[500px] p-2.5 relative">
+            <div class="h-3.5 -mx-2.5 -mt-2.5 mb-2 bg-gradient-to-b from-[#B2B9AB] to-[#8F9789] border-b-2.5 border-[#120D11] relative">
+              <svg class="w-full h-full" viewBox="0 0 400 14" preserveAspectRatio="none">
+                <line x1="10" y1="5" x2="390" y2="5" stroke="#120D11" stroke-width="1" stroke-dasharray="18 6 30 5"/>
+                <line x1="20" y1="10" x2="380" y2="10" stroke="#222720" stroke-width="0.8" opacity="0.5"/>
+              </svg>
+            </div>
+
+            <div class="tarot-interior p-2 rounded-xs border-2 border-[#120D11] relative">
+              <div class="pointer-events-none absolute top-0 inset-x-0 flex justify-around px-10 z-20">
+                <div class="w-7 h-2 rounded-b-full bg-[#FFF3C4] border-x border-b border-[#120D11] shadow-[0_6px_18px_rgba(255,232,150,0.85)]"></div>
+                <div class="w-7 h-2 rounded-b-full bg-[#FFF3C4] border-x border-b border-[#120D11] shadow-[0_6px_18px_rgba(255,232,150,0.85)]"></div>
+              </div>
+
+              <div id="tarotCubbiesGrid" class="grid grid-cols-3 gap-2 pt-1.5 relative z-10">
+                <!-- 12 cubículos generados por JS -->
+              </div>
+
+              <div class="pointer-events-none absolute inset-y-0 left-1/2 -translate-x-1/2 w-[5px] bg-[#98A192]/90 border-x-2 border-[#120D11] z-20"></div>
+              <div class="pointer-events-none absolute top-1/2 -translate-y-1/2 left-[calc(50%-8px)] w-1.5 h-9 rounded-full bg-gradient-to-b from-stone-200 to-stone-500 border border-[#120D11] z-30"></div>
+              <div class="pointer-events-none absolute top-1/2 -translate-y-1/2 left-[calc(50%+3px)] w-1.5 h-9 rounded-full bg-gradient-to-b from-stone-200 to-stone-500 border border-[#120D11] z-30"></div>
+              <div class="glass-reflection absolute inset-0 z-20"></div>
+            </div>
+
+            <div class="mt-2 h-3 -mx-2.5 -mb-2.5 bg-gradient-to-b from-[#98A192] to-[#778071] border-t-2.5 border-[#120D11]"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL DE LISTADO INTERACTIVO SINCRONIZADO ("Contenido") -->
+    <section id="shelfInspectorPanel" class="bg-[#21181F]/95 rounded-2xl p-4 sm:p-6 ink-box">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 pb-4 border-b border-[#392935]">
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#2E212B] border border-[#120D11] text-[#F6C453] font-bold">
+              📜 Contenido
+            </span>
+            <h2 id="inspectorTitle" class="font-witchy text-lg sm:text-xl text-[#F7E7C4]">
+              Toda la Biblioteca
+            </h2>
+          </div>
+          <p id="inspectorSubtitle" class="text-xs sm:text-sm text-[#C4B0BC] mt-1">
+            Haz clic en cualquier estante, cubículo o vitrina arriba para filtrar este listado, o pulsa «📍 Localizar» en cualquier pieza para iluminarla.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Selector de vista: Ficha o Tabla -->
+          <div class="inline-flex rounded-xl bg-[#151014] p-1 border-2 border-[#120D11]" role="group" aria-label="Modo de visualización">
+            <button id="viewModeCardsBtn" onclick="setViewMode('cards')"
+              class="px-3 py-1 rounded-lg text-xs font-bold bg-[#A8D59D] text-[#151014] cursor-pointer transition">
+              🗂️ Ficha
+            </button>
+            <button id="viewModeTableBtn" onclick="setViewMode('table')"
+              class="px-3 py-1 rounded-lg text-xs font-semibold text-[#C4B0BC] hover:text-white cursor-pointer transition">
+              📋 Tabla
+            </button>
+          </div>
+
+          <!-- Selector de ordenación -->
+          <select id="sortOrderSelect" onchange="handleSortChange()" aria-label="Ordenar contenido"
+            class="px-3 py-1.5 rounded-xl bg-[#151014] text-[#F6EFE4] border-2 border-[#120D11] text-xs font-semibold focus:outline-none focus:border-[#F6C453] cursor-pointer">
+            <option value="default">↕ Orden: Estante / Ubicación</option>
+            <option value="title_asc">🔤 Título (A → Z)</option>
+            <option value="title_desc">🔤 Título (Z → A)</option>
+            <option value="publisher_asc">🏛️ Editorial / Autor (A → Z)</option>
+            <option value="publisher_desc">🏛️ Editorial / Autor (Z → A)</option>
+            <option value="theme_asc">🏷️ Temática (A → Z)</option>
+            <option value="type_asc">✦ Tipo</option>
+          </select>
+
+          <div class="inline-flex rounded-xl bg-[#151014] p-1 border-2 border-[#120D11]">
+            <button id="scopeBtnSelection" onclick="setInspectorScope('selection')"
+              class="px-3 py-1 rounded-lg text-xs font-semibold text-[#C4B0BC] hover:text-white cursor-pointer transition">
+              Estante / Cubículo
+            </button>
+            <button id="scopeBtnCabinet" onclick="setInspectorScope('cabinet')"
+              class="px-3 py-1 rounded-lg text-xs font-semibold text-[#C4B0BC] hover:text-white cursor-pointer transition">
+              Vitrina completa
+            </button>
+            <button id="scopeBtnAll" onclick="setInspectorScope('all')"
+              class="px-3 py-1 rounded-lg text-xs font-bold bg-[#F6C453] text-[#151014] cursor-pointer transition">
+              Toda la biblioteca
+            </button>
+          </div>
+
+          <button id="addInScopeBtn" onclick="addInCurrentScope()"
+            class="ink-btn px-3.5 py-2 rounded-xl bg-[#A8D59D] text-[#151014] font-bold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer">
+            <span>+</span> <span id="addInScopeLabel">Añadir aquí</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Selector rápido de vitrinas -->
+      <div class="mt-3.5 flex flex-wrap items-center gap-1.5 text-xs">
+        <span class="text-[#A995A1] font-medium mr-1">Saltar a:</span>
+        <button onclick="selectWhiteCabinetScope(1)" class="px-2.5 py-1 rounded-lg bg-[#2B1F28] hover:bg-[#3A2A36] border border-[#120D11] text-[#F3EAD8] cursor-pointer">Vitrina I</button>
+        <button onclick="selectWhiteCabinetScope(2)" class="px-2.5 py-1 rounded-lg bg-[#2B1F28] hover:bg-[#3A2A36] border border-[#120D11] text-[#F3EAD8] cursor-pointer">Vitrina II</button>
+        <button onclick="selectWhiteCabinetScope(3)" class="px-2.5 py-1 rounded-lg bg-[#2B1F28] hover:bg-[#3A2A36] border border-[#120D11] text-[#F3EAD8] cursor-pointer">Vitrina III</button>
+        <button onclick="selectWhiteCabinetScope(4)" class="px-2.5 py-1 rounded-lg bg-[#2B1F28] hover:bg-[#3A2A36] border border-[#120D11] text-[#F3EAD8] cursor-pointer">Vitrina IV</button>
+        <button onclick="selectTarotCabinetScope()" class="px-2.5 py-1 rounded-lg bg-[#262F26] hover:bg-[#323F32] border border-[#120D11] text-[#DCE6D6] cursor-pointer">☾ Vitrina de Tarots</button>
+      </div>
+
+      <!-- Contenedor de Ficha o Tabla con los libros, tarots y objetos -->
+      <div id="inspectorGrid" class="mt-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+        <!-- Renderizado dinámicamente por JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: AÑADIR / EDITAR LIBRO, TAROT U OBJETO -->
+  <div id="itemModal" class="fixed inset-0 bg-black/75 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+    <div class="bg-[#231921] text-[#F4EDE2] w-full max-w-lg rounded-2xl p-5 sm:p-6 ink-box relative max-h-[92vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-[#3B2B37]">
+        <h3 id="modalTitle" class="font-witchy text-lg sm:text-xl text-[#F6C453]">Añadir a la Biblioteca</h3>
+        <button onclick="closeItemModal()" class="w-8 h-8 rounded-lg bg-[#352631] border border-[#120D11] text-sm font-bold hover:bg-[#493444] cursor-pointer">✕</button>
+      </div>
+
+      <form id="itemForm" onsubmit="saveItem(event)" class="mt-4 space-y-3.5 text-sm">
+        <input type="hidden" id="editItemId" />
+
+        <!-- Tipo -->
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1.5">Tipo de pieza</label>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="cursor-pointer">
+              <input type="radio" name="itemType" value="book" class="peer hidden" checked onchange="toggleLocationFields()" />
+              <div class="peer-checked:bg-[#F6C453] peer-checked:text-[#151014] peer-checked:font-bold bg-[#171116] border-2 border-[#120D11] rounded-xl py-2 text-center transition">
+                📚 Libro
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="itemType" value="tarot" class="peer hidden" onchange="toggleLocationFields()" />
+              <div class="peer-checked:bg-[#A8D59D] peer-checked:text-[#151014] peer-checked:font-bold bg-[#171116] border-2 border-[#120D11] rounded-xl py-2 text-center transition">
+                🃏 Tarot / Oráculo
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="itemType" value="object" class="peer hidden" onchange="toggleLocationFields()" />
+              <div class="peer-checked:bg-[#D8B4FE] peer-checked:text-[#151014] peer-checked:font-bold bg-[#171116] border-2 border-[#120D11] rounded-xl py-2 text-center transition">
+                🔮 Objeto
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Título -->
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Título o Nombre *</label>
+          <input id="fieldTitle" type="text" required placeholder="Ej. Guía del Autoestopista Galáctico / Modelo celeste Orrery"
+            class="w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]" />
+        </div>
+
+        <!-- Autor, Editorial y Temática/Categoría -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Autor</label>
+            <input id="fieldAuthor" type="text" placeholder="Ej. Isaac Asimov"
+              class="w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]" />
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Editorial</label>
+            <input id="fieldPublisher" type="text" placeholder="Ej. Minotauro"
+              class="w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]" />
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Categoría / Temática</label>
+            <select id="fieldBookCategory" class="w-full px-3 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]">
+            </select>
+            <input id="fieldTheme" type="text" placeholder="Ej. Decoración brujeril, Gatos..."
+              class="hidden w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]" />
+          </div>
+        </div>
+
+        <!-- Ubicación para Vitrinas Blancas -->
+        <div id="whiteLocationGroup" class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Vitrina Blanca</label>
+            <select id="fieldCabinet" class="w-full px-3 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]">
+              <option value="1">Vitrina I (Izquierda)</option>
+              <option value="2">Vitrina II (Centro-Izq)</option>
+              <option value="3">Vitrina III (Centro-Der)</option>
+              <option value="4">Vitrina IV (Derecha)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Estante (de arriba abajo)</label>
+            <select id="fieldShelf" class="w-full px-3 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]">
+              <option value="1">Estante 1 (Superior)</option>
+              <option value="2">Estante 2 (Medio-Alto)</option>
+              <option value="3">Estante 3 (Medio-Bajo)</option>
+              <option value="4">Estante 4 (Inferior)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Ubicación para Vitrina Verde de Tarots -->
+        <div id="tarotLocationGroup" class="hidden">
+          <label class="block text-xs uppercase tracking-wider text-[#A8D59D] font-semibold mb-1">Cubículo en Vitrina Verde</label>
+          <select id="fieldCubby" class="w-full px-3 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#A8D59D]">
+          </select>
+        </div>
+
+        <!-- Selector visual de icono (objetos) y color -->
+        <div id="objectIconGroup" class="hidden">
+          <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1.5">Ilustración del objeto</label>
+          <div class="grid grid-cols-3 sm:grid-cols-5 gap-2" id="objectIconPicker"></div>
+        </div>
+
+        <div id="colorPickerGroup">
+          <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1.5">Color del lomo, caja o acabado</label>
+          <div class="flex flex-wrap gap-2" id="colorSwatches"></div>
+        </div>
+
+        <!-- Notas -->
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Notas personales</label>
+          <textarea id="fieldNotes" rows="2" placeholder="Ej. Edición ilustrada, leído, con guía en español..."
+            class="w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]"></textarea>
+        </div>
+
+        <!-- Botones -->
+        <div class="pt-2 flex items-center justify-between gap-2">
+          <button type="button" id="deleteItemBtn" onclick="deleteCurrentItem()" class="hidden ink-btn px-3.5 py-2 rounded-xl bg-[#7F2D36] text-white font-semibold text-xs cursor-pointer">
+            🗑️ Eliminar
+          </button>
+          <div class="flex items-center gap-2 ml-auto">
+            <button type="button" onclick="closeItemModal()" class="ink-btn px-4 py-2 rounded-xl bg-[#342631] text-[#E6DBD0] font-semibold text-xs cursor-pointer">
+              Cancelar
+            </button>
+            <button type="submit" class="ink-btn px-5 py-2 rounded-xl bg-[#F6C453] text-[#151014] font-bold text-xs sm:text-sm cursor-pointer">
+              Guardar pieza
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: NOTAS DE ARMARIO INFERIOR -->
+  <div id="cupboardModal" class="fixed inset-0 bg-black/75 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+    <div class="bg-[#231921] text-[#F4EDE2] w-full max-w-md rounded-2xl p-5 ink-box">
+      <div class="flex items-center justify-between">
+        <h3 id="cupboardModalTitle" class="font-witchy text-base text-[#F6C453]">Armario Inferior</h3>
+        <button onclick="closeCupboardModal()" class="w-7 h-7 rounded-lg bg-[#352631] border border-[#120D11] text-xs font-bold cursor-pointer">✕</button>
+      </div>
+      <p class="text-xs text-[#B7A2AE] mt-1">Anota qué guardas dentro de las puertas cerradas de este mueble (cajas, velas de repuesto, juegos, álbumes...).</p>
+      <input type="hidden" id="editCupboardCab" />
+      <textarea id="cupboardNotesInput" rows="4" placeholder="Ej. Velas de cera de abeja, inciensos, manteles de altar y cajas de recuerdos..."
+        class="mt-3 w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] text-sm focus:outline-none focus:border-[#F6C453]"></textarea>
+      <div class="mt-4 flex justify-end gap-2">
+        <button onclick="closeCupboardModal()" class="ink-btn px-3.5 py-1.5 rounded-xl bg-[#342631] text-xs font-semibold cursor-pointer">Cancelar</button>
+        <button onclick="saveCupboardNotes()" class="ink-btn px-4 py-1.5 rounded-xl bg-[#F6C453] text-[#151014] text-xs font-bold cursor-pointer">Guardar notas</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: EDITAR PLACA DE CUBÍCULO DE TAROT -->
+  <div id="cubbyLabelModal" class="fixed inset-0 bg-black/75 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+    <div class="bg-[#231921] text-[#F4EDE2] w-full max-w-sm rounded-2xl p-5 ink-box">
+      <h3 class="font-witchy text-base text-[#A8D59D]">Etiqueta del Cubículo</h3>
+      <p class="text-xs text-[#B7A2AE] mt-1">Personaliza la placa temática de este compartimento de tu vitrina verde.</p>
+      <input type="hidden" id="editCubbyIndex" />
+      <input id="cubbyLabelInput" type="text" maxlength="24"
+        class="mt-3 w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] font-serif-label text-lg focus:outline-none focus:border-[#A8D59D]" />
+      <div class="mt-4 flex justify-end gap-2">
+        <button onclick="closeCubbyLabelModal()" class="ink-btn px-3.5 py-1.5 rounded-xl bg-[#342631] text-xs font-semibold cursor-pointer">Cancelar</button>
+        <button onclick="saveCubbyLabel()" class="ink-btn px-4 py-1.5 rounded-xl bg-[#A8D59D] text-[#151014] text-xs font-bold cursor-pointer">Guardar placa</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST FLOTANTE -->
+  <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden">
+    <div id="toastMsg" class="px-4 py-2.5 rounded-xl bg-[#F6C453] text-[#151014] font-bold text-xs sm:text-sm ink-box"></div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'biblioteca_de_la_meiga_v5';
+    const ROMAN = ['I', 'II', 'III', 'IV'];
+
+    // Tus 14 categorías literarias exactas
+    const BOOK_CATEGORIES = [
+      'Ciencia ficción',
+      'Humor',
+      'Terror',
+      'Matemáticas',
+      'Ciencia',
+      'Misterio',
+      'Erótico-festivo',
+      'Aventura',
+      'Cómic',
+      'Cuento',
+      'Poesía',
+      'Thriller',
+      'Drama',
+      'Lógico -Deducción'
+    ];
+
+    const DEFAULT_CUBBY_LABELS = [
+      'Ángeles y Demonios',
+      'Artísticos',
+      'Barajas',
+      'Terror',
+      'Gatos',
+      'Vampiros y Brujas',
+      'Magia Verde',
+      'En Uso',
+      'Oráculos',
+      'Dragones',
+      'Rol',
+      'Mix'
+    ];
+
+    const SPINE_COLORS = [
+      { name: 'Ciruela', hex: '#5D3552' },
+      { name: 'Bosque', hex: '#385947' },
+      { name: 'Borgoña', hex: '#7A2E3B' },
+      { name: 'Noche', hex: '#28364A' },
+      { name: 'Latón / Ocre', hex: '#B8893E' },
+      { name: 'Amatista', hex: '#684785' },
+      { name: 'Terracota', hex: '#9B4D3A' },
+      { name: 'Salvia', hex: '#5E7563' },
+      { name: 'Pergamino', hex: '#CBB894' },
+      { name: 'Obsidiana', hex: '#2B2429' }
+    ];
+
+    // Repertorio completo de objetos decorativos (incluidos Marco de fotos y Modelo celeste Orrery)
+    const OBJECT_ICONS = [
+      { id: 'photoframe', label: '🖼️ Marco de fotos' },
+      { id: 'orrery', label: '🪐 Modelo celeste (Orrery)' },
+      { id: 'canopo', label: '🏺 Vaso canopo' },
+      { id: 'compass', label: '🧭 Brújula' },
+      { id: 'sundial', label: '☀️ Reloj solar' },
+      { id: 'sextant', label: '📐 Sextante' },
+      { id: 'scrollholder', label: '📜 Portapergaminos' },
+      { id: 'octopusorb', label: '🐙 Pulpo bola cristal' },
+      { id: 'operaglasses', label: '🎭 Prismáticos ópera' },
+      { id: 'shell', label: '🐚 Caracola' },
+      { id: 'jar', label: '🧪 Pote de bruja' },
+      { id: 'crystal', label: '💎 Piedras y cristales' },
+      { id: 'candle', label: '🕯️ Vela' },
+      { id: 'cauldron', label: '🫕 Calderito' },
+      { id: 'skull', label: '💀 Calavera' },
+      { id: 'plant', label: '🌿 Planta' },
+      { id: 'orb', label: '🔮 Bola de cristal' }
+    ];
+
+    const DEFAULT_ITEMS = [
+      // VITRINA I (Datos del CSV de la primera vitrina)
+      { id: 'v1_csv_1', type: 'book', title: 'Fundación', author: 'Isaac Asimov', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_2', type: 'book', title: 'Hacia la fundación', author: 'Isaac Asimov', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_3', type: 'book', title: 'Preludio a la fundación', author: 'Isaac Asimov', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_4', type: 'book', title: 'Fundación e Imperio', author: 'Isaac Asimov', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_5', type: 'book', title: 'Segunda Fundación', author: 'Isaac Asimor', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_6', type: 'book', title: 'Mundo anillo', author: 'Larry Niven', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_7', type: 'object', title: 'Modelo Celeste Orrery con cuarzo blanco', author: '', theme: 'Decoración brujeril', cabinet: 1, shelf: 1, icon: 'orrery', color: '#CBB894', notes: '' },
+      { id: 'v1_csv_8', type: 'book', title: 'A vuestros cuerpos dispersos', author: 'Philip José Farmer', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_9', type: 'book', title: 'El granjero de las estrellas', author: 'Robert A. Heinlein', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_10', type: 'book', title: 'Inundación', author: 'Stephen Baxter', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_11', type: 'book', title: 'El arca', author: 'Stephen Baxter', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_12', type: 'book', title: 'Dune', author: 'Frank Herbert', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_13', type: 'book', title: 'Mesías de Dune', author: 'Frank Herbert', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_14', type: 'book', title: 'La conspiración alejandrina', author: 'Terry Bisson', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_15', type: 'book', title: 'Ready player One', author: 'Ernest Cline', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_16', type: 'book', title: 'Armada', author: 'Ernest Cline', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#2B2429', notes: '' },
+      { id: 'v1_csv_17', type: 'book', title: 'Ender en el exilio', author: 'Orson Scott Card', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#2B2429', notes: '' },
+      { id: 'v1_csv_18', type: 'book', title: 'Flashforward', author: 'Robert J. Sawyer', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_19', type: 'book', title: 'Muerte de la luz', author: 'George R. R. Martin', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'v1_csv_20', type: 'book', title: 'Los mejores cuentos de Ciencia Ficción', author: 'Varios autores', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#5D3552', notes: '' },
+
+      // VITRINA II
+      { id: 'b9', type: 'book', title: 'Drácula', author: 'Bram Stoker', theme: 'Terror', cabinet: 2, shelf: 1, color: '#7A2E3B', notes: '' },
+      { id: 'b10', type: 'book', title: 'Frankenstein', author: 'Mary Shelley', theme: 'Terror', cabinet: 2, shelf: 1, color: '#2B2429', notes: '' },
+      { id: 'o5', type: 'object', title: 'Pulpo sujeta bola de cristal', author: 'Altar', theme: 'Decoración brujeril', cabinet: 2, shelf: 1, icon: 'octopusorb', color: '#8B54C4', notes: '' },
+
+      { id: 'b11', type: 'book', title: 'Cuentos Completos', author: 'Edgar Allan Poe', theme: 'Terror', cabinet: 2, shelf: 2, color: '#5D3552', notes: '' },
+      { id: 'o6', type: 'object', title: 'Pote de bruja con hierbas', author: 'Boticario', theme: 'Decoración brujeril', cabinet: 2, shelf: 2, icon: 'jar', color: '#4E7566', notes: '' },
+
+      { id: 'b12', type: 'book', title: 'Asesinato en el Orient Express', author: 'Agatha Christie', theme: 'Misterio', cabinet: 2, shelf: 3, color: '#385947', notes: '' },
+      { id: 'o7', type: 'object', title: 'Drusa de amatistas', author: 'Minerales', theme: 'Cristales', cabinet: 2, shelf: 3, icon: 'crystal', color: '#9D65D0', notes: '' },
+
+      { id: 'b13', type: 'book', title: 'El Silencio de los Corderos', author: 'Thomas Harris', theme: 'Thriller', cabinet: 2, shelf: 4, color: '#2B2429', notes: '' },
+      { id: 'o8', type: 'object', title: 'Vaso canopo de alabastro', author: 'Antigüedades', theme: 'Decoración brujeril', cabinet: 2, shelf: 4, icon: 'canopo', color: '#EDE2CC', notes: 'Con tapa de chacal' },
+
+      // VITRINA III
+      { id: 'b14', type: 'book', title: 'Sandman', author: 'Neil Gaiman', theme: 'Cómic', cabinet: 3, shelf: 1, color: '#28364A', notes: '' },
+      { id: 'b15', type: 'book', title: 'Blacksad', author: 'Díaz Canales & Guarnido', theme: 'Cómic', cabinet: 3, shelf: 1, color: '#B8893E', notes: '' },
+      { id: 'o9', type: 'object', title: 'Prismáticos de ópera nacarados', author: 'Curiosidades', theme: 'Decoración brujeril', cabinet: 3, shelf: 1, icon: 'operaglasses', color: '#E8C872', notes: '' },
+
+      { id: 'b16', type: 'book', title: 'Follas Novas', author: 'Rosalía de Castro', theme: 'Poesía', cabinet: 3, shelf: 2, color: '#5E7563', notes: '' },
+      { id: 'o10', type: 'object', title: 'Portapergaminos de cuero y latón', author: 'Escritorio', theme: 'Decoración brujeril', cabinet: 3, shelf: 2, icon: 'scrollholder', color: '#9B5A3C', notes: '' },
+
+      { id: 'b17', type: 'book', title: 'La Casa de Bernarda Alba', author: 'Federico García Lorca', theme: 'Drama', cabinet: 3, shelf: 3, color: '#7A2E3B', notes: '' },
+      { id: 'o13', type: 'object', title: 'Marco de fotos vintage tallado', author: 'Recuerdos', theme: 'Decoración brujeril', cabinet: 3, shelf: 3, icon: 'photoframe', color: '#C8963E', notes: '' },
+
+      { id: 'b18', type: 'book', title: 'El Decamerón', author: 'Giovanni Boccaccio', theme: 'Erótico-festivo', cabinet: 3, shelf: 4, color: '#9B4D3A', notes: '' },
+
+      // VITRINA IV
+      { id: 'b19', type: 'book', title: 'Buenos Presagios', author: 'Terry Pratchett & Neil Gaiman', theme: 'Humor', cabinet: 4, shelf: 1, color: '#CBB894', notes: '' },
+      { id: 'b20', type: 'book', title: 'Brujerías', author: 'Terry Pratchett', theme: 'Humor', cabinet: 4, shelf: 1, color: '#385947', notes: '' },
+      { id: 'o11', type: 'object', title: 'Helecho de interior', author: 'Botánica', theme: 'Decoración brujeril', cabinet: 4, shelf: 1, icon: 'plant', color: '#5E8563', notes: '' },
+
+      { id: 'b21', type: 'book', title: 'El Problema de los Tres Cuerpos', author: 'Cixin Liu', theme: 'Ciencia ficción', cabinet: 4, shelf: 2, color: '#28364A', notes: '' },
+      { id: 'o12', type: 'object', title: 'Vela de cera de abeja', author: 'Altar', theme: 'Decoración brujeril', cabinet: 4, shelf: 2, icon: 'candle', color: '#F6C453', notes: '' },
+      { id: 'o14', type: 'object', title: 'Modelo celeste Orrery de latón', author: 'Astronomía', theme: 'Decoración brujeril', cabinet: 4, shelf: 3, icon: 'orrery', color: '#D4A84F', notes: 'Planetario mecánico' },
+
+      // VITRINA VERDE DE TAROTS (12 CUBÍCULOS)
+      { id: 't1', type: 'tarot', title: 'Demon of the Day', author: 'Oráculo', theme: 'Ángeles y Demonios', cubby: 0, color: '#8C2D2D', notes: 'Caja roja' },
+      { id: 't2', type: 'tarot', title: 'Angels & Demons Tarot', author: 'Tarot', theme: 'Ángeles y Demonios', cubby: 0, color: '#4A262B', notes: '' },
+      { id: 't3', type: 'tarot', title: 'Steampunk Art Nouveau Tarot', author: 'Lo Scarabeo', theme: 'Artísticos', cubby: 1, color: '#3B646E', notes: '' },
+      { id: 't4', type: 'tarot', title: 'Diario Arcano de Cuero', author: 'Cuaderno de tiradas', theme: 'Artísticos', cubby: 1, color: '#6E4730', notes: '' },
+      { id: 't5', type: 'tarot', title: 'Barajas Clásicas y Edición Especial', author: 'Colección', theme: 'Barajas', cubby: 2, color: '#8F7B63', notes: '' },
+      { id: 't6', type: 'tarot', title: 'El Necronomicón Tarot', author: 'Donald Tyson', theme: 'Terror', cubby: 3, color: '#2B3033', notes: '' },
+      { id: 't7', type: 'tarot', title: 'Occult Tarot', author: 'Travis McHenry', theme: 'Terror', cubby: 3, color: '#6E2626', notes: '' },
+      { id: 't8', type: 'tarot', title: 'El Tarot de los Gatos', author: 'Librero', theme: 'Gatos', cubby: 4, color: '#C47451', notes: '78 cartas y guía' },
+      { id: 't9', type: 'tarot', title: 'Tarot XIII', author: 'Nekro', theme: 'Vampiros y Brujas', cubby: 5, color: '#262226', notes: '' },
+      { id: 't10', type: 'tarot', title: 'Tarot del Libro de las Sombras', author: 'Barbara Moore', theme: 'Vampiros y Brujas', cubby: 5, color: '#4B5744', notes: '' },
+      { id: 't11', type: 'tarot', title: 'Tarot V (Vampiros)', author: 'Tarot gótico', theme: 'Vampiros y Brujas', cubby: 5, color: '#3D2329', notes: '' },
+      { id: 't12', type: 'tarot', title: "The Green Witch's Oracle Deck", author: 'Arin Murphy-Hiscock', theme: 'Magia Verde', cubby: 6, color: '#5D7A5C', notes: '' },
+      { id: 't13', type: 'tarot', title: 'Green Witch Tarot', author: 'Ann Moura', theme: 'Magia Verde', cubby: 6, color: '#4E7D78', notes: '' },
+      { id: 't14', type: 'tarot', title: 'Baraja en Uso (Paño Estrellado)', author: 'Lectura actual', theme: 'En Uso', cubby: 7, color: '#233252', notes: '' },
+      { id: 't15', type: 'tarot', title: 'Circle of Life Tarot', author: 'Maria Distefano', theme: 'Oráculos', cubby: 8, color: '#4C4373', notes: '' },
+      { id: 't16', type: 'tarot', title: 'Earthbound Oracle', author: 'Oráculo', theme: 'Oráculos', cubby: 8, color: '#B86F4B', notes: '' },
+      { id: 't17', type: 'tarot', title: 'Past Life & Lenormand', author: 'Oráculos', theme: 'Oráculos', cubby: 8, color: '#C9963E', notes: '' },
+      { id: 't18', type: 'tarot', title: 'Star Dragon Oracle Cards', author: 'Oráculo', theme: 'Dragones', cubby: 9, color: '#7D3530', notes: '' },
+      { id: 't19', type: 'tarot', title: 'Dungeons & Dragons Tarot Deck', author: 'Wizards of the Coast', theme: 'Rol', cubby: 10, color: '#242226', notes: '' },
+      { id: 't20', type: 'tarot', title: 'Citadel: A Fantasy Oracle', author: 'Fez Inkwright', theme: 'Rol', cubby: 10, color: '#D4CEC5', notes: '' },
+      { id: 't21', type: 'tarot', title: 'Tarot Vintage', author: 'Tarot', theme: 'Mix', cubby: 11, color: '#C9B796', notes: '' },
+      { id: 't22', type: 'tarot', title: 'Mindscapes Tarot', author: 'Tarot', theme: 'Mix', cubby: 11, color: '#395A75', notes: '' },
+      { id: 't23', type: 'tarot', title: 'Celtic Tarot', author: 'Tarot', theme: 'Mix', cubby: 11, color: '#6E4935', notes: '' }
+    ];
+
+    let state = {
+      items: [],
+      cubbyLabels: [...DEFAULT_CUBBY_LABELS],
+      cupboardNotes: ['', '', '', ''],
+      searchQuery: '',
+      activeTab: 'all',
+      activeCategoryFilter: '',
+      activePublisherFilter: '',
+      activeAuthorFilter: '',
+      viewMode: 'cards',
+      sortBy: 'default',
+      inspectorScope: 'all',
+      selectedFurniture: 'white',
+      selectedCabinet: 1,
+      selectedShelf: 1,
+      selectedCubby: 0,
+      highlightedItemId: null
+    };
+
+    function loadState() {
+      try {
+        const raw =
+          localStorage.getItem(STORAGE_KEY) ||
+          localStorage.getItem('biblioteca_de_la_meiga_v4') ||
+          localStorage.getItem('biblioteca_de_la_meiga_v3');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed.items)) state.items = parsed.items;
+          if (Array.isArray(parsed.cubbyLabels) && parsed.cubbyLabels.length === 12) {
+            state.cubbyLabels = parsed.cubbyLabels;
+          }
+          if (Array.isArray(parsed.cupboardNotes) && parsed.cupboardNotes.length === 4) {
+            state.cupboardNotes = parsed.cupboardNotes;
+          }
+          return;
+        }
+      } catch (e) {
+        console.warn('No se pudo leer localStorage:', e);
+      }
+      state.items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+      saveState();
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          items: state.items,
+          cubbyLabels: state.cubbyLabels,
+          cupboardNotes: state.cupboardNotes
+        }));
+      } catch (e) {
+        console.warn('No se pudo guardar en localStorage:', e);
+      }
+    }
+
+    function escapeHTML(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function itemMatchesGlobalFilter(item) {
+      if (state.activeTab !== 'all' && item.type !== state.activeTab) return false;
+
+      if (state.activeCategoryFilter) {
+        if (state.activeCategoryFilter.startsWith('book:')) {
+          const targetCat = state.activeCategoryFilter.slice(5).toLowerCase();
+          if (item.type !== 'book' || (item.theme || '').toLowerCase() !== targetCat) return false;
+        } else if (state.activeCategoryFilter.startsWith('tarot:')) {
+          const targetCubby = state.activeCategoryFilter.slice(6).toLowerCase();
+          if (item.type !== 'tarot') return false;
+          const cubbyName = (state.cubbyLabels[item.cubby] || '').toLowerCase();
+          const itemTheme = (item.theme || '').toLowerCase();
+          if (cubbyName !== targetCubby && itemTheme !== targetCubby) return false;
+        } else if (state.activeCategoryFilter.startsWith('theme:')) {
+          const targetTheme = state.activeCategoryFilter.slice(6).toLowerCase();
+          if ((item.theme || '').toLowerCase() !== targetTheme) return false;
+        }
+      }
+
+      if (state.activePublisherFilter) {
+        if (item.type !== 'book') return false;
+        const targetPub = state.activePublisherFilter.toLowerCase();
+        const pub = (item.publisher || '').trim().toLowerCase();
+        if (pub !== targetPub) return false;
+      }
+
+      if (state.activeAuthorFilter) {
+        if (item.type !== 'book') return false;
+        const targetAuth = state.activeAuthorFilter.toLowerCase();
+        const auth = (item.author || '').trim().toLowerCase();
+        if (auth !== targetAuth) return false;
+      }
+
+      if (state.searchQuery.trim() !== '') {
+        const q = state.searchQuery.trim().toLowerCase();
+        const cubbyName = item.type === 'tarot' ? (state.cubbyLabels[item.cubby] || '') : '';
+        const haystack = [
+          item.title,
+          item.author,
+          item.publisher,
+          item.theme,
+          item.notes,
+          cubbyName,
+          item.type !== 'tarot' ? `vitrina ${item.cabinet} estante ${item.shelf}` : ''
+        ].join(' ').toLowerCase();
+        if (!haystack.includes(q)) return false;
+      }
+
+      return true;
+    }
+
+    function isFilteringActive() {
+      return (
+        state.searchQuery.trim() !== '' ||
+        state.activeTab !== 'all' ||
+        state.activeCategoryFilter !== '' ||
+        state.activePublisherFilter !== '' ||
+        state.activeAuthorFilter !== '' ||
+        Boolean(state.highlightedItemId)
+      );
+    }
+
+    // Ilustraciones SVG estilo dibujo a tinta para todos los objetos
+    function getTrinketSVG(iconId, color) {
+      const fill = color || '#D4A84F';
+      switch (iconId) {
+        case 'photoframe': // Marco de fotos vintage tallado con paisaje lunar interior
+          return `<svg class="w-7 h-8" viewBox="0 0 32 36" fill="none">
+            <path d="M22 25 L26 32 L21 32" stroke="#120D11" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="5" y="4" width="22" height="28" rx="3.5" fill="${fill}" stroke="#120D11" stroke-width="2"/>
+            <circle cx="7.5" cy="6.5" r="1.3" fill="#FFF3C4" stroke="#120D11" stroke-width="0.9"/>
+            <circle cx="24.5" cy="6.5" r="1.3" fill="#FFF3C4" stroke="#120D11" stroke-width="0.9"/>
+            <circle cx="7.5" cy="29.5" r="1.3" fill="#FFF3C4" stroke="#120D11" stroke-width="0.9"/>
+            <circle cx="24.5" cy="29.5" r="1.3" fill="#FFF3C4" stroke="#120D11" stroke-width="0.9"/>
+            <rect x="9" y="8" width="14" height="20" rx="1.5" fill="#231B2E" stroke="#120D11" stroke-width="1.4"/>
+            <path d="M18.5 11.5 C16.3 11.8 14.8 13.7 14.8 16 C14.8 18.3 16.3 20.2 18.5 20.5 C16 20.8 13.5 18.9 13.5 16 C13.5 13.1 16 11.2 18.5 11.5 Z" fill="#F6C453"/>
+            <circle cx="19.5" cy="13" r="0.8" fill="#FFF3C4"/>
+            <path d="M9.5 27.5 Q14 22.5 17.5 25 Q20 22 22.5 24.5 L22.5 27.5 Z" fill="#3B5249" stroke="#120D11" stroke-width="0.9"/>
+          </svg>`;
+
+        case 'orrery': // Modelo celeste (Orrery) planetario mecánico de latón sobre peana torneada
+          return `<svg class="w-8 h-8" viewBox="0 0 36 34" fill="none">
+            <ellipse cx="18" cy="30.5" rx="8" ry="2.2" fill="${fill}" stroke="#120D11" stroke-width="1.7"/>
+            <path d="M15.5 29.5 L16.8 24 L19.2 24 L20.5 29.5 Z" fill="#C8963E" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
+            <line x1="18" y1="24" x2="18" y2="14" stroke="#120D11" stroke-width="2" stroke-linecap="round"/>
+            <ellipse cx="18" cy="14" rx="14" ry="5.5" transform="rotate(-14 18 14)" stroke="${fill}" stroke-width="2.4"/>
+            <ellipse cx="18" cy="14" rx="14" ry="5.5" transform="rotate(-14 18 14)" stroke="#120D11" stroke-width="1.2"/>
+            <ellipse cx="18" cy="14" rx="9.5" ry="3.6" transform="rotate(18 18 14)" stroke="#120D11" stroke-width="1.1" stroke-dasharray="2.5 2"/>
+            <line x1="18" y1="14" x2="7.5" y2="11.5" stroke="#120D11" stroke-width="1.4"/>
+            <line x1="18" y1="14" x2="29" y2="15.5" stroke="#120D11" stroke-width="1.4"/>
+            <circle cx="18" cy="14" r="4" fill="#F6C453" stroke="#120D11" stroke-width="1.6"/>
+            <circle cx="16.8" cy="12.8" r="1" fill="#FFF7D6"/>
+            <circle cx="7" cy="11.5" r="2.2" fill="#4E8098" stroke="#120D11" stroke-width="1.3"/>
+            <circle cx="29.5" cy="15.5" r="2.5" fill="#B85D43" stroke="#120D11" stroke-width="1.3"/>
+            <ellipse cx="29.5" cy="15.5" rx="4.2" ry="1.1" transform="rotate(-20 29.5 15.5)" stroke="#F3EAD8" stroke-width="1"/>
+            <circle cx="23.5" cy="9.2" r="1.6" fill="#9D65D0" stroke="#120D11" stroke-width="1.2"/>
+          </svg>`;
+
+        case 'canopo': // Vaso canopo egipcio de alabastro marfil con tapa de chacal
+          return `<svg class="w-7 h-8" viewBox="0 0 32 36" fill="none">
+            <path d="M10 14 C8 18, 9 27, 11 32 L21 32 C23 27, 24 18, 22 14 Z" fill="${fill}" stroke="#120D11" stroke-width="1.9" stroke-linejoin="round"/>
+            <rect x="9.5" y="31.5" width="13" height="2.5" rx="1" fill="#C8963E" stroke="#120D11" stroke-width="1.5"/>
+            <rect x="9.2" y="18" width="13.6" height="3.2" fill="#D4A84F" stroke="#120D11" stroke-width="1.3"/>
+            <line x1="13" y1="18" x2="13" y2="21.2" stroke="#1D4ED8" stroke-width="1.6"/>
+            <line x1="16" y1="18" x2="16" y2="21.2" stroke="#1D4ED8" stroke-width="1.6"/>
+            <line x1="19" y1="18" x2="19" y2="21.2" stroke="#1D4ED8" stroke-width="1.6"/>
+            <line x1="14" y1="23.5" x2="14" y2="29" stroke="#5C4938" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="18" y1="23.5" x2="18" y2="29" stroke="#5C4938" stroke-width="1.2" stroke-linecap="round"/>
+            <circle cx="16" cy="25.5" r="1" fill="#5C4938"/>
+            <path d="M11 14 L12 8.5 L11 3.5 L14 7.5 L18 7.5 L21 3.5 L20 8.5 L21 14 Z" fill="#2A2630" stroke="#120D11" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M18.5 9.5 L23.5 11 L22.5 13 L18.5 12.5 Z" fill="#2A2630" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
+            <circle cx="17.2" cy="9.6" r="1" fill="#F6C453"/>
+          </svg>`;
+
+        case 'compass': // Brújula antigua
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="4" r="2.2" stroke="#120D11" stroke-width="1.6"/>
+            <circle cx="16" cy="17" r="10.5" fill="${fill}" stroke="#120D11" stroke-width="2"/>
+            <circle cx="16" cy="17" r="7.5" fill="#F6EFE2" stroke="#120D11" stroke-width="1.3"/>
+            <polygon points="16,10.5 18.2,17 16,23.5 13.8,17" fill="#9E2A2B" stroke="#120D11" stroke-width="1"/>
+            <circle cx="16" cy="17" r="1.4" fill="#120D11"/>
+          </svg>`;
+
+        case 'sundial': // Reloj solar
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <ellipse cx="16" cy="22" rx="12" ry="5.5" fill="${fill}" stroke="#120D11" stroke-width="2"/>
+            <ellipse cx="16" cy="21" rx="9" ry="3.5" fill="#F3EAD8" stroke="#120D11" stroke-width="1.2"/>
+            <polygon points="16,21 16,10 23,21" fill="#C8963E" stroke="#120D11" stroke-width="1.6" stroke-linejoin="round"/>
+            <line x1="9" y1="21" x2="12" y2="20" stroke="#120D11" stroke-width="1.2"/>
+            <line x1="20" y1="20" x2="23" y2="21" stroke="#120D11" stroke-width="1.2"/>
+          </svg>`;
+
+        case 'sextant': // Sextante náutico
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <path d="M7 22 Q16 28 25 22 L16 7 Z" fill="${fill}" fill-opacity="0.35" stroke="#120D11" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M6 21 Q16 27.5 26 21" stroke="${fill}" stroke-width="3" stroke-linecap="round"/>
+            <path d="M6 21 Q16 27.5 26 21" stroke="#120D11" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="16" y1="7" x2="19" y2="24.5" stroke="#120D11" stroke-width="2" stroke-linecap="round"/>
+            <rect x="9" y="13" width="6" height="2.8" transform="rotate(-25 9 13)" fill="#2B2429" stroke="#120D11" stroke-width="1.2"/>
+          </svg>`;
+
+        case 'scrollholder': // Portapergaminos
+          return `<svg class="w-8 h-7" viewBox="0 0 36 30" fill="none">
+            <rect x="6" y="12" width="24" height="8" rx="2" fill="${fill}" stroke="#120D11" stroke-width="1.8"/>
+            <rect x="4" y="11" width="4" height="10" rx="1.5" fill="#D4A84F" stroke="#120D11" stroke-width="1.6"/>
+            <rect x="28" y="11" width="4" height="10" rx="1.5" fill="#D4A84F" stroke="#120D11" stroke-width="1.6"/>
+            <path d="M31 13.5 C34 13.5, 34 18.5, 31 18.5" stroke="#F5EAD6" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="14" y1="12" x2="14" y2="20" stroke="#120D11" stroke-width="1.4"/>
+            <line x1="22" y1="12" x2="22" y2="20" stroke="#120D11" stroke-width="1.4"/>
+          </svg>`;
+
+        case 'octopusorb': // Pulpo sujeta bola de cristal
+          return `<svg class="w-8 h-8" viewBox="0 0 34 34" fill="none">
+            <circle cx="17" cy="11" r="7.5" fill="${fill}" stroke="#120D11" stroke-width="1.8"/>
+            <path d="M13.5 8.5 C15 7, 17 6.5, 19 7" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
+            <ellipse cx="17" cy="21" rx="5.5" ry="4.2" fill="#8C583A" stroke="#120D11" stroke-width="1.7"/>
+            <circle cx="15" cy="20.5" r="1" fill="#F6C453"/>
+            <circle cx="19" cy="20.5" r="1" fill="#F6C453"/>
+            <path d="M12 22 C8 20, 7 15, 10 14" stroke="#8C583A" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M12 22 C8 20, 7 15, 10 14" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M22 22 C26 20, 27 15, 24 14" stroke="#8C583A" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M22 22 C26 20, 27 15, 24 14" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M13 24 C10 27, 7 27, 6 25" stroke="#8C583A" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M21 24 C24 27, 27 27, 28 25" stroke="#8C583A" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M16 25 L15 29 M18 25 L19 29" stroke="#120D11" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>`;
+
+        case 'operaglasses': // Prismáticos de ópera
+          return `<svg class="w-8 h-7" viewBox="0 0 36 30" fill="none">
+            <path d="M10 10 L8 22 L15 22 L15 10 Z" fill="${fill}" stroke="#120D11" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M21 10 L21 22 L28 22 L26 10 Z" fill="${fill}" stroke="#120D11" stroke-width="1.8" stroke-linejoin="round"/>
+            <rect x="9" y="13" width="5" height="5" fill="#F6EFE2" stroke="#120D11" stroke-width="1.1"/>
+            <rect x="22" y="13" width="5" height="5" fill="#F6EFE2" stroke="#120D11" stroke-width="1.1"/>
+            <line x1="15" y1="14" x2="21" y2="14" stroke="#120D11" stroke-width="2.2"/>
+            <line x1="27" y1="18" x2="33" y2="26" stroke="#D4A84F" stroke-width="2.6" stroke-linecap="round"/>
+            <line x1="27" y1="18" x2="33" y2="26" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>`;
+
+        case 'shell':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <path d="M16 5 C9 5, 5 11, 6 18 C7 23, 12 27, 16 27 C20 27, 25 23, 26 18 C27 11, 23 5, 16 5 Z" fill="${fill}" stroke="#120D11" stroke-width="2"/>
+            <path d="M16 26 L10 9 M16 26 L16 6 M16 26 L22 9" stroke="#120D11" stroke-width="1.3"/>
+          </svg>`;
+
+        case 'jar':
+          return `<svg class="w-6 h-8" viewBox="0 0 28 34" fill="none">
+            <rect x="6" y="10" width="16" height="20" rx="4" fill="${fill}" stroke="#120D11" stroke-width="2"/>
+            <rect x="10" y="4" width="8" height="6" rx="1" fill="#C49A6C" stroke="#120D11" stroke-width="1.8"/>
+            <rect x="9" y="15" width="10" height="8" fill="#F3EAD8" stroke="#120D11" stroke-width="1.2"/>
+          </svg>`;
+
+        case 'crystal':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <polygon points="8,27 12,11 17,27" fill="${fill}" stroke="#120D11" stroke-width="1.8"/>
+            <polygon points="14,27 19,6 24,27" fill="#C084FC" stroke="#120D11" stroke-width="1.8"/>
+            <polygon points="5,27 8,16 11,27" fill="#7E22CE" stroke="#120D11" stroke-width="1.6"/>
+          </svg>`;
+
+        case 'candle':
+          return `<svg class="w-6 h-8" viewBox="0 0 26 34" fill="none">
+            <rect x="8" y="14" width="10" height="15" rx="1.5" fill="#F5EAD6" stroke="#120D11" stroke-width="1.8"/>
+            <path d="M13 4 C16 8, 16 11, 13 13 C10 11, 10 8, 13 4 Z" fill="#F6C453" stroke="#120D11" stroke-width="1.5"/>
+            <ellipse cx="13" cy="30" rx="8" ry="2.5" fill="#C8963E" stroke="#120D11" stroke-width="1.6"/>
+          </svg>`;
+
+        case 'cauldron':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <path d="M7 12 L25 12 C27 20, 24 27, 16 27 C8 27, 5 20, 7 12 Z" fill="#262025" stroke="#120D11" stroke-width="2"/>
+            <rect x="6" y="10" width="20" height="3.5" rx="1.5" fill="#3B3139" stroke="#120D11" stroke-width="1.6"/>
+            <path d="M10 26 L8 30 M22 26 L24 30" stroke="#120D11" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>`;
+
+        case 'skull':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <path d="M16 5 C10 5, 7 9, 7 15 C7 18, 9 20, 11 21 L11 26 L21 26 L21 21 C23 20, 25 18, 25 15 C25 9, 22 5, 16 5 Z" fill="#EFE4D2" stroke="#120D11" stroke-width="2"/>
+            <circle cx="12.5" cy="15" r="2.2" fill="#120D11"/>
+            <circle cx="19.5" cy="15" r="2.2" fill="#120D11"/>
+            <line x1="14" y1="22" x2="14" y2="26" stroke="#120D11" stroke-width="1.4"/>
+            <line x1="18" y1="22" x2="18" y2="26" stroke="#120D11" stroke-width="1.4"/>
+          </svg>`;
+
+        case 'plant':
+          return `<svg class="w-7 h-8" viewBox="0 0 30 34" fill="none">
+            <polygon points="9,20 21,20 19,31 11,31" fill="#A65A3E" stroke="#120D11" stroke-width="1.8"/>
+            <path d="M15 20 C11 13, 6 11, 5 14 C8 17, 11 19, 15 20 Z" fill="#5E8563" stroke="#120D11" stroke-width="1.5"/>
+            <path d="M15 20 C19 13, 24 11, 25 14 C22 17, 19 19, 15 20 Z" fill="#5E8563" stroke="#120D11" stroke-width="1.5"/>
+            <path d="M15 19 C13 12, 14 6, 15 4 C16 6, 17 12, 15 19 Z" fill="#73A179" stroke="#120D11" stroke-width="1.5"/>
+          </svg>`;
+
+        default:
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="14" r="9" fill="${fill}" stroke="#120D11" stroke-width="2"/>
+            <path d="M12 10 C13 8, 16 7, 18 8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
+            <polygon points="10,23 22,23 24,28 8,28" fill="#2B1F27" stroke="#120D11" stroke-width="1.8"/>
+          </svg>`;
+      }
+    }
+
+    function getBookHeightClass(title) {
+      const mod = title.length % 4;
+      if (mod === 0) return 'h-[54px]';
+      if (mod === 1) return 'h-[48px]';
+      if (mod === 2) return 'h-[52px]';
+      return 'h-[45px]';
+    }
+
+    function renderAll() {
+      updateCounters();
+      renderCategoryFilterSelect();
+      renderWhiteCabinets();
+      renderTarotCabinet();
+      renderInspectorPanel();
+      updateSearchFeedback();
+    }
+
+    function updateCounters() {
+      document.getElementById('countBooks').textContent = state.items.filter(i => i.type === 'book').length;
+      document.getElementById('countTarots').textContent = state.items.filter(i => i.type === 'tarot').length;
+      document.getElementById('countObjects').textContent = state.items.filter(i => i.type === 'object').length;
+    }
+
+    function renderCategoryFilterSelect() {
+      const select = document.getElementById('categoryFilterSelect');
+      if (!select) return;
+
+      const bookOpts = BOOK_CATEGORIES.map(cat => {
+        const val = `book:${cat}`;
+        const count = state.items.filter(i => i.type === 'book' && (i.theme || '').toLowerCase() === cat.toLowerCase()).length;
+        return `<option value="${escapeHTML(val)}" ${state.activeCategoryFilter === val ? 'selected' : ''}>📚 ${escapeHTML(cat)} (${count})</option>`;
+      }).join('');
+
+      const tarotOpts = state.cubbyLabels.map((lbl, idx) => {
+        const val = `tarot:${lbl}`;
+        const count = state.items.filter(i => i.type === 'tarot' && (Number(i.cubby) === idx || (i.theme || '').toLowerCase() === lbl.toLowerCase())).length;
+        return `<option value="${escapeHTML(val)}" ${state.activeCategoryFilter === val ? 'selected' : ''}>🃏 ${escapeHTML(lbl)} (${count})</option>`;
+      }).join('');
+
+      const extraThemes = Array.from(new Set(
+        state.items
+          .map(i => (i.theme || '').trim())
+          .filter(t => t && !BOOK_CATEGORIES.some(b => b.toLowerCase() === t.toLowerCase()) && !state.cubbyLabels.some(c => c.toLowerCase() === t.toLowerCase()))
+      )).sort((a, b) => a.localeCompare(b, 'es'));
+
+      const otherOpts = extraThemes.map(th => {
+        const val = `theme:${th}`;
+        const count = state.items.filter(i => (i.theme || '').toLowerCase() === th.toLowerCase()).length;
+        return `<option value="${escapeHTML(val)}" ${state.activeCategoryFilter === val ? 'selected' : ''}>🔮 ${escapeHTML(th)} (${count})</option>`;
+      }).join('');
+
+      select.innerHTML = `
+        <option value="" ${state.activeCategoryFilter === '' ? 'selected' : ''}>🏷️ Todas las categorías</option>
+        <optgroup label="Temáticas de Libros">
+          ${bookOpts}
+        </optgroup>
+        <optgroup label="Vitrina de Tarots y Oráculos">
+          ${tarotOpts}
+        </optgroup>
+        ${otherOpts ? `<optgroup label="Otras temáticas">${otherOpts}</optgroup>` : ''}
+      `;
+
+      const booksOnly = state.items.filter(i => i.type === 'book');
+
+      const pubSelect = document.getElementById('publisherFilterSelect');
+      if (pubSelect) {
+        const publishers = Array.from(new Set(
+          booksOnly.map(i => (i.publisher || '').trim()).filter(Boolean)
+        )).sort((a, b) => a.localeCompare(b, 'es'));
+
+        const pubOpts = publishers.map(pub => {
+          const count = booksOnly.filter(i => (i.publisher || '').trim().toLowerCase() === pub.toLowerCase()).length;
+          const selected = state.activePublisherFilter.toLowerCase() === pub.toLowerCase() ? 'selected' : '';
+          return `<option value="${escapeHTML(pub)}" ${selected}>${escapeHTML(pub)} (${count})</option>`;
+        }).join('');
+
+        pubSelect.innerHTML = `
+          <option value="" ${state.activePublisherFilter === '' ? 'selected' : ''}>🏛️ Editoriales (libros)</option>
+          ${pubOpts}
+        `;
+      }
+
+      const authSelect = document.getElementById('authorFilterSelect');
+      if (authSelect) {
+        const authors = Array.from(new Set(
+          booksOnly.map(i => (i.author || '').trim()).filter(Boolean)
+        )).sort((a, b) => a.localeCompare(b, 'es'));
+
+        const authOpts = authors.map(auth => {
+          const count = booksOnly.filter(i => (i.author || '').trim().toLowerCase() === auth.toLowerCase()).length;
+          const selected = state.activeAuthorFilter.toLowerCase() === auth.toLowerCase() ? 'selected' : '';
+          return `<option value="${escapeHTML(auth)}" ${selected}>${escapeHTML(auth)} (${count})</option>`;
+        }).join('');
+
+        authSelect.innerHTML = `
+          <option value="" ${state.activeAuthorFilter === '' ? 'selected' : ''}>✍️ Autores (libros)</option>
+          ${authOpts}
+        `;
+      }
+
+      const typeSelect = document.getElementById('typeFilterSelect');
+      if (typeSelect) typeSelect.value = state.activeTab;
+
+      const sortSelect = document.getElementById('sortOrderSelect');
+      if (sortSelect) sortSelect.value = state.sortBy;
+
+      const resetBtn = document.getElementById('resetAllFiltersBtn');
+      const hasActiveFilters =
+        state.searchQuery.trim() !== '' ||
+        state.activeTab !== 'all' ||
+        state.activeCategoryFilter !== '' ||
+        state.activePublisherFilter !== '' ||
+        state.activeAuthorFilter !== '';
+      resetBtn.classList.toggle('hidden', !hasActiveFilters);
+    }
+
+    function selectShelfScope(cab, shelf, event) {
+      if (event) event.stopPropagation();
+      state.selectedFurniture = 'white';
+      state.selectedCabinet = cab;
+      state.selectedShelf = shelf;
+      state.inspectorScope = 'selection';
+      state.highlightedItemId = null;
+      renderAll();
+    }
+
+    function selectWhiteCabinetScope(cab, event) {
+      if (event) event.stopPropagation();
+      state.selectedFurniture = 'white';
+      state.selectedCabinet = cab;
+      state.inspectorScope = 'cabinet';
+      state.highlightedItemId = null;
+      renderAll();
+    }
+
+    function selectCubbyScope(cubbyIdx, event) {
+      if (event) event.stopPropagation();
+      state.selectedFurniture = 'tarot';
+      state.selectedCubby = cubbyIdx;
+      state.inspectorScope = 'selection';
+      state.highlightedItemId = null;
+      renderAll();
+    }
+
+    function selectTarotCabinetScope(event) {
+      if (event) event.stopPropagation();
+      state.selectedFurniture = 'tarot';
+      state.inspectorScope = 'cabinet';
+      state.highlightedItemId = null;
+      renderAll();
+    }
+
+    function setInspectorScope(scope) {
+      state.inspectorScope = scope;
+      renderInspectorPanel();
+    }
+
+    function renderWhiteCabinets() {
+      const grid = document.getElementById('whiteCabinetsGrid');
+      const filtering = isFilteringActive();
+      const activeSearchOrFilter = state.searchQuery.trim() !== '' || state.activeCategoryFilter !== '' || state.activeTab !== 'all';
+      let html = '';
+
+      for (let cab = 1; cab <= 4; cab++) {
+        const isCabSelected =
+          state.inspectorScope !== 'all' &&
+          state.selectedFurniture === 'white' &&
+          state.selectedCabinet === cab;
+
+        let shelvesHTML = '';
+        for (let shelf = 1; shelf <= 4; shelf++) {
+          const shelfItems = state.items.filter(
+            i => (i.type === 'book' || i.type === 'object') && Number(i.cabinet) === cab && Number(i.shelf) === shelf
+          );
+
+          const hasSearchMatch = activeSearchOrFilter && shelfItems.some(itemMatchesGlobalFilter);
+          const hasHighlightedItem = state.highlightedItemId && shelfItems.some(i => i.id === state.highlightedItemId);
+          const isShelfSelected =
+            state.inspectorScope === 'selection' &&
+            state.selectedFurniture === 'white' &&
+            state.selectedCabinet === cab &&
+            state.selectedShelf === shelf;
+
+          let itemsHTML = '';
+          shelfItems.forEach(item => {
+            const matched = state.highlightedItemId
+              ? item.id === state.highlightedItemId
+              : itemMatchesGlobalFilter(item);
+            const stateClass = filtering ? (matched ? 'item-highlighted' : 'item-dimmed') : '';
+
+            if (item.type === 'object') {
+              itemsHTML += `
+                <div onclick="event.stopPropagation(); openEditModal('${item.id}')"
+                  title="${escapeHTML(item.title)} (${escapeHTML(item.theme || 'Objeto')}) — Clic para editar"
+                  class="witch-trinket shrink-0 flex items-end pb-0.5 ${stateClass}">
+                  ${getTrinketSVG(item.icon, item.color)}
+                </div>
+              `;
+            } else {
+              const hClass = getBookHeightClass(item.title);
+              const bgColor = item.color || '#5D3552';
+              const isLight = bgColor === '#CBB894' || bgColor === '#EBD9C3' || bgColor === '#EDE2CC';
+              const textColor = isLight ? 'text-[#181215]' : 'text-[#FAF3E6]';
+              itemsHTML += `
+                <div onclick="event.stopPropagation(); openEditModal('${item.id}')"
+                  title="${escapeHTML(item.title)}${item.author ? ' — ' + escapeHTML(item.author) : ''} [${escapeHTML(item.theme || 'Sin categoría')}]"
+                  style="background-color: ${bgColor};"
+                  class="book-spine ${hClass} w-[21px] sm:w-[23px] shrink-0 flex flex-col items-center justify-between py-1 px-0.5 overflow-hidden select-none ${stateClass}">
+                  <span class="w-full h-[2px] bg-[#F6C453]/75 rounded-full"></span>
+                  <span class="font-serif-label text-[8px] font-bold leading-none tracking-tighter ${textColor} [writing-mode:vertical-rl] rotate-180 max-h-[34px] overflow-hidden text-ellipsis whitespace-nowrap">
+                    ${escapeHTML(item.title)}
+                  </span>
+                  <span class="w-full h-[2px] bg-[#F6C453]/75 rounded-full"></span>
+                </div>
+              `;
+            }
+          });
+
+          const zoneHighlight = (hasSearchMatch || hasHighlightedItem)
+            ? 'shelf-highlighted'
+            : (isShelfSelected ? 'shelf-active-selection' : '');
+
+          shelvesHTML += `
+            <div id="shelf-${cab}-${shelf}"
+              onclick="selectShelfScope(${cab}, ${shelf}, event)"
+              title="Clic para ver el listado de Vitrina ${ROMAN[cab - 1]}, Estante ${shelf}"
+              class="shelf-zone relative ${zoneHighlight}">
+              <div class="h-[68px] px-2 pt-2 flex items-end gap-1 overflow-x-auto overflow-y-hidden relative z-10">
+                ${itemsHTML || '<span class="text-[10px] text-stone-500/70 italic pb-1 select-none">Estante vacío</span>'}
+                <button onclick="event.stopPropagation(); openAddModalForWhite(${cab}, ${shelf})"
+                  title="Añadir libro u objeto a Vitrina ${ROMAN[cab - 1]}, Estante ${shelf}"
+                  class="ml-auto mb-1 w-5 h-5 rounded-md bg-[#F3EAD8]/90 hover:bg-[#F6C453] text-[#120D11] border border-[#120D11] text-xs font-bold flex items-center justify-center shrink-0 opacity-70 hover:opacity-100 transition cursor-pointer">
+                  +
+                </button>
+              </div>
+              <div class="shelf-plank h-2.5 w-full relative z-10"></div>
+            </div>
+          `;
+        }
+
+        const hasCupboardNote = Boolean((state.cupboardNotes[cab - 1] || '').trim());
+
+        html += `
+          <article id="whiteCabinet-${cab}" class="white-cabinet flex flex-col overflow-hidden ${isCabSelected ? 'cabinet-selected' : ''}">
+            <button onclick="selectWhiteCabinetScope(${cab}, event)"
+              title="Clic para listar toda la Vitrina ${ROMAN[cab - 1]}"
+              class="cabinet-cornice w-full px-3 py-1.5 flex items-center justify-between cursor-pointer hover:brightness-95 transition">
+              <span class="font-witchy text-xs font-bold text-[#2A1F24] tracking-wider">Vitrina ${ROMAN[cab - 1]}</span>
+              <span class="text-[10px] font-semibold text-[#5E4D47]">Ver todo ▾</span>
+            </button>
+
+            <div class="p-2 bg-[var(--cabinet-white)] border-b-2.5 border-[#120D11] relative">
+              <div class="cabinet-interior rounded-xs border-2 border-[#120D11] relative overflow-hidden">
+                ${shelvesHTML}
+                <div class="pointer-events-none absolute inset-y-0 left-1/2 -translate-x-1/2 w-[5px] bg-[var(--cabinet-white)]/90 border-x-2 border-[#120D11] z-20"></div>
+                <div class="pointer-events-none absolute top-1/2 left-[calc(50%-8px)] w-2 h-2 rounded-full bg-slate-300 border-[1.5px] border-[#120D11] z-30"></div>
+                <div class="pointer-events-none absolute top-1/2 left-[calc(50%+3px)] w-2 h-2 rounded-full bg-slate-300 border-[1.5px] border-[#120D11] z-30"></div>
+                <div class="glass-reflection absolute inset-0 z-20"></div>
+              </div>
+            </div>
+
+            <div onclick="openCupboardModal(${cab})"
+              title="${hasCupboardNote ? escapeHTML(state.cupboardNotes[cab - 1]) : 'Clic para anotar qué guardas en este armario inferior'}"
+              class="p-2 bg-[var(--cabinet-white)] cursor-pointer group">
+              <div class="grid grid-cols-2 gap-1.5 h-14">
+                <div class="rounded-xs border-2 border-[#120D11] bg-[var(--cabinet-white)] p-1.5 relative flex items-center justify-end group-hover:brightness-95 transition">
+                  <div class="w-full h-full border-[1.5px] border-[#3B2D28]/65 rounded-xs"></div>
+                  <div class="absolute right-2 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-gradient-to-br from-white via-slate-300 to-slate-600 border-[1.5px] border-[#120D11]"></div>
+                </div>
+                <div class="rounded-xs border-2 border-[#120D11] bg-[var(--cabinet-white)] p-1.5 relative flex items-center justify-start group-hover:brightness-95 transition">
+                  <div class="w-full h-full border-[1.5px] border-[#3B2D28]/65 rounded-xs"></div>
+                  <div class="absolute left-2 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-gradient-to-br from-white via-slate-300 to-slate-600 border-[1.5px] border-[#120D11]"></div>
+                </div>
+              </div>
+              <div class="mt-1.5 h-2.5 -mx-2 -mb-2 bg-[var(--cabinet-shade)] border-t-2 border-[#120D11] flex items-center justify-center">
+                <span class="text-[7px] uppercase tracking-wider text-stone-700 font-bold">
+                  ${hasCupboardNote ? '✦ Notas guardadas' : 'Armario inferior'}
+                </span>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      grid.innerHTML = html;
+    }
+
+    function renderTarotCabinet() {
+      const unit = document.getElementById('tarotCabinetUnit');
+      const isTarotCabSelected = state.inspectorScope !== 'all' && state.selectedFurniture === 'tarot';
+      unit.classList.toggle('cabinet-selected', isTarotCabSelected);
+
+      const grid = document.getElementById('tarotCubbiesGrid');
+      const filtering = isFilteringActive();
+      const activeSearchOrFilter = state.searchQuery.trim() !== '' || state.activeCategoryFilter !== '' || state.activeTab !== 'all';
+      let html = '';
+
+      for (let idx = 0; idx < 12; idx++) {
+        const label = state.cubbyLabels[idx] || `Cubículo ${idx + 1}`;
+        const decks = state.items.filter(i => i.type === 'tarot' && Number(i.cubby) === idx);
+
+        const hasSearchMatch = activeSearchOrFilter && decks.some(itemMatchesGlobalFilter);
+        const hasHighlightedItem = state.highlightedItemId && decks.some(i => i.id === state.highlightedItemId);
+        const isCubbySelected =
+          state.inspectorScope === 'selection' &&
+          state.selectedFurniture === 'tarot' &&
+          state.selectedCubby === idx;
+
+        let decksHTML = '';
+        decks.forEach(deck => {
+          const matched = state.highlightedItemId
+            ? deck.id === state.highlightedItemId
+            : itemMatchesGlobalFilter(deck);
+          const stateClass = filtering ? (matched ? 'item-highlighted' : 'item-dimmed') : '';
+          const bg = deck.color || '#4C4373';
+          const isLight = bg === '#D4CEC5' || bg === '#C9B796' || bg === '#CBB894';
+          const txtClass = isLight ? 'text-[#181215]' : 'text-[#FAF3E6]';
+
+          decksHTML += `
+            <div onclick="event.stopPropagation(); openEditModal('${deck.id}')"
+              title="${escapeHTML(deck.title)}${deck.author ? ' — ' + escapeHTML(deck.author) : ''} (Cubículo: ${escapeHTML(label)})"
+              style="background-color: ${bg};"
+              class="tarot-box h-[46px] min-w-[26px] max-w-[44px] flex-1 p-1 flex flex-col items-center justify-between overflow-hidden select-none ${stateClass}">
+              <span class="text-[7px] text-[#F6C453] leading-none">✦</span>
+              <span class="font-serif-label text-[8px] font-bold leading-[1.05] text-center ${txtClass} line-clamp-3 break-words">
+                ${escapeHTML(deck.title)}
+              </span>
+              <span class="w-2.5 h-[1.5px] bg-[#F6C453]/80"></span>
+            </div>
+          `;
+        });
+
+        const cubbyHighlight = (hasSearchMatch || hasHighlightedItem)
+          ? 'shelf-highlighted'
+          : (isCubbySelected ? 'shelf-active-selection' : '');
+
+        html += `
+          <div id="cubby-${idx}"
+            onclick="selectCubbyScope(${idx}, event)"
+            title="Clic para ver el listado de «${escapeHTML(label)}»"
+            class="tarot-cubby rounded-xs p-1.5 flex flex-col justify-between min-h-[96px] relative ${cubbyHighlight}">
+            <div class="flex-1 flex items-end justify-center gap-1 pt-1 pb-1.5 overflow-x-auto">
+              ${decksHTML || '<span class="text-[9px] text-[#222820]/70 italic select-none">Vacío</span>'}
+              <button onclick="event.stopPropagation(); openAddModalForTarot(${idx})"
+                title="Añadir baraja a «${escapeHTML(label)}»"
+                class="w-4 h-4 rounded bg-[#F3EAD8]/90 hover:bg-[#F6C453] text-[#120D11] border border-[#120D11] text-[10px] font-bold flex items-center justify-center shrink-0 opacity-75 hover:opacity-100 cursor-pointer">
+                +
+              </button>
+            </div>
+
+            <button onclick="event.stopPropagation(); openCubbyLabelModal(${idx})"
+              title="Clic para renombrar esta placa"
+              class="cubby-plaque w-full px-1 py-0.5 rounded-xs text-[9.5px] sm:text-[10px] leading-tight text-center truncate cursor-pointer hover:brightness-105">
+              ${escapeHTML(label)}
+            </button>
+          </div>
+        `;
+      }
+
+      grid.innerHTML = html;
+    }
+
+    // PANEL DE LISTADO INTERACTIVO SINCRONIZADO
+    function renderInspectorPanel() {
+      const titleEl = document.getElementById('inspectorTitle');
+      const subEl = document.getElementById('inspectorSubtitle');
+      const addLabelEl = document.getElementById('addInScopeLabel');
+      const grid = document.getElementById('inspectorGrid');
+
+      const scopes = ['selection', 'cabinet', 'all'];
+      scopes.forEach(s => {
+        const btn = document.getElementById(`scopeBtn${s.charAt(0).toUpperCase() + s.slice(1)}`);
+        if (!btn) return;
+        const active = state.inspectorScope === s;
+        btn.className = active
+          ? 'px-3 py-1 rounded-lg text-xs font-bold bg-[#F6C453] text-[#151014] cursor-pointer transition'
+          : 'px-3 py-1 rounded-lg text-xs font-semibold text-[#C4B0BC] hover:text-white cursor-pointer transition';
+      });
+
+      let scopedItems = [];
+      if (state.inspectorScope === 'all') {
+        titleEl.textContent = 'Toda la Biblioteca';
+        subEl.textContent = 'Listado completo de libros, barajas de tarot, oráculos y objetos decorativos.';
+        addLabelEl.textContent = 'Añadir pieza';
+        scopedItems = [...state.items];
+      } else if (state.inspectorScope === 'cabinet') {
+        if (state.selectedFurniture === 'tarot') {
+          titleEl.textContent = 'Vitrina Verde de Tarots y Oráculos (12 cubículos)';
+          subEl.textContent = 'Todas las barajas guardadas en tu vitrina verde salvia.';
+          addLabelEl.textContent = 'Añadir tarot';
+          scopedItems = state.items.filter(i => i.type === 'tarot');
+        } else {
+          const cabRoman = ROMAN[state.selectedCabinet - 1];
+          titleEl.textContent = `Vitrina Blanca ${cabRoman} (4 estantes)`;
+          subEl.textContent = `Todos los libros y objetos colocados en la Vitrina ${cabRoman}.`;
+          addLabelEl.textContent = `Añadir en Vitrina ${cabRoman}`;
+          scopedItems = state.items.filter(
+            i => (i.type === 'book' || i.type === 'object') && Number(i.cabinet) === state.selectedCabinet
+          );
+        }
+      } else {
+        if (state.selectedFurniture === 'tarot') {
+          const cubbyName = state.cubbyLabels[state.selectedCubby] || `Cubículo ${state.selectedCubby + 1}`;
+          titleEl.textContent = `Vitrina Verde → Cubículo «${cubbyName}»`;
+          subEl.textContent = 'Barajas almacenadas en este compartimento.';
+          addLabelEl.textContent = `Añadir en «${cubbyName}»`;
+          scopedItems = state.items.filter(
+            i => i.type === 'tarot' && Number(i.cubby) === state.selectedCubby
+          );
+        } else {
+          const cabRoman = ROMAN[state.selectedCabinet - 1];
+          titleEl.textContent = `Vitrina ${cabRoman} → Estante ${state.selectedShelf}`;
+          subEl.textContent = 'Libros y curiosidades colocados en esta balda.';
+          addLabelEl.textContent = `Añadir en Estante ${state.selectedShelf}`;
+          scopedItems = state.items.filter(
+            i => (i.type === 'book' || i.type === 'object') &&
+                 Number(i.cabinet) === state.selectedCabinet &&
+                 Number(i.shelf) === state.selectedShelf
+          );
+        }
+      }
+
+      const cardsBtn = document.getElementById('viewModeCardsBtn');
+      const tableBtn = document.getElementById('viewModeTableBtn');
+      if (cardsBtn && tableBtn) {
+        cardsBtn.className = state.viewMode === 'cards'
+          ? 'px-3 py-1 rounded-lg text-xs font-bold bg-[#A8D59D] text-[#151014] cursor-pointer transition'
+          : 'px-3 py-1 rounded-lg text-xs font-semibold text-[#C4B0BC] hover:text-white cursor-pointer transition';
+        tableBtn.className = state.viewMode === 'table'
+          ? 'px-3 py-1 rounded-lg text-xs font-bold bg-[#A8D59D] text-[#151014] cursor-pointer transition'
+          : 'px-3 py-1 rounded-lg text-xs font-semibold text-[#C4B0BC] hover:text-white cursor-pointer transition';
+      }
+
+      const sortSelectEl = document.getElementById('sortOrderSelect');
+      if (sortSelectEl) sortSelectEl.value = state.sortBy;
+
+      const visibleItems = sortItemsList(scopedItems.filter(itemMatchesGlobalFilter));
+
+      if (visibleItems.length === 0) {
+        grid.className = 'mt-4 grid grid-cols-1';
+        grid.innerHTML = `
+          <div class="p-6 rounded-xl bg-[#161015] border-2 border-dashed border-[#3B2B37] text-center">
+            <p class="text-sm text-[#C4B0BC]">No hay piezas que coincidan en esta selección.</p>
+            <button onclick="addInCurrentScope()" class="mt-3 ink-btn px-4 py-1.5 rounded-xl bg-[#F6C453] text-[#151014] font-bold text-xs cursor-pointer">
+              + Añadir aquí ahora
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      if (state.viewMode === 'table') {
+        grid.className = 'mt-4 overflow-x-auto rounded-xl border-2 border-[#33242F] bg-[#161015]';
+        const sortIndicator = (ascKey, descKey) => {
+          if (state.sortBy === ascKey) return ' ▲';
+          if (state.sortBy === descKey) return ' ▼';
+          return ' ↕';
+        };
+        const rowsHTML = visibleItems.map(item => {
+          const isHighlighted = state.highlightedItemId === item.id;
+          const typeLabel = item.type === 'book' ? '📚 Libro' : item.type === 'tarot' ? '🃏 Tarot' : '🔮 Objeto';
+          const locationLabel = item.type === 'tarot'
+            ? `Vitrina Verde • Cub. «${escapeHTML(state.cubbyLabels[item.cubby] || '')}»`
+            : `Vitrina ${ROMAN[(item.cabinet || 1) - 1]} • Est. ${item.shelf}`;
+          const creatorOrPub = [item.author, item.publisher].filter(Boolean).join(' • ') || '—';
+
+          return `
+            <tr class="border-t border-[#281C25] hover:bg-[#221720] transition ${isHighlighted ? 'bg-[#362814]/60' : ''}">
+              <td class="px-3 py-2.5 text-xs font-semibold whitespace-nowrap text-[#E6D7E2]">${typeLabel}</td>
+              <td class="px-3 py-2.5 text-sm font-serif-label font-bold text-[#F7EFE2]">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-4 rounded-xs border border-[#120D11] shrink-0" style="background-color: ${item.color || '#5D3552'};"></span>
+                  <span>${escapeHTML(item.title)}</span>
+                </div>
+              </td>
+              <td class="px-3 py-2.5 text-xs text-[#D3C0CB]">${escapeHTML(creatorOrPub)}</td>
+              <td class="px-3 py-2.5 text-xs whitespace-nowrap">
+                ${item.theme ? `<span class="px-2 py-0.5 rounded-full bg-[#261C23] text-[#F6C453] font-semibold">${escapeHTML(item.theme)}</span>` : '—'}
+              </td>
+              <td class="px-3 py-2.5 text-xs text-[#C2B0BA] whitespace-nowrap">${locationLabel}</td>
+              <td class="px-3 py-2.5 text-right whitespace-nowrap">
+                <div class="inline-flex items-center gap-1.5">
+                  <button onclick="locateItem('${item.id}')" class="ink-btn px-2 py-1 rounded-lg bg-[#F6C453] text-[#151014] font-bold text-[11px] cursor-pointer">📍</button>
+                  <button onclick="openEditModal('${item.id}')" class="ink-btn px-2 py-1 rounded-lg bg-[#342631] text-[#F4EDE2] text-[11px] cursor-pointer">✏️</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        grid.innerHTML = `
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-[#231821] text-[#F6C453] text-[11px] uppercase tracking-wider">
+                <th onclick="sortByColumn('type')" class="px-3 py-2.5 cursor-pointer hover:text-white select-none">Tipo${sortIndicator('type_asc', '')}</th>
+                <th onclick="sortByColumn('title')" class="px-3 py-2.5 cursor-pointer hover:text-white select-none">Título${sortIndicator('title_asc', 'title_desc')}</th>
+                <th onclick="sortByColumn('publisher')" class="px-3 py-2.5 cursor-pointer hover:text-white select-none">Autor / Editorial${sortIndicator('publisher_asc', 'publisher_desc')}</th>
+                <th onclick="sortByColumn('theme')" class="px-3 py-2.5 cursor-pointer hover:text-white select-none">Temática${sortIndicator('theme_asc', '')}</th>
+                <th class="px-3 py-2.5">Ubicación</th>
+                <th class="px-3 py-2.5 text-right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>${rowsHTML}</tbody>
+          </table>
+        `;
+        return;
+      }
+
+      grid.className = 'mt-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3';
+      grid.innerHTML = visibleItems.map(item => {
+        const isHighlighted = state.highlightedItemId === item.id;
+        const typeBadge = item.type === 'book'
+          ? '<span class="px-2 py-0.5 rounded bg-[#3A2B36] text-[#F6C453] text-[10px] font-bold">📚 Libro</span>'
+          : item.type === 'tarot'
+            ? '<span class="px-2 py-0.5 rounded bg-[#273628] text-[#A8D59D] text-[10px] font-bold">🃏 Tarot / Oráculo</span>'
+            : '<span class="px-2 py-0.5 rounded bg-[#352640] text-[#D8B4FE] text-[10px] font-bold">🔮 Objeto</span>';
+
+        const locationLabel = item.type === 'tarot'
+          ? `Vitrina Verde • Cubículo «${escapeHTML(state.cubbyLabels[item.cubby] || '')}»`
+          : `Vitrina ${ROMAN[(item.cabinet || 1) - 1]} • Estante ${item.shelf}`;
+
+        return `
+          <div class="p-3.5 rounded-xl bg-[#161015] border-2 ${isHighlighted ? 'border-[#F6C453] shadow-[0_0_16px_rgba(246,196,83,0.35)]' : 'border-[#33242F]'} flex flex-col justify-between gap-2.5 transition">
+            <div>
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  ${typeBadge}
+                  ${item.theme ? `<span class="px-2 py-0.5 rounded-full bg-[#261C23] text-[#D8C3CE] text-[10px] font-semibold">#${escapeHTML(item.theme)}</span>` : ''}
+                </div>
+                <span class="w-3.5 h-3.5 rounded-full border border-[#120D11] shrink-0" style="background-color: ${item.color || '#5D3552'};"></span>
+              </div>
+
+              <h3 class="mt-2 font-serif-label text-base sm:text-lg font-bold text-[#F7EFE2] leading-snug">
+                ${escapeHTML(item.title)}
+              </h3>
+              ${item.author ? `<p class="text-xs text-[#BFAAB6]">${escapeHTML(item.author)}</p>` : ''}
+              ${item.notes ? `<p class="text-[11px] text-[#96838E] italic mt-1 line-clamp-2">«${escapeHTML(item.notes)}»</p>` : ''}
+            </div>
+
+            <div class="pt-2 border-t border-[#2B1F28] flex items-center justify-between gap-2">
+              <span class="text-[11px] font-medium text-[#D6C4B0] truncate">📍 ${locationLabel}</span>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button onclick="locateItem('${item.id}')"
+                  title="Iluminar en la vitrina"
+                  class="ink-btn px-2.5 py-1 rounded-lg bg-[#F6C453] text-[#151014] font-bold text-[11px] cursor-pointer">
+                  📍 Localizar
+                </button>
+                <button onclick="openEditModal('${item.id}')"
+                  title="Editar pieza"
+                  class="ink-btn px-2 py-1 rounded-lg bg-[#342631] text-[#F4EDE2] text-[11px] cursor-pointer">
+                  ✏️
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function addInCurrentScope() {
+      if (state.inspectorScope !== 'all' && state.selectedFurniture === 'tarot') {
+        openAddModalForTarot(state.selectedCubby);
+      } else if (state.inspectorScope !== 'all' && state.selectedFurniture === 'white') {
+        openAddModalForWhite(state.selectedCabinet, state.selectedShelf);
+      } else {
+        openAddModal();
+      }
+    }
+
+    function locateItem(itemId) {
+      const item = state.items.find(i => i.id === itemId);
+      if (!item) return;
+
+      state.highlightedItemId = item.id;
+      if (item.type === 'tarot') {
+        state.selectedFurniture = 'tarot';
+        state.selectedCubby = Number(item.cubby);
+      } else {
+        state.selectedFurniture = 'white';
+        state.selectedCabinet = Number(item.cabinet);
+        state.selectedShelf = Number(item.shelf);
+      }
+
+      renderAll();
+
+      setTimeout(() => {
+        const targetEl = item.type === 'tarot'
+          ? document.getElementById(`cubby-${item.cubby}`)
+          : document.getElementById(`shelf-${item.cabinet}-${item.shelf}`);
+
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        const locText = item.type === 'tarot'
+          ? `Vitrina Verde → Cubículo «${state.cubbyLabels[item.cubby]}»`
+          : `Vitrina Blanca ${ROMAN[item.cabinet - 1]} → Estante ${item.shelf}`;
+        showToast(`📍 ${item.title}: ${locText}`);
+      }, 90);
+    }
+
+    function handleSearch() {
+      const input = document.getElementById('searchInput');
+      state.searchQuery = input.value;
+      state.highlightedItemId = null;
+      document.getElementById('clearTextBtn').classList.toggle('hidden', state.searchQuery.length === 0);
+      if (state.searchQuery.trim() !== '') {
+        state.inspectorScope = 'all';
+      }
+      renderAll();
+    }
+
+    function clearSearchText() {
+      const input = document.getElementById('searchInput');
+      input.value = '';
+      state.searchQuery = '';
+      state.highlightedItemId = null;
+      document.getElementById('clearTextBtn').classList.add('hidden');
+      renderAll();
+    }
+
+    function setViewMode(mode) {
+      state.viewMode = mode === 'table' ? 'table' : 'cards';
+      renderInspectorPanel();
+    }
+
+    function handleSortChange() {
+      const sortSelect = document.getElementById('sortOrderSelect');
+      state.sortBy = sortSelect ? sortSelect.value : 'default';
+      renderInspectorPanel();
+    }
+
+    function sortByColumn(colKey) {
+      const map = {
+        title: ['title_asc', 'title_desc'],
+        publisher: ['publisher_asc', 'publisher_desc'],
+        theme: ['theme_asc', 'default'],
+        type: ['type_asc', 'default']
+      };
+      const pair = map[colKey];
+      if (!pair) return;
+      state.sortBy = state.sortBy === pair[0] ? pair[1] : pair[0];
+      renderInspectorPanel();
+    }
+
+    function sortItemsList(list) {
+      const arr = [...list];
+      const byText = (a, b, asc = true) => {
+        const res = String(a || '').localeCompare(String(b || ''), 'es', { sensitivity: 'base' });
+        return asc ? res : -res;
+      };
+
+      switch (state.sortBy) {
+        case 'title_asc':
+          return arr.sort((a, b) => byText(a.title, b.title, true));
+        case 'title_desc':
+          return arr.sort((a, b) => byText(a.title, b.title, false));
+        case 'publisher_asc':
+          return arr.sort((a, b) => byText(a.author || a.publisher, b.author || b.publisher, true) || byText(a.title, b.title, true));
+        case 'publisher_desc':
+          return arr.sort((a, b) => byText(a.author || a.publisher, b.author || b.publisher, false) || byText(a.title, b.title, true));
+        case 'theme_asc':
+          return arr.sort((a, b) => byText(a.theme, b.theme, true) || byText(a.title, b.title, true));
+        case 'type_asc':
+          return arr.sort((a, b) => byText(a.type, b.type, true) || byText(a.title, b.title, true));
+        default:
+          return arr;
+      }
+    }
+
+    function handleFilterSelects() {
+      const typeSelect = document.getElementById('typeFilterSelect');
+      const catSelect = document.getElementById('categoryFilterSelect');
+      const pubSelect = document.getElementById('publisherFilterSelect');
+      const authSelect = document.getElementById('authorFilterSelect');
+
+      state.activeTab = typeSelect.value;
+      state.activeCategoryFilter = catSelect.value;
+      state.activePublisherFilter = pubSelect ? pubSelect.value : '';
+      state.activeAuthorFilter = authSelect ? authSelect.value : '';
+      state.highlightedItemId = null;
+
+      if ((state.activePublisherFilter || state.activeAuthorFilter) && state.activeTab !== 'book') {
+        state.activeTab = 'book';
+        typeSelect.value = 'book';
+      }
+
+      if (state.activeCategoryFilter.startsWith('book:') && state.activeTab !== 'book') {
+        state.activeTab = 'book';
+        typeSelect.value = 'book';
+      } else if (state.activeCategoryFilter.startsWith('tarot:') && state.activeTab !== 'tarot') {
+        state.activeTab = 'tarot';
+        typeSelect.value = 'tarot';
+      }
+
+      if (
+        state.activeTab !== 'all' ||
+        state.activeCategoryFilter !== '' ||
+        state.activePublisherFilter !== '' ||
+        state.activeAuthorFilter !== ''
+      ) {
+        state.inspectorScope = 'all';
+      }
+
+      renderAll();
+    }
+
+    function clearAllFilters() {
+      const input = document.getElementById('searchInput');
+      input.value = '';
+      state.searchQuery = '';
+      state.activeTab = 'all';
+      state.activeCategoryFilter = '';
+      state.activePublisherFilter = '';
+      state.activeAuthorFilter = '';
+      state.highlightedItemId = null;
+      document.getElementById('clearTextBtn').classList.add('hidden');
+      document.getElementById('typeFilterSelect').value = 'all';
+      document.getElementById('categoryFilterSelect').value = '';
+      const pubSelect = document.getElementById('publisherFilterSelect');
+      if (pubSelect) pubSelect.value = '';
+      const authSelect = document.getElementById('authorFilterSelect');
+      if (authSelect) authSelect.value = '';
+      renderAll();
+    }
+
+    function updateSearchFeedback() {
+      const bar = document.getElementById('searchFeedbackBar');
+      const textEl = document.getElementById('searchFeedbackText');
+      if (!isFilteringActive()) {
+        bar.classList.add('hidden');
+        return;
+      }
+      const matches = state.highlightedItemId
+        ? state.items.filter(i => i.id === state.highlightedItemId)
+        : state.items.filter(itemMatchesGlobalFilter);
+
+      bar.classList.remove('hidden');
+      if (matches.length === 0) {
+        textEl.textContent = 'No se encontraron coincidencias en las vitrinas con estos filtros.';
+      } else {
+        textEl.textContent = `✨ ${matches.length} ${matches.length === 1 ? 'pieza iluminada' : 'piezas iluminadas'} en las vitrinas`;
+      }
+    }
+
+    // Modal Añadir / Editar
+    function populateModalPickers(selectedColor = '#5D3552', selectedIcon = 'photoframe') {
+      const bookCatSelect = document.getElementById('fieldBookCategory');
+      bookCatSelect.innerHTML = BOOK_CATEGORIES.map(cat =>
+        `<option value="${escapeHTML(cat)}">${escapeHTML(cat)}</option>`
+      ).join('');
+
+      const cubbySelect = document.getElementById('fieldCubby');
+      cubbySelect.innerHTML = state.cubbyLabels.map((lbl, idx) =>
+        `<option value="${idx}">${idx + 1}. ${escapeHTML(lbl)}</option>`
+      ).join('');
+
+      const swatches = document.getElementById('colorSwatches');
+      swatches.innerHTML = SPINE_COLORS.map(c => `
+        <button type="button" onclick="selectColorSwatch('${c.hex}')"
+          data-color="${c.hex}"
+          style="background-color: ${c.hex};"
+          title="${c.name}"
+          class="color-swatch w-7 h-7 rounded-lg border-2 ${c.hex === selectedColor ? 'border-[#F6C453] scale-110' : 'border-[#120D11]'} cursor-pointer transition">
+        </button>
+      `).join('');
+      swatches.dataset.selected = selectedColor;
+
+      const iconPicker = document.getElementById('objectIconPicker');
+      iconPicker.innerHTML = OBJECT_ICONS.map(ic => `
+        <button type="button" onclick="selectObjectIcon('${ic.id}')"
+          data-icon="${ic.id}"
+          title="${ic.label}"
+          class="obj-icon-btn p-1.5 rounded-xl border-2 flex flex-col items-center justify-center bg-[#151014] ${ic.id === selectedIcon ? 'border-[#D8B4FE] bg-[#2D1F36]' : 'border-[#120D11]'} cursor-pointer">
+          ${getTrinketSVG(ic.id, selectedColor)}
+          <span class="text-[8.5px] text-[#C8B4C0] mt-0.5 truncate max-w-full">${ic.label}</span>
+        </button>
+      `).join('');
+      iconPicker.dataset.selected = selectedIcon;
+    }
+
+    function selectColorSwatch(hex) {
+      const swatches = document.getElementById('colorSwatches');
+      swatches.dataset.selected = hex;
+      document.querySelectorAll('.color-swatch').forEach(el => {
+        el.classList.toggle('border-[#F6C453]', el.dataset.color === hex);
+        el.classList.toggle('scale-110', el.dataset.color === hex);
+        el.classList.toggle('border-[#120D11]', el.dataset.color !== hex);
+      });
+    }
+
+    function selectObjectIcon(iconId) {
+      const picker = document.getElementById('objectIconPicker');
+      picker.dataset.selected = iconId;
+      document.querySelectorAll('.obj-icon-btn').forEach(el => {
+        const active = el.dataset.icon === iconId;
+        el.classList.toggle('border-[#D8B4FE]', active);
+        el.classList.toggle('bg-[#2D1F36]', active);
+        el.classList.toggle('border-[#120D11]', !active);
+      });
+    }
+
+    function toggleLocationFields() {
+      const type = document.querySelector('input[name="itemType"]:checked').value;
+      document.getElementById('whiteLocationGroup').classList.toggle('hidden', type === 'tarot');
+      document.getElementById('tarotLocationGroup').classList.toggle('hidden', type !== 'tarot');
+      document.getElementById('objectIconGroup').classList.toggle('hidden', type !== 'object');
+      document.getElementById('fieldBookCategory').classList.toggle('hidden', type !== 'book');
+      document.getElementById('fieldTheme').classList.toggle('hidden', type === 'book');
+    }
+
+    function openAddModal() {
+      document.getElementById('modalTitle').textContent = 'Añadir a la Biblioteca';
+      document.getElementById('editItemId').value = '';
+      document.getElementById('itemForm').reset();
+      document.querySelector('input[name="itemType"][value="book"]').checked = true;
+      document.getElementById('deleteItemBtn').classList.add('hidden');
+      populateModalPickers('#5D3552', 'photoframe');
+      toggleLocationFields();
+      showModal('itemModal');
+    }
+
+    function openAddModalForWhite(cab, shelf) {
+      openAddModal();
+      document.getElementById('fieldCabinet').value = String(cab);
+      document.getElementById('fieldShelf').value = String(shelf);
+    }
+
+    function openAddModalForTarot(cubbyIdx) {
+      openAddModal();
+      document.querySelector('input[name="itemType"][value="tarot"]').checked = true;
+      toggleLocationFields();
+      document.getElementById('fieldCubby').value = String(cubbyIdx);
+      document.getElementById('fieldTheme').value = state.cubbyLabels[cubbyIdx] || '';
+    }
+
+    function openEditModal(itemId) {
+      const item = state.items.find(i => i.id === itemId);
+      if (!item) return;
+
+      document.getElementById('modalTitle').textContent = 'Editar Pieza';
+      document.getElementById('editItemId').value = item.id;
+      document.querySelector(`input[name="itemType"][value="${item.type}"]`).checked = true;
+      populateModalPickers(item.color || '#5D3552', item.icon || 'photoframe');
+      toggleLocationFields();
+
+      document.getElementById('fieldTitle').value = item.title || '';
+      document.getElementById('fieldAuthor').value = item.author || '';
+      document.getElementById('fieldPublisher').value = item.publisher || '';
+      document.getElementById('fieldNotes').value = item.notes || '';
+
+      if (item.type === 'book') {
+        const catSelect = document.getElementById('fieldBookCategory');
+        const matchedCat = BOOK_CATEGORIES.find(c => c.toLowerCase() === (item.theme || '').toLowerCase());
+        if (matchedCat) {
+          catSelect.value = matchedCat;
+        } else if (item.theme) {
+          const opt = document.createElement('option');
+          opt.value = item.theme;
+          opt.textContent = item.theme;
+          catSelect.appendChild(opt);
+          catSelect.value = item.theme;
+        }
+      } else {
+        document.getElementById('fieldTheme').value = item.theme || '';
+      }
+
+      if (item.type === 'tarot') {
+        document.getElementById('fieldCubby').value = String(item.cubby ?? 0);
+      } else {
+        document.getElementById('fieldCabinet').value = String(item.cabinet || 1);
+        document.getElementById('fieldShelf').value = String(item.shelf || 1);
+      }
+
+      document.getElementById('deleteItemBtn').classList.remove('hidden');
+      showModal('itemModal');
+    }
+
+    function closeItemModal() {
+      hideModal('itemModal');
+    }
+
+    function saveItem(e) {
+      e.preventDefault();
+      const id = document.getElementById('editItemId').value;
+      const type = document.querySelector('input[name="itemType"]:checked').value;
+      const title = document.getElementById('fieldTitle').value.trim();
+      if (!title) return;
+
+      const author = document.getElementById('fieldAuthor').value.trim();
+      const publisher = document.getElementById('fieldPublisher').value.trim();
+      const theme = type === 'book'
+        ? document.getElementById('fieldBookCategory').value
+        : document.getElementById('fieldTheme').value.trim();
+      const notes = document.getElementById('fieldNotes').value.trim();
+      const color = document.getElementById('colorSwatches').dataset.selected || '#5D3552';
+      const icon = document.getElementById('objectIconPicker').dataset.selected || 'photoframe';
+
+      const payload = {
+        id: id || ('item_' + Date.now()),
+        type,
+        title,
+        author,
+        publisher,
+        theme,
+        notes,
+        color
+      };
+
+      if (type === 'tarot') {
+        payload.cubby = Number(document.getElementById('fieldCubby').value);
+      } else {
+        payload.cabinet = Number(document.getElementById('fieldCabinet').value);
+        payload.shelf = Number(document.getElementById('fieldShelf').value);
+        if (type === 'object') payload.icon = icon;
+      }
+
+      if (id) {
+        const idx = state.items.findIndex(i => i.id === id);
+        if (idx !== -1) state.items[idx] = payload;
+        showToast('✨ Pieza actualizada');
+      } else {
+        state.items.push(payload);
+        showToast('✨ Añadido a la biblioteca');
+      }
+
+      saveState();
+      renderAll();
+      closeItemModal();
+    }
+
+    function deleteCurrentItem() {
+      const id = document.getElementById('editItemId').value;
+      if (!id) return;
+      state.items = state.items.filter(i => i.id !== id);
+      if (state.highlightedItemId === id) state.highlightedItemId = null;
+      saveState();
+      renderAll();
+      closeItemModal();
+      showToast('🗑️ Pieza retirada');
+    }
+
+    // Armarios inferiores
+    function openCupboardModal(cab) {
+      document.getElementById('editCupboardCab').value = cab;
+      document.getElementById('cupboardModalTitle').textContent = `Armario Inferior — Vitrina ${ROMAN[cab - 1]}`;
+      document.getElementById('cupboardNotesInput').value = state.cupboardNotes[cab - 1] || '';
+      showModal('cupboardModal');
+    }
+
+    function closeCupboardModal() {
+      hideModal('cupboardModal');
+    }
+
+    function saveCupboardNotes() {
+      const cab = Number(document.getElementById('editCupboardCab').value);
+      state.cupboardNotes[cab - 1] = document.getElementById('cupboardNotesInput').value.trim();
+      saveState();
+      renderWhiteCabinets();
+      closeCupboardModal();
+      showToast('🗝️ Notas del armario guardadas');
+    }
+
+    // Editar placa de cubículo
+    function openCubbyLabelModal(idx) {
+      document.getElementById('editCubbyIndex').value = idx;
+      document.getElementById('cubbyLabelInput').value = state.cubbyLabels[idx] || '';
+      showModal('cubbyLabelModal');
+    }
+
+    function closeCubbyLabelModal() {
+      hideModal('cubbyLabelModal');
+    }
+
+    function saveCubbyLabel() {
+      const idx = Number(document.getElementById('editCubbyIndex').value);
+      const val = document.getElementById('cubbyLabelInput').value.trim();
+      if (val) {
+        state.cubbyLabels[idx] = val;
+        saveState();
+        renderAll();
+        showToast('🏷️ Placa actualizada');
+      }
+      closeCubbyLabelModal();
+    }
+
+    // Vaciar ejemplos
+    let clearConfirmPending = false;
+    function confirmClearExamples() {
+      if (!clearConfirmPending) {
+        clearConfirmPending = true;
+        showToast('⚠️ Pulsa de nuevo «Vaciar ejemplos» para dejar todos los estantes en blanco');
+        setTimeout(() => { clearConfirmPending = false; }, 4500);
+        return;
+      }
+      clearConfirmPending = false;
+      state.items = [];
+      state.highlightedItemId = null;
+      saveState();
+      renderAll();
+      showToast('🧹 Estantes vaciados. ¡Listos para tu colección!');
+    }
+
+    // ==========================================
+    // EXPORTAR E IMPORTAR CSV + COPIA JSON
+    // ==========================================
+    function csvEscape(val) {
+      const str = String(val ?? '');
+      if (str.includes(';') || str.includes('"') || str.includes('\n') || str.includes(',')) {
+        return '"' + str.replace(/"/g, '""') + '"';
+      }
+      return str;
+    }
+
+    function exportCSV() {
+      const headers = [
+        'Mueble',
+        'Nombre_Mueble',
+        'Ubicacion',
+        'Numero_Ubicacion',
+        'Etiqueta_Cubiculo',
+        'Tipo',
+        'Titulo',
+        'Autor',
+        'Editorial',
+        'Tematica',
+        'Icono_Objeto',
+        'Color_Lomo',
+        'Notas'
+      ];
+
+      const rows = [headers.join(';')];
+
+      const sorted = [...state.items].sort((a, b) => {
+        if (a.type === 'tarot' && b.type !== 'tarot') return 1;
+        if (a.type !== 'tarot' && b.type === 'tarot') return -1;
+        if (a.type === 'tarot' && b.type === 'tarot') return (a.cubby ?? 0) - (b.cubby ?? 0);
+        if ((a.cabinet ?? 1) !== (b.cabinet ?? 1)) return (a.cabinet ?? 1) - (b.cabinet ?? 1);
+        return (a.shelf ?? 1) - (b.shelf ?? 1);
+      });
+
+      sorted.forEach(item => {
+        const isTarot = item.type === 'tarot';
+        const mueble = isTarot ? 5 : (item.cabinet || 1);
+        const nombreMueble = isTarot ? 'Vitrina Verde Tarots' : `Vitrina Blanca ${ROMAN[(item.cabinet || 1) - 1]}`;
+        const ubicacion = isTarot ? 'Cubiculo' : 'Estante';
+        const numUbicacion = isTarot ? ((item.cubby ?? 0) + 1) : (item.shelf || 1);
+        const etiquetaCubiculo = isTarot ? (state.cubbyLabels[item.cubby] || '') : '';
+        const tipoLegible = item.type === 'book' ? 'Libro' : (item.type === 'tarot' ? 'Tarot' : 'Objeto');
+
+        const line = [
+          csvEscape(mueble),
+          csvEscape(nombreMueble),
+          csvEscape(ubicacion),
+          csvEscape(numUbicacion),
+          csvEscape(etiquetaCubiculo),
+          csvEscape(tipoLegible),
+          csvEscape(item.title),
+          csvEscape(item.author || ''),
+          csvEscape(item.publisher || ''),
+          csvEscape(item.theme || ''),
+          csvEscape(item.icon || ''),
+          csvEscape(item.color || '#5D3552'),
+          csvEscape(item.notes || '')
+        ].join(';');
+
+        rows.push(line);
+      });
+
+      const csvContent = '\uFEFF' + rows.join('\r\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'la-biblioteca-de-la-meiga.csv';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showToast('📊 Archivo CSV descargado con toda tu biblioteca');
+    }
+
+    function exportJSON() {
+      const payload = {
+        app: 'La Biblioteca de la Meiga',
+        exportedAt: new Date().toISOString(),
+        items: state.items,
+        cubbyLabels: state.cubbyLabels,
+        cupboardNotes: state.cupboardNotes
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'la-biblioteca-de-la-meiga-copia.json';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      showToast('📥 Copia JSON descargada');
+    }
+
+    function triggerCSVImport() {
+      const input = document.getElementById('csvFileInput');
+      input.value = '';
+      input.click();
+    }
+
+    function triggerJSONImport() {
+      const input = document.getElementById('jsonFileInput');
+      input.value = '';
+      input.click();
+    }
+
+    function parseCSVLine(line, delimiter) {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+          if (inQuotes && line[i + 1] === '"') {
+            current += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (ch === delimiter && !inQuotes) {
+          result.push(current);
+          current = '';
+        } else {
+          current += ch;
+        }
+      }
+      result.push(current);
+      return result;
+    }
+
+    function handleCSVFileSelected(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        try {
+          const rawText = String(e.target.result || '').replace(/^\uFEFF/, '');
+          const lines = rawText.split(/\r?\n/).filter(l => l.trim() !== '');
+          if (lines.length < 2) {
+            showToast('❌ El archivo CSV está vacío');
+            return;
+          }
+
+          const delimiter = lines[0].includes(';') ? ';' : ',';
+          const importedItems = [];
+
+          for (let i = 1; i < lines.length; i++) {
+            const cols = parseCSVLine(lines[i], delimiter);
+            if (cols.length < 7) continue;
+
+            const col0 = (cols[0] || '').trim();
+            const col1 = (cols[1] || '').trim();
+            const numVitrina = parseInt(col0, 10) || parseInt(col1, 10) || 1;
+            const nombreMueble = isNaN(parseInt(col0, 10)) ? col0 : col1;
+            const numUbicacion = parseInt(cols[3], 10) || 1;
+            const etiquetaCubiculo = (cols[4] || '').trim();
+            const tipoRaw = (cols[5] || '').trim().toLowerCase();
+            const title = (cols[6] || '').trim();
+            const hasPublisherCol = cols.length >= 13;
+            const author = (cols[7] || '').trim();
+            const publisher = hasPublisherCol ? (cols[8] || '').trim() : '';
+            const theme = (cols[hasPublisherCol ? 9 : 8] || '').trim();
+            const icon = (cols[hasPublisherCol ? 10 : 9] || '').trim();
+            const color = (cols[hasPublisherCol ? 11 : 10] || '').trim() || '#5D3552';
+            const notes = (cols[hasPublisherCol ? 12 : 11] || '').trim();
+
+            if (!title) continue;
+
+            let type = 'book';
+            if (
+              tipoRaw.includes('tarot') ||
+              tipoRaw.includes('oráculo') ||
+              tipoRaw.includes('oraculo') ||
+              nombreMueble.toLowerCase().includes('verde') ||
+              numVitrina === 5
+            ) {
+              type = 'tarot';
+            } else if (tipoRaw.includes('objeto')) {
+              type = 'object';
+            }
+
+            const newItem = {
+              id: 'csv_' + Date.now() + '_' + i,
+              type,
+              title,
+              author,
+              publisher,
+              theme,
+              color,
+              notes
+            };
+
+            if (type === 'tarot') {
+              const cubbyIdx = Math.max(0, Math.min(11, numUbicacion - 1));
+              newItem.cubby = cubbyIdx;
+              if (etiquetaCubiculo) {
+                state.cubbyLabels[cubbyIdx] = etiquetaCubiculo;
+              }
+            } else {
+              newItem.cabinet = Math.max(1, Math.min(4, numVitrina));
+              newItem.shelf = Math.max(1, Math.min(4, numUbicacion));
+              if (type === 'object') {
+                newItem.icon = icon || 'photoframe';
+              }
+            }
+
+            importedItems.push(newItem);
+          }
+
+          if (importedItems.length === 0) {
+            showToast('❌ No se pudieron leer filas válidas del CSV');
+            return;
+          }
+
+          state.items = importedItems;
+          state.highlightedItemId = null;
+          saveState();
+          renderAll();
+          showToast(`✨ Importadas ${importedItems.length} piezas desde el CSV`);
+        } catch (err) {
+          console.error(err);
+          showToast('❌ Error al procesar el archivo CSV');
+        }
+      };
+      reader.readAsText(file, 'UTF-8');
+    }
+
+    function handleJSONFileSelected(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        try {
+          const parsed = JSON.parse(String(e.target.result || '{}'));
+          if (Array.isArray(parsed.items)) state.items = parsed.items;
+          if (Array.isArray(parsed.cubbyLabels) && parsed.cubbyLabels.length === 12) state.cubbyLabels = parsed.cubbyLabels;
+          if (Array.isArray(parsed.cupboardNotes) && parsed.cupboardNotes.length === 4) state.cupboardNotes = parsed.cupboardNotes;
+          saveState();
+          renderAll();
+          showToast('✨ Copia JSON restaurada');
+        } catch (err) {
+          showToast('❌ Archivo JSON no válido');
+        }
+      };
+      reader.readAsText(file, 'UTF-8');
+    }
+
+    function showModal(id) {
+      const el = document.getElementById(id);
+      el.classList.remove('hidden');
+      el.classList.add('flex');
+    }
+
+    function hideModal(id) {
+      const el = document.getElementById(id);
+      el.classList.add('hidden');
+      el.classList.remove('flex');
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      document.getElementById('toastMsg').textContent = msg;
+      box.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => box.classList.add('hidden'), 3600);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      renderAll();
+    });
+  </script>
+</body>
+</html>
