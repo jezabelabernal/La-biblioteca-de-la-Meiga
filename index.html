@@ -375,13 +375,31 @@
       <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
         <!-- Título y contadores directos -->
         <div class="flex items-center gap-3.5">
-          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-[#2E212B] ink-box flex items-center justify-center shrink-0">
-            <svg class="w-9 h-9" viewBox="0 0 48 48" fill="none">
-              <path d="M29 9C21.5 10.5 16 17.1 16 25C16 32.9 21.5 39.5 29 41C20.5 41.8 12 35.2 12 25C12 14.8 20.5 8.2 29 9Z" fill="#F6C453" stroke="#120D11" stroke-width="2.2" stroke-linejoin="round"/>
-              <path d="M33 14L34.4 17.6L38 19L34.4 20.4L33 24L31.6 20.4L28 19L31.6 17.6L33 14Z" fill="#FFF3C4" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M24 34C28 31 33 28 38 25" stroke="#8FBC8F" stroke-width="2" stroke-linecap="round"/>
-              <ellipse cx="31" cy="27" rx="3" ry="1.6" transform="rotate(-35 31 27)" fill="#8FBC8F" stroke="#120D11" stroke-width="1.3"/>
-              <ellipse cx="35" cy="30" rx="3" ry="1.6" transform="rotate(15 35 30)" fill="#8FBC8F" stroke="#120D11" stroke-width="1.3"/>
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-[#382735] via-[#2B1E28] to-[#1D141B] ink-box flex items-center justify-center shrink-0 relative overflow-hidden">
+            <div class="absolute inset-1 rounded-lg bg-[#F6C453]/12 blur-[2px] pointer-events-none"></div>
+            <svg class="w-10 h-10 sm:w-11 sm:h-11 relative z-10 drop-shadow-[0_0_6px_rgba(246,196,83,0.45)]" viewBox="0 0 52 52" fill="none">
+              <!-- Halo celeste sutil -->
+              <circle cx="24" cy="26" r="15" stroke="#F6C453" stroke-opacity="0.22" stroke-width="1.1" stroke-dasharray="2.5 3"/>
+              <!-- Media luna creciente dorada con brillo -->
+              <path d="M30.5 8.5C21.8 10.2 15.5 17.6 15.5 26.5C15.5 35.4 21.8 42.8 30.5 44.5C20.6 45.4 11.5 37.8 11.5 26.5C11.5 15.2 20.6 7.6 30.5 8.5Z" fill="url(#moonGrad)" stroke="#120D11" stroke-width="2.2" stroke-linejoin="round"/>
+              <!-- Destello suave sobre el lomo de la luna -->
+              <path d="M23.5 13.5C18.2 16.5 15.8 22.5 16.2 28.5" stroke="#FFF8D6" stroke-width="1.5" stroke-linecap="round" opacity="0.75"/>
+              <!-- Estrella de 4 puntas principal -->
+              <path d="M37 11L38.6 15.4L43 17L38.6 18.6L37 23L35.4 18.6L31 17L35.4 15.4L37 11Z" fill="#FFE484" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
+              <!-- Estrellita secundaria -->
+              <path d="M43.5 26.5L44.3 28.7L46.5 29.5L44.3 30.3L43.5 32.5L42.7 30.3L40.5 29.5L42.7 28.7L43.5 26.5Z" fill="#FFF7D6" stroke="#120D11" stroke-width="1.1" stroke-linejoin="round"/>
+              <!-- Ramita botánica de meiga -->
+              <path d="M25 38.5C29.5 35.2 35 32 41 29.5" stroke="#6E9E76" stroke-width="2.2" stroke-linecap="round"/>
+              <ellipse cx="31.5" cy="34.2" rx="3.8" ry="1.8" transform="rotate(-32 31.5 34.2)" fill="#7EB386" stroke="#120D11" stroke-width="1.3"/>
+              <ellipse cx="36.5" cy="31.5" rx="3.8" ry="1.8" transform="rotate(-22 36.5 31.5)" fill="#6E9E76" stroke="#120D11" stroke-width="1.3"/>
+              <ellipse cx="34.5" cy="35.8" rx="3.4" ry="1.6" transform="rotate(18 34.5 35.8)" fill="#598560" stroke="#120D11" stroke-width="1.2"/>
+              <defs>
+                <linearGradient id="moonGrad" x1="12" y1="8" x2="31" y2="45" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#FFE17D"/>
+                  <stop offset="55%" stop-color="#F6C453"/>
+                  <stop offset="100%" stop-color="#DDA22E"/>
+                </linearGradient>
+              </defs>
             </svg>
           </div>
           <div>
@@ -402,7 +420,7 @@
           </div>
         </div>
 
-        <!-- Acciones principales + Exportar/Importar CSV y Copia JSON -->
+        <!-- Acciones principales: Añadir, Exportar CSV e Importar CSV -->
         <div class="flex flex-wrap items-center gap-2">
           <button onclick="openAddModal()" class="ink-btn px-3.5 py-2 rounded-xl bg-[#F6C453] text-[#171115] font-bold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer">
             <span>✦</span> <span>+ Añadir</span>
@@ -412,15 +430,6 @@
           </button>
           <button onclick="triggerCSVImport()" class="ink-btn px-3 py-2 rounded-xl bg-[#2B1F28] text-[#DCE6D6] font-semibold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer" title="Cargar un archivo CSV guardado">
             <span>📂</span> <span>Importar CSV</span>
-          </button>
-          <button onclick="exportJSON()" class="ink-btn px-3 py-2 rounded-xl bg-[#2B1F28] text-[#E6D7E2] font-semibold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer" title="Descargar copia de seguridad JSON">
-            <span>📥</span> <span>Copia</span>
-          </button>
-          <button onclick="triggerJSONImport()" class="ink-btn px-3 py-2 rounded-xl bg-[#2B1F28] text-[#D7C4CE] font-semibold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer" title="Restaurar copia JSON">
-            <span>📤</span> <span>Restaurar JSON</span>
-          </button>
-          <button onclick="confirmClearExamples()" class="ink-btn px-3 py-2 rounded-xl bg-[#2B1F28] text-[#E3C8B8] font-medium text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer" title="Dejar los estantes vacíos para meter los tuyos">
-            <span>🧹</span> <span>Vaciar ejemplos</span>
           </button>
         </div>
       </div>
@@ -503,10 +512,11 @@
               id="resetAllFiltersBtn"
               type="button"
               onclick="clearAllFilters()"
-              class="hidden ink-btn shrink-0 px-3 py-2.5 rounded-xl bg-[#7F2D36] text-white font-bold text-xs cursor-pointer"
-              title="Restablecer búsqueda y filtros"
+              class="hidden ink-btn shrink-0 px-3 py-2.5 rounded-xl bg-[#3A2835] hover:bg-[#4B3445] text-[#F6C453] font-bold text-sm flex items-center justify-center cursor-pointer"
+              title="Vaciar todos los filtros"
+              aria-label="Vaciar todos los filtros"
             >
-              Limpiar
+              🧹
             </button>
           </div>
         </div>
@@ -938,7 +948,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = 'biblioteca_de_la_meiga_v5';
+    const STORAGE_KEY = 'biblioteca_de_la_meiga_v12';
     const ROMAN = ['I', 'II', 'III', 'IV'];
 
     // Tus 14 categorías literarias exactas
@@ -1009,89 +1019,895 @@
     ];
 
     const DEFAULT_ITEMS = [
-      // VITRINA I (Datos del CSV de la primera vitrina)
-      { id: 'v1_csv_1', type: 'book', title: 'Fundación', author: 'Isaac Asimov', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_2', type: 'book', title: 'Hacia la fundación', author: 'Isaac Asimov', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_3', type: 'book', title: 'Preludio a la fundación', author: 'Isaac Asimov', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_4', type: 'book', title: 'Fundación e Imperio', author: 'Isaac Asimov', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_5', type: 'book', title: 'Segunda Fundación', author: 'Isaac Asimor', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_6', type: 'book', title: 'Mundo anillo', author: 'Larry Niven', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_7', type: 'object', title: 'Modelo Celeste Orrery con cuarzo blanco', author: '', theme: 'Decoración brujeril', cabinet: 1, shelf: 1, icon: 'orrery', color: '#CBB894', notes: '' },
-      { id: 'v1_csv_8', type: 'book', title: 'A vuestros cuerpos dispersos', author: 'Philip José Farmer', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_9', type: 'book', title: 'El granjero de las estrellas', author: 'Robert A. Heinlein', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_10', type: 'book', title: 'Inundación', author: 'Stephen Baxter', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_11', type: 'book', title: 'El arca', author: 'Stephen Baxter', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_12', type: 'book', title: 'Dune', author: 'Frank Herbert', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_13', type: 'book', title: 'Mesías de Dune', author: 'Frank Herbert', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_14', type: 'book', title: 'La conspiración alejandrina', author: 'Terry Bisson', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_15', type: 'book', title: 'Ready player One', author: 'Ernest Cline', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_16', type: 'book', title: 'Armada', author: 'Ernest Cline', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#2B2429', notes: '' },
-      { id: 'v1_csv_17', type: 'book', title: 'Ender en el exilio', author: 'Orson Scott Card', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#2B2429', notes: '' },
-      { id: 'v1_csv_18', type: 'book', title: 'Flashforward', author: 'Robert J. Sawyer', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_19', type: 'book', title: 'Muerte de la luz', author: 'George R. R. Martin', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'v1_csv_20', type: 'book', title: 'Los mejores cuentos de Ciencia Ficción', author: 'Varios autores', theme: 'Ciencia ficción', cabinet: 1, shelf: 1, color: '#5D3552', notes: '' },
-
-      // VITRINA II
-      { id: 'b9', type: 'book', title: 'Drácula', author: 'Bram Stoker', theme: 'Terror', cabinet: 2, shelf: 1, color: '#7A2E3B', notes: '' },
-      { id: 'b10', type: 'book', title: 'Frankenstein', author: 'Mary Shelley', theme: 'Terror', cabinet: 2, shelf: 1, color: '#2B2429', notes: '' },
-      { id: 'o5', type: 'object', title: 'Pulpo sujeta bola de cristal', author: 'Altar', theme: 'Decoración brujeril', cabinet: 2, shelf: 1, icon: 'octopusorb', color: '#8B54C4', notes: '' },
-
-      { id: 'b11', type: 'book', title: 'Cuentos Completos', author: 'Edgar Allan Poe', theme: 'Terror', cabinet: 2, shelf: 2, color: '#5D3552', notes: '' },
-      { id: 'o6', type: 'object', title: 'Pote de bruja con hierbas', author: 'Boticario', theme: 'Decoración brujeril', cabinet: 2, shelf: 2, icon: 'jar', color: '#4E7566', notes: '' },
-
-      { id: 'b12', type: 'book', title: 'Asesinato en el Orient Express', author: 'Agatha Christie', theme: 'Misterio', cabinet: 2, shelf: 3, color: '#385947', notes: '' },
-      { id: 'o7', type: 'object', title: 'Drusa de amatistas', author: 'Minerales', theme: 'Cristales', cabinet: 2, shelf: 3, icon: 'crystal', color: '#9D65D0', notes: '' },
-
-      { id: 'b13', type: 'book', title: 'El Silencio de los Corderos', author: 'Thomas Harris', theme: 'Thriller', cabinet: 2, shelf: 4, color: '#2B2429', notes: '' },
-      { id: 'o8', type: 'object', title: 'Vaso canopo de alabastro', author: 'Antigüedades', theme: 'Decoración brujeril', cabinet: 2, shelf: 4, icon: 'canopo', color: '#EDE2CC', notes: 'Con tapa de chacal' },
-
-      // VITRINA III
-      { id: 'b14', type: 'book', title: 'Sandman', author: 'Neil Gaiman', theme: 'Cómic', cabinet: 3, shelf: 1, color: '#28364A', notes: '' },
-      { id: 'b15', type: 'book', title: 'Blacksad', author: 'Díaz Canales & Guarnido', theme: 'Cómic', cabinet: 3, shelf: 1, color: '#B8893E', notes: '' },
-      { id: 'o9', type: 'object', title: 'Prismáticos de ópera nacarados', author: 'Curiosidades', theme: 'Decoración brujeril', cabinet: 3, shelf: 1, icon: 'operaglasses', color: '#E8C872', notes: '' },
-
-      { id: 'b16', type: 'book', title: 'Follas Novas', author: 'Rosalía de Castro', theme: 'Poesía', cabinet: 3, shelf: 2, color: '#5E7563', notes: '' },
-      { id: 'o10', type: 'object', title: 'Portapergaminos de cuero y latón', author: 'Escritorio', theme: 'Decoración brujeril', cabinet: 3, shelf: 2, icon: 'scrollholder', color: '#9B5A3C', notes: '' },
-
-      { id: 'b17', type: 'book', title: 'La Casa de Bernarda Alba', author: 'Federico García Lorca', theme: 'Drama', cabinet: 3, shelf: 3, color: '#7A2E3B', notes: '' },
-      { id: 'o13', type: 'object', title: 'Marco de fotos vintage tallado', author: 'Recuerdos', theme: 'Decoración brujeril', cabinet: 3, shelf: 3, icon: 'photoframe', color: '#C8963E', notes: '' },
-
-      { id: 'b18', type: 'book', title: 'El Decamerón', author: 'Giovanni Boccaccio', theme: 'Erótico-festivo', cabinet: 3, shelf: 4, color: '#9B4D3A', notes: '' },
-
-      // VITRINA IV
-      { id: 'b19', type: 'book', title: 'Buenos Presagios', author: 'Terry Pratchett & Neil Gaiman', theme: 'Humor', cabinet: 4, shelf: 1, color: '#CBB894', notes: '' },
-      { id: 'b20', type: 'book', title: 'Brujerías', author: 'Terry Pratchett', theme: 'Humor', cabinet: 4, shelf: 1, color: '#385947', notes: '' },
-      { id: 'o11', type: 'object', title: 'Helecho de interior', author: 'Botánica', theme: 'Decoración brujeril', cabinet: 4, shelf: 1, icon: 'plant', color: '#5E8563', notes: '' },
-
-      { id: 'b21', type: 'book', title: 'El Problema de los Tres Cuerpos', author: 'Cixin Liu', theme: 'Ciencia ficción', cabinet: 4, shelf: 2, color: '#28364A', notes: '' },
-      { id: 'o12', type: 'object', title: 'Vela de cera de abeja', author: 'Altar', theme: 'Decoración brujeril', cabinet: 4, shelf: 2, icon: 'candle', color: '#F6C453', notes: '' },
-      { id: 'o14', type: 'object', title: 'Modelo celeste Orrery de latón', author: 'Astronomía', theme: 'Decoración brujeril', cabinet: 4, shelf: 3, icon: 'orrery', color: '#D4A84F', notes: 'Planetario mecánico' },
-
-      // VITRINA VERDE DE TAROTS (12 CUBÍCULOS)
-      { id: 't1', type: 'tarot', title: 'Demon of the Day', author: 'Oráculo', theme: 'Ángeles y Demonios', cubby: 0, color: '#8C2D2D', notes: 'Caja roja' },
-      { id: 't2', type: 'tarot', title: 'Angels & Demons Tarot', author: 'Tarot', theme: 'Ángeles y Demonios', cubby: 0, color: '#4A262B', notes: '' },
-      { id: 't3', type: 'tarot', title: 'Steampunk Art Nouveau Tarot', author: 'Lo Scarabeo', theme: 'Artísticos', cubby: 1, color: '#3B646E', notes: '' },
-      { id: 't4', type: 'tarot', title: 'Diario Arcano de Cuero', author: 'Cuaderno de tiradas', theme: 'Artísticos', cubby: 1, color: '#6E4730', notes: '' },
-      { id: 't5', type: 'tarot', title: 'Barajas Clásicas y Edición Especial', author: 'Colección', theme: 'Barajas', cubby: 2, color: '#8F7B63', notes: '' },
-      { id: 't6', type: 'tarot', title: 'El Necronomicón Tarot', author: 'Donald Tyson', theme: 'Terror', cubby: 3, color: '#2B3033', notes: '' },
-      { id: 't7', type: 'tarot', title: 'Occult Tarot', author: 'Travis McHenry', theme: 'Terror', cubby: 3, color: '#6E2626', notes: '' },
-      { id: 't8', type: 'tarot', title: 'El Tarot de los Gatos', author: 'Librero', theme: 'Gatos', cubby: 4, color: '#C47451', notes: '78 cartas y guía' },
-      { id: 't9', type: 'tarot', title: 'Tarot XIII', author: 'Nekro', theme: 'Vampiros y Brujas', cubby: 5, color: '#262226', notes: '' },
-      { id: 't10', type: 'tarot', title: 'Tarot del Libro de las Sombras', author: 'Barbara Moore', theme: 'Vampiros y Brujas', cubby: 5, color: '#4B5744', notes: '' },
-      { id: 't11', type: 'tarot', title: 'Tarot V (Vampiros)', author: 'Tarot gótico', theme: 'Vampiros y Brujas', cubby: 5, color: '#3D2329', notes: '' },
-      { id: 't12', type: 'tarot', title: "The Green Witch's Oracle Deck", author: 'Arin Murphy-Hiscock', theme: 'Magia Verde', cubby: 6, color: '#5D7A5C', notes: '' },
-      { id: 't13', type: 'tarot', title: 'Green Witch Tarot', author: 'Ann Moura', theme: 'Magia Verde', cubby: 6, color: '#4E7D78', notes: '' },
-      { id: 't14', type: 'tarot', title: 'Baraja en Uso (Paño Estrellado)', author: 'Lectura actual', theme: 'En Uso', cubby: 7, color: '#233252', notes: '' },
-      { id: 't15', type: 'tarot', title: 'Circle of Life Tarot', author: 'Maria Distefano', theme: 'Oráculos', cubby: 8, color: '#4C4373', notes: '' },
-      { id: 't16', type: 'tarot', title: 'Earthbound Oracle', author: 'Oráculo', theme: 'Oráculos', cubby: 8, color: '#B86F4B', notes: '' },
-      { id: 't17', type: 'tarot', title: 'Past Life & Lenormand', author: 'Oráculos', theme: 'Oráculos', cubby: 8, color: '#C9963E', notes: '' },
-      { id: 't18', type: 'tarot', title: 'Star Dragon Oracle Cards', author: 'Oráculo', theme: 'Dragones', cubby: 9, color: '#7D3530', notes: '' },
-      { id: 't19', type: 'tarot', title: 'Dungeons & Dragons Tarot Deck', author: 'Wizards of the Coast', theme: 'Rol', cubby: 10, color: '#242226', notes: '' },
-      { id: 't20', type: 'tarot', title: 'Citadel: A Fantasy Oracle', author: 'Fez Inkwright', theme: 'Rol', cubby: 10, color: '#D4CEC5', notes: '' },
-      { id: 't21', type: 'tarot', title: 'Tarot Vintage', author: 'Tarot', theme: 'Mix', cubby: 11, color: '#C9B796', notes: '' },
-      { id: 't22', type: 'tarot', title: 'Mindscapes Tarot', author: 'Tarot', theme: 'Mix', cubby: 11, color: '#395A75', notes: '' },
-      { id: 't23', type: 'tarot', title: 'Celtic Tarot', author: 'Tarot', theme: 'Mix', cubby: 11, color: '#6E4935', notes: '' }
-    ];
+  {
+    "id": "csv_1",
+    "type": "book",
+    "title": "Fundación",
+    "author": "Isaac Asimov",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_2",
+    "type": "book",
+    "title": "Hacia la fundación",
+    "author": "Isaac Asimov",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_3",
+    "type": "book",
+    "title": "Preludio a la fundación",
+    "author": "Isaac Asimov",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_4",
+    "type": "book",
+    "title": "Fundación e Imperio",
+    "author": "Isaac Asimov",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_5",
+    "type": "book",
+    "title": "Segunda Fundación",
+    "author": "Isaac Asimor",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_6",
+    "type": "book",
+    "title": "Mundo anillo",
+    "author": "Larry Niven",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_7",
+    "type": "object",
+    "title": "Modelo Celeste Orrery con cuarzo blanco",
+    "author": "",
+    "publisher": "",
+    "theme": "Decoración brujeril",
+    "cabinet": 1,
+    "shelf": 1,
+    "icon": "orrery",
+    "color": "#CBB894",
+    "notes": ""
+  },
+  {
+    "id": "csv_8",
+    "type": "book",
+    "title": "A vuestros cuerpos dispersos",
+    "author": "Philip José Farmer",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_9",
+    "type": "book",
+    "title": "El granjero de las estrellas",
+    "author": "Robert A. Heinlein",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_10",
+    "type": "book",
+    "title": "Inundación",
+    "author": "Stephen Baxter",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_11",
+    "type": "book",
+    "title": "El arca",
+    "author": "Stephen Baxter",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_12",
+    "type": "book",
+    "title": "Dune",
+    "author": "Frank Herbert",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_13",
+    "type": "book",
+    "title": "Mesías de Dune",
+    "author": "Frank Herbert",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_14",
+    "type": "book",
+    "title": "La conspiración alejandrina",
+    "author": "Terry Bisson",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_15",
+    "type": "book",
+    "title": "Ready player One",
+    "author": "Ernest Cline",
+    "publisher": "Nova",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_16",
+    "type": "book",
+    "title": "Armada",
+    "author": "Ernest Cline",
+    "publisher": "Nova",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#2B2429",
+    "notes": ""
+  },
+  {
+    "id": "csv_17",
+    "type": "book",
+    "title": "Ender en el exilio",
+    "author": "Orson Scott Card",
+    "publisher": "Nova",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#2B2429",
+    "notes": ""
+  },
+  {
+    "id": "csv_18",
+    "type": "book",
+    "title": "Flashforward",
+    "author": "Robert J. Sawyer",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_19",
+    "type": "book",
+    "title": "Muerte de la luz",
+    "author": "George R. R. Martin",
+    "publisher": "Gigamesh",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_20",
+    "type": "book",
+    "title": "Los mejores cuentos de Ciencia Ficción",
+    "author": "Varios autores",
+    "publisher": "Ameghino",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_21",
+    "type": "book",
+    "title": "Guía del autoestopista galáctico",
+    "author": "Douglas Adams",
+    "publisher": "Anagrama",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#9B4D3A",
+    "notes": ""
+  },
+  {
+    "id": "csv_22",
+    "type": "book",
+    "title": "Criptonomicón I",
+    "author": "Neal Stephenson",
+    "publisher": "Zeta",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#2B2429",
+    "notes": ""
+  },
+  {
+    "id": "csv_23",
+    "type": "book",
+    "title": "Criptonomicón II",
+    "author": "Neal Stephenson",
+    "publisher": "Zeta",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#2B2429",
+    "notes": ""
+  },
+  {
+    "id": "csv_24",
+    "type": "book",
+    "title": "La era diamante",
+    "author": "Neal Stephenson",
+    "publisher": "Nova",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#CBB894",
+    "notes": ""
+  },
+  {
+    "id": "csv_25",
+    "type": "book",
+    "title": "La vieja guardia",
+    "author": "John Scalzi",
+    "publisher": "Minotauro",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#2B2429",
+    "notes": ""
+  },
+  {
+    "id": "csv_26",
+    "type": "book",
+    "title": "La historia de Zoë",
+    "author": "John Scalzi",
+    "publisher": "booket",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#2B2429",
+    "notes": ""
+  },
+  {
+    "id": "csv_27",
+    "type": "book",
+    "title": "La colonia perdida",
+    "author": "John Scalzi",
+    "publisher": "booket",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#2B2429",
+    "notes": ""
+  },
+  {
+    "id": "csv_28",
+    "type": "book",
+    "title": "El tercer brazo",
+    "author": "L. Nivel y J. Pournelle",
+    "publisher": "Gran Super Ficción",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#2B2429",
+    "notes": ""
+  },
+  {
+    "id": "csv_29",
+    "type": "book",
+    "title": "La paja en el ojo de dios",
+    "author": "L. Nivel y J. Pournelle",
+    "publisher": "Gran Super Ficción",
+    "theme": "Ciencia ficción",
+    "cabinet": 1,
+    "shelf": 1,
+    "color": "#2B2429",
+    "notes": ""
+  },
+  {
+    "id": "csv_30",
+    "type": "book",
+    "title": "Drácula",
+    "author": "Bram Stoker",
+    "publisher": "",
+    "theme": "Terror",
+    "cabinet": 2,
+    "shelf": 1,
+    "color": "#7A2E3B",
+    "notes": ""
+  },
+  {
+    "id": "csv_31",
+    "type": "book",
+    "title": "Frankenstein",
+    "author": "Mary Shelley",
+    "publisher": "",
+    "theme": "Terror",
+    "cabinet": 2,
+    "shelf": 1,
+    "color": "#2B2429",
+    "notes": ""
+  },
+  {
+    "id": "csv_32",
+    "type": "object",
+    "title": "Pulpo sujeta bola de cristal",
+    "author": "Altar",
+    "publisher": "",
+    "theme": "Decoración brujeril",
+    "cabinet": 2,
+    "shelf": 1,
+    "icon": "octopusorb",
+    "color": "#8B54C4",
+    "notes": ""
+  },
+  {
+    "id": "csv_33",
+    "type": "book",
+    "title": "Cuentos Completos",
+    "author": "Edgar Allan Poe",
+    "publisher": "",
+    "theme": "Terror",
+    "cabinet": 2,
+    "shelf": 2,
+    "color": "#5D3552",
+    "notes": ""
+  },
+  {
+    "id": "csv_34",
+    "type": "object",
+    "title": "Pote de bruja con hierbas",
+    "author": "Boticario",
+    "publisher": "",
+    "theme": "Decoración brujeril",
+    "cabinet": 2,
+    "shelf": 2,
+    "icon": "jar",
+    "color": "#4E7566",
+    "notes": ""
+  },
+  {
+    "id": "csv_35",
+    "type": "book",
+    "title": "Asesinato en el Orient Express",
+    "author": "Agatha Christie",
+    "publisher": "",
+    "theme": "Misterio",
+    "cabinet": 2,
+    "shelf": 3,
+    "color": "#385947",
+    "notes": ""
+  },
+  {
+    "id": "csv_36",
+    "type": "object",
+    "title": "Drusa de amatistas",
+    "author": "Minerales",
+    "publisher": "",
+    "theme": "Cristales",
+    "cabinet": 2,
+    "shelf": 3,
+    "icon": "crystal",
+    "color": "#9D65D0",
+    "notes": ""
+  },
+  {
+    "id": "csv_37",
+    "type": "book",
+    "title": "El Silencio de los Corderos",
+    "author": "Thomas Harris",
+    "publisher": "",
+    "theme": "Thriller",
+    "cabinet": 2,
+    "shelf": 4,
+    "color": "#2B2429",
+    "notes": ""
+  },
+  {
+    "id": "csv_38",
+    "type": "object",
+    "title": "Vaso canopo de alabastro",
+    "author": "Antigüedades",
+    "publisher": "",
+    "theme": "Decoración brujeril",
+    "cabinet": 2,
+    "shelf": 4,
+    "icon": "canopo",
+    "color": "#EDE2CC",
+    "notes": "Con tapa de chacal"
+  },
+  {
+    "id": "csv_39",
+    "type": "book",
+    "title": "Sandman",
+    "author": "Neil Gaiman",
+    "publisher": "",
+    "theme": "Cómic",
+    "cabinet": 3,
+    "shelf": 1,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_40",
+    "type": "book",
+    "title": "Blacksad",
+    "author": "Díaz Canales & Guarnido",
+    "publisher": "",
+    "theme": "Cómic",
+    "cabinet": 3,
+    "shelf": 1,
+    "color": "#B8893E",
+    "notes": ""
+  },
+  {
+    "id": "csv_41",
+    "type": "object",
+    "title": "Prismáticos de ópera nacarados",
+    "author": "Curiosidades",
+    "publisher": "",
+    "theme": "Decoración brujeril",
+    "cabinet": 3,
+    "shelf": 1,
+    "icon": "operaglasses",
+    "color": "#E8C872",
+    "notes": ""
+  },
+  {
+    "id": "csv_42",
+    "type": "book",
+    "title": "Follas Novas",
+    "author": "Rosalía de Castro",
+    "publisher": "",
+    "theme": "Poesía",
+    "cabinet": 3,
+    "shelf": 2,
+    "color": "#5E7563",
+    "notes": ""
+  },
+  {
+    "id": "csv_43",
+    "type": "object",
+    "title": "Portapergaminos de cuero y latón",
+    "author": "Escritorio",
+    "publisher": "",
+    "theme": "Decoración brujeril",
+    "cabinet": 3,
+    "shelf": 2,
+    "icon": "scrollholder",
+    "color": "#9B5A3C",
+    "notes": ""
+  },
+  {
+    "id": "csv_44",
+    "type": "book",
+    "title": "La Casa de Bernarda Alba",
+    "author": "Federico García Lorca",
+    "publisher": "",
+    "theme": "Drama",
+    "cabinet": 3,
+    "shelf": 3,
+    "color": "#7A2E3B",
+    "notes": ""
+  },
+  {
+    "id": "csv_45",
+    "type": "object",
+    "title": "Marco de fotos vintage tallado",
+    "author": "Recuerdos",
+    "publisher": "",
+    "theme": "Decoración brujeril",
+    "cabinet": 3,
+    "shelf": 3,
+    "icon": "photoframe",
+    "color": "#C8963E",
+    "notes": ""
+  },
+  {
+    "id": "csv_46",
+    "type": "book",
+    "title": "El Decamerón",
+    "author": "Giovanni Boccaccio",
+    "publisher": "",
+    "theme": "Erótico-festivo",
+    "cabinet": 3,
+    "shelf": 4,
+    "color": "#9B4D3A",
+    "notes": ""
+  },
+  {
+    "id": "csv_47",
+    "type": "book",
+    "title": "Buenos Presagios",
+    "author": "Terry Pratchett & Neil Gaiman",
+    "publisher": "",
+    "theme": "Humor",
+    "cabinet": 4,
+    "shelf": 1,
+    "color": "#CBB894",
+    "notes": ""
+  },
+  {
+    "id": "csv_48",
+    "type": "book",
+    "title": "Brujerías",
+    "author": "Terry Pratchett",
+    "publisher": "",
+    "theme": "Humor",
+    "cabinet": 4,
+    "shelf": 1,
+    "color": "#385947",
+    "notes": ""
+  },
+  {
+    "id": "csv_49",
+    "type": "object",
+    "title": "Helecho de interior",
+    "author": "Botánica",
+    "publisher": "",
+    "theme": "Decoración brujeril",
+    "cabinet": 4,
+    "shelf": 1,
+    "icon": "plant",
+    "color": "#5E8563",
+    "notes": ""
+  },
+  {
+    "id": "csv_50",
+    "type": "book",
+    "title": "El Problema de los Tres Cuerpos",
+    "author": "Cixin Liu",
+    "publisher": "",
+    "theme": "Ciencia ficción",
+    "cabinet": 4,
+    "shelf": 2,
+    "color": "#28364A",
+    "notes": ""
+  },
+  {
+    "id": "csv_51",
+    "type": "object",
+    "title": "Vela de cera de abeja",
+    "author": "Altar",
+    "publisher": "",
+    "theme": "Decoración brujeril",
+    "cabinet": 4,
+    "shelf": 2,
+    "icon": "candle",
+    "color": "#F6C453",
+    "notes": ""
+  },
+  {
+    "id": "csv_52",
+    "type": "object",
+    "title": "Modelo celeste Orrery de latón",
+    "author": "Astronomía",
+    "publisher": "",
+    "theme": "Decoración brujeril",
+    "cabinet": 4,
+    "shelf": 3,
+    "icon": "orrery",
+    "color": "#D4A84F",
+    "notes": "Planetario mecánico"
+  },
+  {
+    "id": "csv_53",
+    "type": "tarot",
+    "title": "Demon of the Day",
+    "author": "Oráculo",
+    "publisher": "",
+    "theme": "Ángeles y Demonios",
+    "cubby": 0,
+    "color": "#8C2D2D",
+    "notes": "Caja roja"
+  },
+  {
+    "id": "csv_54",
+    "type": "tarot",
+    "title": "Angels & Demons Tarot",
+    "author": "Tarot",
+    "publisher": "",
+    "theme": "Ángeles y Demonios",
+    "cubby": 0,
+    "color": "#4A262B",
+    "notes": ""
+  },
+  {
+    "id": "csv_55",
+    "type": "tarot",
+    "title": "Steampunk Art Nouveau Tarot",
+    "author": "Lo Scarabeo",
+    "publisher": "",
+    "theme": "Artísticos",
+    "cubby": 1,
+    "color": "#3B646E",
+    "notes": ""
+  },
+  {
+    "id": "csv_56",
+    "type": "tarot",
+    "title": "Diario Arcano de Cuero",
+    "author": "Cuaderno de tiradas",
+    "publisher": "",
+    "theme": "Artísticos",
+    "cubby": 1,
+    "color": "#6E4730",
+    "notes": ""
+  },
+  {
+    "id": "csv_57",
+    "type": "tarot",
+    "title": "Barajas Clásicas y Edición Especial",
+    "author": "Colección",
+    "publisher": "",
+    "theme": "Barajas",
+    "cubby": 2,
+    "color": "#8F7B63",
+    "notes": ""
+  },
+  {
+    "id": "csv_58",
+    "type": "tarot",
+    "title": "El Necronomicón Tarot",
+    "author": "Donald Tyson",
+    "publisher": "",
+    "theme": "Terror",
+    "cubby": 3,
+    "color": "#2B3033",
+    "notes": ""
+  },
+  {
+    "id": "csv_59",
+    "type": "tarot",
+    "title": "Occult Tarot",
+    "author": "Travis McHenry",
+    "publisher": "",
+    "theme": "Terror",
+    "cubby": 3,
+    "color": "#6E2626",
+    "notes": ""
+  },
+  {
+    "id": "csv_60",
+    "type": "tarot",
+    "title": "El Tarot de los Gatos",
+    "author": "Librero",
+    "publisher": "",
+    "theme": "Gatos",
+    "cubby": 4,
+    "color": "#C47451",
+    "notes": "78 cartas y guía"
+  },
+  {
+    "id": "csv_61",
+    "type": "tarot",
+    "title": "Tarot XIII",
+    "author": "Nekro",
+    "publisher": "",
+    "theme": "Vampiros y Brujas",
+    "cubby": 5,
+    "color": "#262226",
+    "notes": ""
+  },
+  {
+    "id": "csv_62",
+    "type": "tarot",
+    "title": "Tarot del Libro de las Sombras",
+    "author": "Barbara Moore",
+    "publisher": "",
+    "theme": "Vampiros y Brujas",
+    "cubby": 5,
+    "color": "#4B5744",
+    "notes": ""
+  },
+  {
+    "id": "csv_63",
+    "type": "tarot",
+    "title": "Tarot V (Vampiros)",
+    "author": "Tarot gótico",
+    "publisher": "",
+    "theme": "Vampiros y Brujas",
+    "cubby": 5,
+    "color": "#3D2329",
+    "notes": ""
+  },
+  {
+    "id": "csv_64",
+    "type": "tarot",
+    "title": "The Green Witch's Oracle Deck",
+    "author": "Arin Murphy-Hiscock",
+    "publisher": "",
+    "theme": "Magia Verde",
+    "cubby": 6,
+    "color": "#5D7A5C",
+    "notes": ""
+  },
+  {
+    "id": "csv_65",
+    "type": "tarot",
+    "title": "Green Witch Tarot",
+    "author": "Ann Moura",
+    "publisher": "",
+    "theme": "Magia Verde",
+    "cubby": 6,
+    "color": "#4E7D78",
+    "notes": ""
+  },
+  {
+    "id": "csv_66",
+    "type": "tarot",
+    "title": "Baraja en Uso (Paño Estrellado)",
+    "author": "Lectura actual",
+    "publisher": "",
+    "theme": "En Uso",
+    "cubby": 7,
+    "color": "#233252",
+    "notes": ""
+  },
+  {
+    "id": "csv_67",
+    "type": "tarot",
+    "title": "Circle of Life Tarot",
+    "author": "Maria Distefano",
+    "publisher": "",
+    "theme": "Oráculos",
+    "cubby": 8,
+    "color": "#4C4373",
+    "notes": ""
+  },
+  {
+    "id": "csv_68",
+    "type": "tarot",
+    "title": "Earthbound Oracle",
+    "author": "Oráculo",
+    "publisher": "",
+    "theme": "Oráculos",
+    "cubby": 8,
+    "color": "#B86F4B",
+    "notes": ""
+  },
+  {
+    "id": "csv_69",
+    "type": "tarot",
+    "title": "Past Life & Lenormand",
+    "author": "Oráculos",
+    "publisher": "",
+    "theme": "Oráculos",
+    "cubby": 8,
+    "color": "#C9963E",
+    "notes": ""
+  },
+  {
+    "id": "csv_70",
+    "type": "tarot",
+    "title": "Star Dragon Oracle Cards",
+    "author": "Oráculo",
+    "publisher": "",
+    "theme": "Dragones",
+    "cubby": 9,
+    "color": "#7D3530",
+    "notes": ""
+  },
+  {
+    "id": "csv_71",
+    "type": "tarot",
+    "title": "Dungeons & Dragons Tarot Deck",
+    "author": "Wizards of the Coast",
+    "publisher": "",
+    "theme": "Rol",
+    "cubby": 10,
+    "color": "#242226",
+    "notes": ""
+  },
+  {
+    "id": "csv_72",
+    "type": "tarot",
+    "title": "Citadel: A Fantasy Oracle",
+    "author": "Fez Inkwright",
+    "publisher": "",
+    "theme": "Rol",
+    "cubby": 10,
+    "color": "#D4CEC5",
+    "notes": ""
+  },
+  {
+    "id": "csv_73",
+    "type": "tarot",
+    "title": "Tarot Vintage",
+    "author": "Tarot",
+    "publisher": "",
+    "theme": "Mix",
+    "cubby": 11,
+    "color": "#C9B796",
+    "notes": ""
+  },
+  {
+    "id": "csv_74",
+    "type": "tarot",
+    "title": "Mindscapes Tarot",
+    "author": "Tarot",
+    "publisher": "",
+    "theme": "Mix",
+    "cubby": 11,
+    "color": "#395A75",
+    "notes": ""
+  },
+  {
+    "id": "csv_75",
+    "type": "tarot",
+    "title": "Celtic Tarot",
+    "author": "Tarot",
+    "publisher": "",
+    "theme": "Mix",
+    "cubby": 11,
+    "color": "#6E4935",
+    "notes": ""
+  }
+];
 
     let state = {
       items: [],
@@ -1114,20 +1930,19 @@
 
     function loadState() {
       try {
-        const raw =
-          localStorage.getItem(STORAGE_KEY) ||
-          localStorage.getItem('biblioteca_de_la_meiga_v4') ||
-          localStorage.getItem('biblioteca_de_la_meiga_v3');
+        const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed.items)) state.items = parsed.items;
-          if (Array.isArray(parsed.cubbyLabels) && parsed.cubbyLabels.length === 12) {
-            state.cubbyLabels = parsed.cubbyLabels;
+          if (Array.isArray(parsed.items) && parsed.items.length > 0) {
+            state.items = parsed.items;
+            if (Array.isArray(parsed.cubbyLabels) && parsed.cubbyLabels.length === 12) {
+              state.cubbyLabels = parsed.cubbyLabels;
+            }
+            if (Array.isArray(parsed.cupboardNotes) && parsed.cupboardNotes.length === 4) {
+              state.cupboardNotes = parsed.cupboardNotes;
+            }
+            return;
           }
-          if (Array.isArray(parsed.cupboardNotes) && parsed.cupboardNotes.length === 4) {
-            state.cupboardNotes = parsed.cupboardNotes;
-          }
-          return;
         }
       } catch (e) {
         console.warn('No se pudo leer localStorage:', e);
