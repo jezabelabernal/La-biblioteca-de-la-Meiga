@@ -472,16 +472,32 @@
             </select>
           </div>
 
-          <!-- Menú desplegable de Categoría / Temática agrupado -->
-          <div class="lg:col-span-2">
-            <label for="categoryFilterSelect" class="sr-only">Filtrar por categoría</label>
-            <select
-              id="categoryFilterSelect"
-              onchange="handleFilterSelects()"
-              class="w-full px-3 py-2.5 rounded-xl bg-[#151014] text-[#F6EFE4] border-2 border-[#120D11] focus:outline-none focus:border-[#F6C453] text-sm font-medium cursor-pointer"
+          <!-- Menú desplegable múltiple de Categoría / Temática con casillas -->
+          <div class="lg:col-span-2 relative" id="categoryFilterDropdownContainer">
+            <button
+              type="button"
+              id="categoryFilterBtn"
+              onclick="toggleCategoryFilterDropdown(event)"
+              class="w-full px-3 py-2.5 rounded-xl bg-[#151014] text-[#F6EFE4] border-2 border-[#120D11] hover:border-[#F6C453] focus:outline-none focus:border-[#F6C453] text-sm font-medium cursor-pointer flex items-center justify-between gap-2 text-left"
             >
-              <!-- Generado dinámicamente con optgroup -->
-            </select>
+              <span id="categoryFilterBtnText" class="truncate">🏷️ Categorías (múltiple)</span>
+              <span class="text-xs text-[#F6C453] shrink-0">▾</span>
+            </button>
+            <div
+              id="categoryFilterMenu"
+              onclick="event.stopPropagation()"
+              class="hidden absolute left-0 mt-1.5 w-72 max-h-80 overflow-y-auto rounded-2xl bg-[#1C141A] border-2 border-[#120D11] shadow-[4px_6px_0_#120D11] p-2.5 z-50 text-xs"
+            >
+              <div class="flex items-center justify-between pb-2 mb-2 border-b border-[#392935]">
+                <span class="font-bold text-[#F6C453]">Marcar una o varias:</span>
+                <button type="button" onclick="clearCategoryFilters()" class="text-[11px] text-[#C4B0BC] hover:text-[#F6C453] underline cursor-pointer">
+                  Limpiar
+                </button>
+              </div>
+              <div id="categoryFilterChecklist" class="space-y-2">
+                <!-- Generado dinámicamente -->
+              </div>
+            </div>
           </div>
 
           <!-- Menú desplegable de Editoriales (solo libros) -->
@@ -834,12 +850,15 @@
             <input id="fieldPublisher" type="text" placeholder="Ej. Minotauro"
               class="w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]" />
           </div>
-          <div>
-            <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Categoría / Temática</label>
-            <select id="fieldBookCategory" class="w-full px-3 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]">
-            </select>
+          <div class="sm:col-span-3" id="bookCategoriesGroup">
+            <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1.5">Categorías del libro (puedes marcar varias)</label>
+            <div id="fieldBookCategoriesChecklist" class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 max-h-40 overflow-y-auto p-2.5 rounded-xl bg-[#151014] border-2 border-[#120D11]">
+            </div>
+          </div>
+          <div id="nonBookThemeGroup" class="hidden">
+            <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Temática</label>
             <input id="fieldTheme" type="text" placeholder="Ej. Decoración brujeril, Gatos..."
-              class="hidden w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]" />
+              class="w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]" />
           </div>
         </div>
 
@@ -970,43 +989,46 @@
   </div>
 
   <script>
-    const STORAGE_KEY = 'biblioteca_de_la_meiga_v15';
+    const STORAGE_KEY = 'biblioteca_de_la_meiga_v16';
     const ROMAN = ['I', 'II', 'III', 'IV'];
 
-    // Tus 14 categorías literarias exactas
+    // Categorías literarias ordenadas alfabéticamente (incluyendo Astronomía, Magia - Brujas y Mitología)
     const BOOK_CATEGORIES = [
-      'Ciencia ficción',
-      'Humor',
-      'Terror',
-      'Matemáticas',
-      'Ciencia',
-      'Misterio',
-      'Erótico-festivo',
+      'Astronomía',
       'Aventura',
+      'Ciencia',
+      'Ciencia ficción',
       'Cómic',
       'Cuento',
-      'Poesía',
-      'Thriller',
       'Drama',
-      'Lógico -Deducción'
+      'Erótico-festivo',
+      'Humor',
+      'Lógico -Deducción',
+      'Magia - Brujas',
+      'Matemáticas',
+      'Misterio',
+      'Mitología',
+      'Poesía',
+      'Terror',
+      'Thriller'
     ];
 
     const DEFAULT_CUPBOARD_NOTES = ['', '', '', ''];
 
     const DEFAULT_CUBBY_LABELS = [
-      'Ángeles y Demonios',
-      'Artísticos',
-      'Barajas',
-      'Terror',
-      'Gatos',
-      'Vampiros y Brujas',
-      'Magia Verde',
-      'En Uso',
-      'Oráculos',
-      'Dragones',
-      'Rol',
-      'Mix'
-    ];
+  "Ángeles y Demonios",
+  "Artísticos",
+  "Barajas",
+  "Terror",
+  "Gatos",
+  "Vampiros y Brujas",
+  "Magia Verde",
+  "En Uso",
+  "Oráculos",
+  "Dragones",
+  "Rol",
+  "Mix"
+];
 
     const SPINE_COLORS = [
       { name: 'Ciruela', hex: '#5D3552' },
@@ -1057,10 +1079,10 @@
     "author": "Isaac Asimov",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_2",
@@ -1069,10 +1091,10 @@
     "author": "Isaac Asimov",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_3",
@@ -1081,10 +1103,10 @@
     "author": "Isaac Asimov",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_4",
@@ -1093,10 +1115,10 @@
     "author": "Isaac Asimov",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_5",
@@ -1105,10 +1127,10 @@
     "author": "Isaac Asimor",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_6",
@@ -1117,10 +1139,10 @@
     "author": "Larry Niven",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_7",
@@ -1129,11 +1151,11 @@
     "author": "",
     "publisher": "",
     "theme": "Decoración brujeril",
+    "color": "#CBB894",
+    "notes": "",
     "cabinet": 1,
     "shelf": 1,
-    "icon": "orrery",
-    "color": "#CBB894",
-    "notes": ""
+    "icon": "orrery"
   },
   {
     "id": "csv_8",
@@ -1142,10 +1164,10 @@
     "author": "Philip José Farmer",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_9",
@@ -1154,10 +1176,10 @@
     "author": "Robert A. Heinlein",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_10",
@@ -1166,10 +1188,10 @@
     "author": "Stephen Baxter",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_11",
@@ -1178,10 +1200,10 @@
     "author": "Stephen Baxter",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_12",
@@ -1190,10 +1212,10 @@
     "author": "Frank Herbert",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_13",
@@ -1202,10 +1224,10 @@
     "author": "Frank Herbert",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_14",
@@ -1214,10 +1236,10 @@
     "author": "Terry Bisson",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_15",
@@ -1226,10 +1248,10 @@
     "author": "Ernest Cline",
     "publisher": "Nova",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_16",
@@ -1238,10 +1260,10 @@
     "author": "Ernest Cline",
     "publisher": "Nova",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#2B2429",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_17",
@@ -1250,10 +1272,10 @@
     "author": "Orson Scott Card",
     "publisher": "Nova",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#2B2429",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_18",
@@ -1262,10 +1284,10 @@
     "author": "Robert J. Sawyer",
     "publisher": "La factoría de Ideas",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_19",
@@ -1274,10 +1296,10 @@
     "author": "George R. R. Martin",
     "publisher": "Gigamesh",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_20",
@@ -1286,10 +1308,10 @@
     "author": "Varios autores",
     "publisher": "Ameghino",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_21",
@@ -1298,10 +1320,10 @@
     "author": "Douglas Adams",
     "publisher": "Anagrama",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#9B4D3A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_22",
@@ -1310,10 +1332,10 @@
     "author": "Neal Stephenson",
     "publisher": "Zeta",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#2B2429",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_23",
@@ -1322,10 +1344,10 @@
     "author": "Neal Stephenson",
     "publisher": "Zeta",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#2B2429",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_24",
@@ -1334,10 +1356,10 @@
     "author": "Neal Stephenson",
     "publisher": "Nova",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#CBB894",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_25",
@@ -1346,10 +1368,10 @@
     "author": "John Scalzi",
     "publisher": "Minotauro",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#2B2429",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_26",
@@ -1358,10 +1380,10 @@
     "author": "John Scalzi",
     "publisher": "booket",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#2B2429",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_27",
@@ -1370,10 +1392,10 @@
     "author": "John Scalzi",
     "publisher": "booket",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#2B2429",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_28",
@@ -1382,10 +1404,10 @@
     "author": "L. Nivel y J. Pournelle",
     "publisher": "Gran Super Ficción",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#2B2429",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_29",
@@ -1394,549 +1416,888 @@
     "author": "L. Nivel y J. Pournelle",
     "publisher": "Gran Super Ficción",
     "theme": "Ciencia ficción",
-    "cabinet": 1,
-    "shelf": 1,
     "color": "#2B2429",
-    "notes": ""
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 1
   },
   {
     "id": "csv_30",
+    "type": "book",
+    "title": "El anacropete",
+    "author": "Enrique Gaspar",
+    "publisher": "Kronos Minotauro",
+    "theme": "Ciencia ficción",
+    "color": "#9B4D3A",
+    "notes": "Es el primer libro oficialmente de viajes en el tiempo (1887), antes que H. G. Wells 1895",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_31",
+    "type": "book",
+    "title": "Timeriders: Tiempo de dinosaurios",
+    "author": "Alex Scarrow",
+    "publisher": "Marlow",
+    "theme": "Ciencia ficción",
+    "color": "#2B2429",
+    "notes": "Saga",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_32",
+    "type": "book",
+    "title": "Timeriders: Los vigilantes del tiempo",
+    "author": "Alex Scarrow",
+    "publisher": "Marlow",
+    "theme": "Ciencia ficción",
+    "color": "#2B2429",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_33",
+    "type": "object",
+    "title": "Patente de corso de Barba Roja",
+    "author": "Jorge y Jeza",
+    "publisher": "",
+    "theme": "",
+    "color": "#B8893E",
+    "notes": "Patente de corso de Barba Roja",
+    "cabinet": 1,
+    "shelf": 2,
+    "icon": "scrollholder"
+  },
+  {
+    "id": "csv_34",
+    "type": "book",
+    "title": "Una aventura en el tiempo",
+    "author": "Charlotte Moberly y Eleanor Jourdain",
+    "publisher": "Fábulas de albión",
+    "theme": "Ciencia ficción",
+    "color": "#2B2429",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_35",
+    "type": "book",
+    "title": "An Adventure",
+    "author": "Charlotte Moberly y Eleanor Jourdain",
+    "publisher": "",
+    "theme": "Ciencia ficción",
+    "color": "#2B2429",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_36",
+    "type": "book",
+    "title": "El libro del día del juicio final",
+    "author": "Connie Willis",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "color": "#2B2429",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_37",
+    "type": "book",
+    "title": "Los cronolitos",
+    "author": "Robert C. Wilson",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "color": "#2B2429",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_38",
+    "type": "book",
+    "title": "El hechicero accidental",
+    "author": "K. E. Mills",
+    "publisher": "",
+    "theme": "Ciencia ficción",
+    "color": "#5E7563",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_39",
+    "type": "book",
+    "title": "Prodigioscopio",
+    "author": "José Fernández Guerra",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "color": "#9B4D3A",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_40",
+    "type": "book",
+    "title": "Rescate en el tiempo (1999-1357)",
+    "author": "Michael Crichton",
+    "publisher": "Círculo de Lectores",
+    "theme": "Ciencia ficción",
+    "color": "#2B2429",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_41",
+    "type": "book",
+    "title": "El descrubrimiento de las brujas",
+    "author": "Deborah Harkness",
+    "publisher": "Debolsillo",
+    "theme": "Ciencia ficción",
+    "color": "#2B2429",
+    "notes": "Saga",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_42",
+    "type": "book",
+    "title": "La sombra de la noche",
+    "author": "Deborah Harkness",
+    "publisher": "Debolsillo",
+    "theme": "Ciencia ficción",
+    "color": "#2B2429",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_43",
+    "type": "book",
+    "title": "El libro de la vida",
+    "author": "Deborah Harkness",
+    "publisher": "Debolsillo",
+    "theme": "Ciencia ficción",
+    "color": "#2B2429",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_44",
+    "type": "book",
+    "title": "Memorias encontradas en una bañera",
+    "author": "Stanislaw Lem",
+    "publisher": "Bruguera- Libro amigo",
+    "theme": "Ciencia ficción",
+    "color": "#CBB894",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_45",
+    "type": "book",
+    "title": "Ciberíada",
+    "author": "Stanislaw Lem",
+    "publisher": "Bruguera- Libro amigo",
+    "theme": "Ciencia ficción",
+    "color": "#CBB894",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_46",
+    "type": "book",
+    "title": "Diarios de las estrellas. VIajes y memorias",
+    "author": "Stanislaw Lem",
+    "publisher": "Bruguera- Libro amigo",
+    "theme": "Ciencia ficción",
+    "color": "#CBB894",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_47",
+    "type": "book",
+    "title": "Darwinia",
+    "author": "Robert C. Wilson",
+    "publisher": "La factoría de Ideas",
+    "theme": "Ciencia ficción",
+    "color": "#CBB894",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_48",
+    "type": "book",
+    "title": "Bill, héroe galáctico",
+    "author": "Harry Harrison",
+    "publisher": "Grandes éxitos de bolsillo",
+    "theme": "Ciencia ficción",
+    "color": "#CBB894",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_49",
+    "type": "object",
+    "title": "Foto mía de cuando acabé el instituto + foto carnet de Jorge de chaval",
+    "author": "",
+    "publisher": "",
+    "theme": "",
+    "color": "#9B4D3A",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2,
+    "icon": "photoframe"
+  },
+  {
+    "id": "csv_50",
+    "type": "book",
+    "title": "El hombre ilustrado",
+    "author": "Ray Bradbury",
+    "publisher": "booket",
+    "theme": "Ciencia ficción",
+    "color": "#CBB894",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_51",
+    "type": "book",
+    "title": "Fahrenheit 451",
+    "author": "Ray Bradbury",
+    "publisher": "Debolsillo",
+    "theme": "Ciencia ficción",
+    "color": "#7A2E3B",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_52",
+    "type": "book",
+    "title": "Crónicas marcianas",
+    "author": "Ray Bradbury",
+    "publisher": "booket",
+    "theme": "Ciencia ficción",
+    "color": "#7A2E3B",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_53",
+    "type": "book",
+    "title": "Zen en el arte de escribir",
+    "author": "Ray Bradbury",
+    "publisher": "Minotauro",
+    "theme": "Ciencia ficción",
+    "color": "#CBB894",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_54",
+    "type": "book",
+    "title": "Conde cero - Trilogía del Sprawl 2",
+    "author": "William Gibson",
+    "publisher": "Minotauro",
+    "theme": "Ciencia ficción",
+    "color": "#CBB894",
+    "notes": "Saga",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_55",
+    "type": "book",
+    "title": "Mona Lisa acelerada - Trilogía del Sprawl 2",
+    "author": "William Gibson",
+    "publisher": "Minotauro",
+    "theme": "Ciencia ficción",
+    "color": "#CBB894",
+    "notes": "Saga",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_56",
+    "type": "object",
+    "title": "Caja libro - 2",
+    "author": "",
+    "publisher": "",
+    "theme": "",
+    "color": "#5E7563",
+    "notes": "",
+    "cabinet": 1,
+    "shelf": 2,
+    "icon": "wooden_box"
+  },
+  {
+    "id": "csv_57",
+    "type": "book",
+    "title": "850 Aniversario",
+    "author": "Félix Carreira Viso",
+    "publisher": "Libros Mablax",
+    "theme": "Ciencia ficción",
+    "color": "#2B2429",
+    "notes": "Con dedicatoria del autor",
+    "cabinet": 1,
+    "shelf": 2
+  },
+  {
+    "id": "csv_58",
     "type": "book",
     "title": "Drácula",
     "author": "Bram Stoker",
     "publisher": "",
     "theme": "Terror",
-    "cabinet": 2,
-    "shelf": 1,
     "color": "#7A2E3B",
-    "notes": ""
+    "notes": "",
+    "cabinet": 2,
+    "shelf": 1
   },
   {
-    "id": "csv_31",
+    "id": "csv_59",
     "type": "book",
     "title": "Frankenstein",
     "author": "Mary Shelley",
     "publisher": "",
     "theme": "Terror",
-    "cabinet": 2,
-    "shelf": 1,
     "color": "#2B2429",
-    "notes": ""
+    "notes": "",
+    "cabinet": 2,
+    "shelf": 1
   },
   {
-    "id": "csv_32",
+    "id": "csv_60",
     "type": "object",
     "title": "Pulpo sujeta bola de cristal",
     "author": "Altar",
     "publisher": "",
     "theme": "Decoración brujeril",
+    "color": "#8B54C4",
+    "notes": "",
     "cabinet": 2,
     "shelf": 1,
-    "icon": "octopusorb",
-    "color": "#8B54C4",
-    "notes": ""
+    "icon": "octopusorb"
   },
   {
-    "id": "csv_33",
+    "id": "csv_61",
     "type": "book",
     "title": "Cuentos Completos",
     "author": "Edgar Allan Poe",
     "publisher": "",
     "theme": "Terror",
-    "cabinet": 2,
-    "shelf": 2,
     "color": "#5D3552",
-    "notes": ""
+    "notes": "",
+    "cabinet": 2,
+    "shelf": 2
   },
   {
-    "id": "csv_34",
+    "id": "csv_62",
     "type": "object",
     "title": "Pote de bruja con hierbas",
     "author": "Boticario",
     "publisher": "",
     "theme": "Decoración brujeril",
+    "color": "#4E7566",
+    "notes": "",
     "cabinet": 2,
     "shelf": 2,
-    "icon": "jar",
-    "color": "#4E7566",
-    "notes": ""
+    "icon": "jar"
   },
   {
-    "id": "csv_35",
+    "id": "csv_63",
     "type": "book",
     "title": "Asesinato en el Orient Express",
     "author": "Agatha Christie",
     "publisher": "",
     "theme": "Misterio",
-    "cabinet": 2,
-    "shelf": 3,
     "color": "#385947",
-    "notes": ""
+    "notes": "",
+    "cabinet": 2,
+    "shelf": 3
   },
   {
-    "id": "csv_36",
+    "id": "csv_64",
     "type": "object",
     "title": "Drusa de amatistas",
     "author": "Minerales",
     "publisher": "",
     "theme": "Cristales",
+    "color": "#9D65D0",
+    "notes": "",
     "cabinet": 2,
     "shelf": 3,
-    "icon": "crystal",
-    "color": "#9D65D0",
-    "notes": ""
+    "icon": "crystal"
   },
   {
-    "id": "csv_37",
+    "id": "csv_65",
     "type": "book",
     "title": "El Silencio de los Corderos",
     "author": "Thomas Harris",
     "publisher": "",
     "theme": "Thriller",
-    "cabinet": 2,
-    "shelf": 4,
     "color": "#2B2429",
-    "notes": ""
+    "notes": "",
+    "cabinet": 2,
+    "shelf": 4
   },
   {
-    "id": "csv_38",
+    "id": "csv_66",
     "type": "object",
     "title": "Vaso canopo de alabastro",
     "author": "Antigüedades",
     "publisher": "",
     "theme": "Decoración brujeril",
+    "color": "#EDE2CC",
+    "notes": "Con tapa de chacal",
     "cabinet": 2,
     "shelf": 4,
-    "icon": "canopo",
-    "color": "#EDE2CC",
-    "notes": "Con tapa de chacal"
+    "icon": "canopo"
   },
   {
-    "id": "csv_39",
+    "id": "csv_67",
     "type": "book",
     "title": "Sandman",
     "author": "Neil Gaiman",
     "publisher": "",
     "theme": "Cómic",
-    "cabinet": 3,
-    "shelf": 1,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 3,
+    "shelf": 1
   },
   {
-    "id": "csv_40",
+    "id": "csv_68",
     "type": "book",
     "title": "Blacksad",
     "author": "Díaz Canales & Guarnido",
     "publisher": "",
     "theme": "Cómic",
-    "cabinet": 3,
-    "shelf": 1,
     "color": "#B8893E",
-    "notes": ""
+    "notes": "",
+    "cabinet": 3,
+    "shelf": 1
   },
   {
-    "id": "csv_41",
+    "id": "csv_69",
     "type": "object",
     "title": "Prismáticos de ópera nacarados",
     "author": "Curiosidades",
     "publisher": "",
     "theme": "Decoración brujeril",
+    "color": "#E8C872",
+    "notes": "",
     "cabinet": 3,
     "shelf": 1,
-    "icon": "operaglasses",
-    "color": "#E8C872",
-    "notes": ""
+    "icon": "operaglasses"
   },
   {
-    "id": "csv_42",
+    "id": "csv_70",
     "type": "book",
     "title": "Follas Novas",
     "author": "Rosalía de Castro",
     "publisher": "",
     "theme": "Poesía",
-    "cabinet": 3,
-    "shelf": 2,
     "color": "#5E7563",
-    "notes": ""
+    "notes": "",
+    "cabinet": 3,
+    "shelf": 2
   },
   {
-    "id": "csv_43",
+    "id": "csv_71",
     "type": "object",
     "title": "Portapergaminos de cuero y latón",
     "author": "Escritorio",
     "publisher": "",
     "theme": "Decoración brujeril",
+    "color": "#9B5A3C",
+    "notes": "",
     "cabinet": 3,
     "shelf": 2,
-    "icon": "scrollholder",
-    "color": "#9B5A3C",
-    "notes": ""
+    "icon": "scrollholder"
   },
   {
-    "id": "csv_44",
+    "id": "csv_72",
     "type": "book",
     "title": "La Casa de Bernarda Alba",
     "author": "Federico García Lorca",
     "publisher": "",
     "theme": "Drama",
-    "cabinet": 3,
-    "shelf": 3,
     "color": "#7A2E3B",
-    "notes": ""
+    "notes": "",
+    "cabinet": 3,
+    "shelf": 3
   },
   {
-    "id": "csv_45",
+    "id": "csv_73",
     "type": "object",
     "title": "Marco de fotos vintage tallado",
     "author": "Recuerdos",
     "publisher": "",
     "theme": "Decoración brujeril",
+    "color": "#C8963E",
+    "notes": "",
     "cabinet": 3,
     "shelf": 3,
-    "icon": "photoframe",
-    "color": "#C8963E",
-    "notes": ""
+    "icon": "photoframe"
   },
   {
-    "id": "csv_46",
+    "id": "csv_74",
     "type": "book",
     "title": "El Decamerón",
     "author": "Giovanni Boccaccio",
     "publisher": "",
     "theme": "Erótico-festivo",
-    "cabinet": 3,
-    "shelf": 4,
     "color": "#9B4D3A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 3,
+    "shelf": 4
   },
   {
-    "id": "csv_47",
+    "id": "csv_75",
     "type": "book",
     "title": "Buenos Presagios",
     "author": "Terry Pratchett & Neil Gaiman",
     "publisher": "",
     "theme": "Humor",
-    "cabinet": 4,
-    "shelf": 1,
     "color": "#CBB894",
-    "notes": ""
+    "notes": "",
+    "cabinet": 4,
+    "shelf": 1
   },
   {
-    "id": "csv_48",
+    "id": "csv_76",
     "type": "book",
     "title": "Brujerías",
     "author": "Terry Pratchett",
     "publisher": "",
     "theme": "Humor",
-    "cabinet": 4,
-    "shelf": 1,
     "color": "#385947",
-    "notes": ""
+    "notes": "",
+    "cabinet": 4,
+    "shelf": 1
   },
   {
-    "id": "csv_49",
+    "id": "csv_77",
     "type": "object",
     "title": "Helecho de interior",
     "author": "Botánica",
     "publisher": "",
     "theme": "Decoración brujeril",
+    "color": "#5E8563",
+    "notes": "",
     "cabinet": 4,
     "shelf": 1,
-    "icon": "plant",
-    "color": "#5E8563",
-    "notes": ""
+    "icon": "plant"
   },
   {
-    "id": "csv_50",
+    "id": "csv_78",
     "type": "book",
     "title": "El Problema de los Tres Cuerpos",
     "author": "Cixin Liu",
     "publisher": "",
     "theme": "Ciencia ficción",
-    "cabinet": 4,
-    "shelf": 2,
     "color": "#28364A",
-    "notes": ""
+    "notes": "",
+    "cabinet": 4,
+    "shelf": 2
   },
   {
-    "id": "csv_51",
+    "id": "csv_79",
     "type": "object",
     "title": "Vela de cera de abeja",
     "author": "Altar",
     "publisher": "",
     "theme": "Decoración brujeril",
+    "color": "#F6C453",
+    "notes": "",
     "cabinet": 4,
     "shelf": 2,
-    "icon": "candle",
-    "color": "#F6C453",
-    "notes": ""
+    "icon": "candle"
   },
   {
-    "id": "csv_52",
+    "id": "csv_80",
     "type": "object",
     "title": "Modelo celeste Orrery de latón",
     "author": "Astronomía",
     "publisher": "",
     "theme": "Decoración brujeril",
+    "color": "#D4A84F",
+    "notes": "Planetario mecánico",
     "cabinet": 4,
     "shelf": 3,
-    "icon": "orrery",
-    "color": "#D4A84F",
-    "notes": "Planetario mecánico"
+    "icon": "orrery"
   },
   {
-    "id": "csv_53",
+    "id": "csv_81",
     "type": "tarot",
     "title": "Demon of the Day",
     "author": "Oráculo",
     "publisher": "",
     "theme": "Ángeles y Demonios",
-    "cubby": 0,
     "color": "#8C2D2D",
-    "notes": "Caja roja"
+    "notes": "Caja roja",
+    "cubby": 0
   },
   {
-    "id": "csv_54",
+    "id": "csv_82",
     "type": "tarot",
     "title": "Angels & Demons Tarot",
     "author": "Tarot",
     "publisher": "",
     "theme": "Ángeles y Demonios",
-    "cubby": 0,
     "color": "#4A262B",
-    "notes": ""
+    "notes": "",
+    "cubby": 0
   },
   {
-    "id": "csv_55",
+    "id": "csv_83",
     "type": "tarot",
     "title": "Steampunk Art Nouveau Tarot",
     "author": "Lo Scarabeo",
     "publisher": "",
     "theme": "Artísticos",
-    "cubby": 1,
     "color": "#3B646E",
-    "notes": ""
+    "notes": "",
+    "cubby": 1
   },
   {
-    "id": "csv_56",
+    "id": "csv_84",
     "type": "tarot",
     "title": "Diario Arcano de Cuero",
     "author": "Cuaderno de tiradas",
     "publisher": "",
     "theme": "Artísticos",
-    "cubby": 1,
     "color": "#6E4730",
-    "notes": ""
+    "notes": "",
+    "cubby": 1
   },
   {
-    "id": "csv_57",
+    "id": "csv_85",
     "type": "tarot",
     "title": "Barajas Clásicas y Edición Especial",
     "author": "Colección",
     "publisher": "",
     "theme": "Barajas",
-    "cubby": 2,
     "color": "#8F7B63",
-    "notes": ""
+    "notes": "",
+    "cubby": 2
   },
   {
-    "id": "csv_58",
+    "id": "csv_86",
     "type": "tarot",
     "title": "El Necronomicón Tarot",
     "author": "Donald Tyson",
     "publisher": "",
     "theme": "Terror",
-    "cubby": 3,
     "color": "#2B3033",
-    "notes": ""
+    "notes": "",
+    "cubby": 3
   },
   {
-    "id": "csv_59",
+    "id": "csv_87",
     "type": "tarot",
     "title": "Occult Tarot",
     "author": "Travis McHenry",
     "publisher": "",
     "theme": "Terror",
-    "cubby": 3,
     "color": "#6E2626",
-    "notes": ""
+    "notes": "",
+    "cubby": 3
   },
   {
-    "id": "csv_60",
+    "id": "csv_88",
     "type": "tarot",
     "title": "El Tarot de los Gatos",
     "author": "Librero",
     "publisher": "",
     "theme": "Gatos",
-    "cubby": 4,
     "color": "#C47451",
-    "notes": "78 cartas y guía"
+    "notes": "78 cartas y guía",
+    "cubby": 4
   },
   {
-    "id": "csv_61",
+    "id": "csv_89",
     "type": "tarot",
     "title": "Tarot XIII",
     "author": "Nekro",
     "publisher": "",
     "theme": "Vampiros y Brujas",
-    "cubby": 5,
     "color": "#262226",
-    "notes": ""
+    "notes": "",
+    "cubby": 5
   },
   {
-    "id": "csv_62",
+    "id": "csv_90",
     "type": "tarot",
     "title": "Tarot del Libro de las Sombras",
     "author": "Barbara Moore",
     "publisher": "",
     "theme": "Vampiros y Brujas",
-    "cubby": 5,
     "color": "#4B5744",
-    "notes": ""
+    "notes": "",
+    "cubby": 5
   },
   {
-    "id": "csv_63",
+    "id": "csv_91",
     "type": "tarot",
     "title": "Tarot V (Vampiros)",
     "author": "Tarot gótico",
     "publisher": "",
     "theme": "Vampiros y Brujas",
-    "cubby": 5,
     "color": "#3D2329",
-    "notes": ""
+    "notes": "",
+    "cubby": 5
   },
   {
-    "id": "csv_64",
+    "id": "csv_92",
     "type": "tarot",
     "title": "The Green Witch's Oracle Deck",
     "author": "Arin Murphy-Hiscock",
     "publisher": "",
     "theme": "Magia Verde",
-    "cubby": 6,
     "color": "#5D7A5C",
-    "notes": ""
+    "notes": "",
+    "cubby": 6
   },
   {
-    "id": "csv_65",
+    "id": "csv_93",
     "type": "tarot",
     "title": "Green Witch Tarot",
     "author": "Ann Moura",
     "publisher": "",
     "theme": "Magia Verde",
-    "cubby": 6,
     "color": "#4E7D78",
-    "notes": ""
+    "notes": "",
+    "cubby": 6
   },
   {
-    "id": "csv_66",
+    "id": "csv_94",
     "type": "tarot",
     "title": "Baraja en Uso (Paño Estrellado)",
     "author": "Lectura actual",
     "publisher": "",
     "theme": "En Uso",
-    "cubby": 7,
     "color": "#233252",
-    "notes": ""
+    "notes": "",
+    "cubby": 7
   },
   {
-    "id": "csv_67",
+    "id": "csv_95",
     "type": "tarot",
     "title": "Circle of Life Tarot",
     "author": "Maria Distefano",
     "publisher": "",
     "theme": "Oráculos",
-    "cubby": 8,
     "color": "#4C4373",
-    "notes": ""
+    "notes": "",
+    "cubby": 8
   },
   {
-    "id": "csv_68",
+    "id": "csv_96",
     "type": "tarot",
     "title": "Earthbound Oracle",
     "author": "Oráculo",
     "publisher": "",
     "theme": "Oráculos",
-    "cubby": 8,
     "color": "#B86F4B",
-    "notes": ""
+    "notes": "",
+    "cubby": 8
   },
   {
-    "id": "csv_69",
+    "id": "csv_97",
     "type": "tarot",
     "title": "Past Life & Lenormand",
     "author": "Oráculos",
     "publisher": "",
     "theme": "Oráculos",
-    "cubby": 8,
     "color": "#C9963E",
-    "notes": ""
+    "notes": "",
+    "cubby": 8
   },
   {
-    "id": "csv_70",
+    "id": "csv_98",
     "type": "tarot",
     "title": "Star Dragon Oracle Cards",
     "author": "Oráculo",
     "publisher": "",
     "theme": "Dragones",
-    "cubby": 9,
     "color": "#7D3530",
-    "notes": ""
+    "notes": "",
+    "cubby": 9
   },
   {
-    "id": "csv_71",
+    "id": "csv_99",
     "type": "tarot",
     "title": "Dungeons & Dragons Tarot Deck",
     "author": "Wizards of the Coast",
     "publisher": "",
     "theme": "Rol",
-    "cubby": 10,
     "color": "#242226",
-    "notes": ""
+    "notes": "",
+    "cubby": 10
   },
   {
-    "id": "csv_72",
+    "id": "csv_100",
     "type": "tarot",
     "title": "Citadel: A Fantasy Oracle",
     "author": "Fez Inkwright",
     "publisher": "",
     "theme": "Rol",
-    "cubby": 10,
     "color": "#D4CEC5",
-    "notes": ""
+    "notes": "",
+    "cubby": 10
   },
   {
-    "id": "csv_73",
+    "id": "csv_101",
     "type": "tarot",
     "title": "Tarot Vintage",
     "author": "Tarot",
     "publisher": "",
     "theme": "Mix",
-    "cubby": 11,
     "color": "#C9B796",
-    "notes": ""
+    "notes": "",
+    "cubby": 11
   },
   {
-    "id": "csv_74",
+    "id": "csv_102",
     "type": "tarot",
     "title": "Mindscapes Tarot",
     "author": "Tarot",
     "publisher": "",
     "theme": "Mix",
-    "cubby": 11,
     "color": "#395A75",
-    "notes": ""
+    "notes": "",
+    "cubby": 11
   },
   {
-    "id": "csv_75",
+    "id": "csv_103",
     "type": "tarot",
     "title": "Celtic Tarot",
     "author": "Tarot",
     "publisher": "",
     "theme": "Mix",
-    "cubby": 11,
     "color": "#6E4935",
-    "notes": ""
+    "notes": "",
+    "cubby": 11
   }
 ];
 
@@ -1946,7 +2307,7 @@
       cupboardNotes: ['', '', '', ''],
       searchQuery: '',
       activeTab: 'all',
-      activeCategoryFilter: '',
+      activeCategoryFilters: [],
       activePublisherFilter: '',
       activeAuthorFilter: '',
       viewMode: 'cards',
@@ -2004,23 +2365,34 @@
         .replace(/'/g, '&#39;');
     }
 
+    function parseItemThemes(themeStr) {
+      return String(themeStr || '')
+        .split(/[,;/]+/)
+        .map(t => t.trim())
+        .filter(Boolean);
+    }
+
     function itemMatchesGlobalFilter(item) {
       if (state.activeTab !== 'all' && item.type !== state.activeTab) return false;
 
-      if (state.activeCategoryFilter) {
-        if (state.activeCategoryFilter.startsWith('book:')) {
-          const targetCat = state.activeCategoryFilter.slice(5).toLowerCase();
-          if (item.type !== 'book' || (item.theme || '').toLowerCase() !== targetCat) return false;
-        } else if (state.activeCategoryFilter.startsWith('tarot:')) {
-          const targetCubby = state.activeCategoryFilter.slice(6).toLowerCase();
-          if (item.type !== 'tarot') return false;
-          const cubbyName = (state.cubbyLabels[item.cubby] || '').toLowerCase();
-          const itemTheme = (item.theme || '').toLowerCase();
-          if (cubbyName !== targetCubby && itemTheme !== targetCubby) return false;
-        } else if (state.activeCategoryFilter.startsWith('theme:')) {
-          const targetTheme = state.activeCategoryFilter.slice(6).toLowerCase();
-          if ((item.theme || '').toLowerCase() !== targetTheme) return false;
-        }
+      if (Array.isArray(state.activeCategoryFilters) && state.activeCategoryFilters.length > 0) {
+        const itemThemesLower = parseItemThemes(item.theme).map(t => t.toLowerCase());
+        const matchesAnyCategory = state.activeCategoryFilters.some(filterVal => {
+          if (filterVal.startsWith('book:')) {
+            const targetCat = filterVal.slice(5).toLowerCase();
+            return item.type === 'book' && itemThemesLower.includes(targetCat);
+          } else if (filterVal.startsWith('tarot:')) {
+            const targetCubby = filterVal.slice(6).toLowerCase();
+            if (item.type !== 'tarot') return false;
+            const cubbyName = (state.cubbyLabels[item.cubby] || '').toLowerCase();
+            return cubbyName === targetCubby || itemThemesLower.includes(targetCubby);
+          } else if (filterVal.startsWith('theme:')) {
+            const targetTheme = filterVal.slice(6).toLowerCase();
+            return itemThemesLower.includes(targetTheme);
+          }
+          return false;
+        });
+        if (!matchesAnyCategory) return false;
       }
 
       if (state.activePublisherFilter) {
@@ -2059,7 +2431,7 @@
       return (
         state.searchQuery.trim() !== '' ||
         state.activeTab !== 'all' ||
-        state.activeCategoryFilter !== '' ||
+        state.activeCategoryFilters.length > 0 ||
         state.activePublisherFilter !== '' ||
         state.activeAuthorFilter !== '' ||
         Boolean(state.highlightedItemId)
@@ -2373,43 +2745,121 @@
       document.getElementById('countObjects').textContent = state.items.filter(i => i.type === 'object').length;
     }
 
-    function renderCategoryFilterSelect() {
-      const select = document.getElementById('categoryFilterSelect');
-      if (!select) return;
+    function toggleCategoryFilterDropdown(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('categoryFilterMenu');
+      if (menu) menu.classList.toggle('hidden');
+    }
 
-      const bookOpts = BOOK_CATEGORIES.map(cat => {
+    function toggleCategoryFilterValue(val) {
+      const idx = state.activeCategoryFilters.indexOf(val);
+      if (idx === -1) {
+        state.activeCategoryFilters.push(val);
+      } else {
+        state.activeCategoryFilters.splice(idx, 1);
+      }
+      state.highlightedItemId = null;
+      if (state.activeCategoryFilters.length > 0) {
+        state.inspectorScope = 'all';
+      }
+      renderAll();
+    }
+
+    function clearCategoryFilters() {
+      state.activeCategoryFilters = [];
+      state.highlightedItemId = null;
+      renderAll();
+    }
+
+    document.addEventListener('click', (e) => {
+      const container = document.getElementById('categoryFilterDropdownContainer');
+      const menu = document.getElementById('categoryFilterMenu');
+      if (container && menu && !container.contains(e.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    function renderCategoryFilterSelect() {
+      const checklist = document.getElementById('categoryFilterChecklist');
+      const btnText = document.getElementById('categoryFilterBtnText');
+      if (!checklist || !btnText) return;
+
+      if (state.activeCategoryFilters.length === 0) {
+        btnText.textContent = '🏷️ Categorías (múltiple)';
+      } else if (state.activeCategoryFilters.length === 1) {
+        const cleanLabel = state.activeCategoryFilters[0].replace(/^(book:|tarot:|theme:)/, '');
+        btnText.textContent = `🏷️ ${cleanLabel}`;
+      } else {
+        const names = state.activeCategoryFilters.map(v => v.replace(/^(book:|tarot:|theme:)/, ''));
+        btnText.textContent = `🏷️ ${state.activeCategoryFilters.length} marcadas (${names.join(', ')})`;
+      }
+
+      const sortedBookCats = [...BOOK_CATEGORIES].sort((a, b) => a.localeCompare(b, 'es'));
+      const bookOpts = sortedBookCats.map(cat => {
         const val = `book:${cat}`;
-        const count = state.items.filter(i => i.type === 'book' && (i.theme || '').toLowerCase() === cat.toLowerCase()).length;
-        return `<option value="${escapeHTML(val)}" ${state.activeCategoryFilter === val ? 'selected' : ''}>📚 ${escapeHTML(cat)} (${count})</option>`;
+        const count = state.items.filter(i => i.type === 'book' && parseItemThemes(i.theme).some(t => t.toLowerCase() === cat.toLowerCase())).length;
+        const checked = state.activeCategoryFilters.includes(val) ? 'checked' : '';
+        return `
+          <label class="flex items-center justify-between gap-2 px-2 py-1 rounded-lg hover:bg-[#2B1F28] cursor-pointer select-none">
+            <span class="flex items-center gap-2 truncate text-[#F4EDE2]">
+              <input type="checkbox" ${checked} onchange="toggleCategoryFilterValue('${escapeHTML(val)}')" class="accent-[#F6C453] rounded cursor-pointer" />
+              <span class="truncate">📚 ${escapeHTML(cat)}</span>
+            </span>
+            <span class="text-[10px] text-[#A995A1] shrink-0">${count}</span>
+          </label>
+        `;
       }).join('');
 
       const tarotOpts = state.cubbyLabels.map((lbl, idx) => {
         const val = `tarot:${lbl}`;
-        const count = state.items.filter(i => i.type === 'tarot' && (Number(i.cubby) === idx || (i.theme || '').toLowerCase() === lbl.toLowerCase())).length;
-        return `<option value="${escapeHTML(val)}" ${state.activeCategoryFilter === val ? 'selected' : ''}>🃏 ${escapeHTML(lbl)} (${count})</option>`;
+        const count = state.items.filter(i => i.type === 'tarot' && (Number(i.cubby) === idx || parseItemThemes(i.theme).some(t => t.toLowerCase() === lbl.toLowerCase()))).length;
+        const checked = state.activeCategoryFilters.includes(val) ? 'checked' : '';
+        return `
+          <label class="flex items-center justify-between gap-2 px-2 py-1 rounded-lg hover:bg-[#2B1F28] cursor-pointer select-none">
+            <span class="flex items-center gap-2 truncate text-[#DCE6D6]">
+              <input type="checkbox" ${checked} onchange="toggleCategoryFilterValue('${escapeHTML(val)}')" class="accent-[#A8D59D] rounded cursor-pointer" />
+              <span class="truncate">🃏 ${escapeHTML(lbl)}</span>
+            </span>
+            <span class="text-[10px] text-[#A995A1] shrink-0">${count}</span>
+          </label>
+        `;
       }).join('');
 
+      const allParsedThemes = state.items.flatMap(i => parseItemThemes(i.theme));
       const extraThemes = Array.from(new Set(
-        state.items
-          .map(i => (i.theme || '').trim())
-          .filter(t => t && !BOOK_CATEGORIES.some(b => b.toLowerCase() === t.toLowerCase()) && !state.cubbyLabels.some(c => c.toLowerCase() === t.toLowerCase()))
+        allParsedThemes.filter(t => t && !BOOK_CATEGORIES.some(b => b.toLowerCase() === t.toLowerCase()) && !state.cubbyLabels.some(c => c.toLowerCase() === t.toLowerCase()))
       )).sort((a, b) => a.localeCompare(b, 'es'));
 
       const otherOpts = extraThemes.map(th => {
         const val = `theme:${th}`;
-        const count = state.items.filter(i => (i.theme || '').toLowerCase() === th.toLowerCase()).length;
-        return `<option value="${escapeHTML(val)}" ${state.activeCategoryFilter === val ? 'selected' : ''}>🔮 ${escapeHTML(th)} (${count})</option>`;
+        const count = state.items.filter(i => parseItemThemes(i.theme).some(t => t.toLowerCase() === th.toLowerCase())).length;
+        const checked = state.activeCategoryFilters.includes(val) ? 'checked' : '';
+        return `
+          <label class="flex items-center justify-between gap-2 px-2 py-1 rounded-lg hover:bg-[#2B1F28] cursor-pointer select-none">
+            <span class="flex items-center gap-2 truncate text-[#EEDCF5]">
+              <input type="checkbox" ${checked} onchange="toggleCategoryFilterValue('${escapeHTML(val)}')" class="accent-[#D8B4FE] rounded cursor-pointer" />
+              <span class="truncate">🔮 ${escapeHTML(th)}</span>
+            </span>
+            <span class="text-[10px] text-[#A995A1] shrink-0">${count}</span>
+          </label>
+        `;
       }).join('');
 
-      select.innerHTML = `
-        <option value="" ${state.activeCategoryFilter === '' ? 'selected' : ''}>🏷️ Todas las categorías</option>
-        <optgroup label="Temáticas de Libros">
-          ${bookOpts}
-        </optgroup>
-        <optgroup label="Vitrina de Tarots y Oráculos">
-          ${tarotOpts}
-        </optgroup>
-        ${otherOpts ? `<optgroup label="Otras temáticas">${otherOpts}</optgroup>` : ''}
+      checklist.innerHTML = `
+        <div>
+          <p class="text-[10px] uppercase tracking-wider text-[#F6C453] font-bold px-2 mb-1">Temáticas de Libros (A-Z)</p>
+          <div class="space-y-0.5">${bookOpts}</div>
+        </div>
+        <div class="pt-2 border-t border-[#392935]">
+          <p class="text-[10px] uppercase tracking-wider text-[#A8D59D] font-bold px-2 mb-1">Vitrina de Tarots y Oráculos</p>
+          <div class="space-y-0.5">${tarotOpts}</div>
+        </div>
+        ${otherOpts ? `
+          <div class="pt-2 border-t border-[#392935]">
+            <p class="text-[10px] uppercase tracking-wider text-[#D8B4FE] font-bold px-2 mb-1">Otras temáticas</p>
+            <div class="space-y-0.5">${otherOpts}</div>
+          </div>
+        ` : ''}
       `;
 
       const booksOnly = state.items.filter(i => i.type === 'book');
@@ -2460,7 +2910,7 @@
       const hasActiveFilters =
         state.searchQuery.trim() !== '' ||
         state.activeTab !== 'all' ||
-        state.activeCategoryFilter !== '' ||
+        state.activeCategoryFilters.length > 0 ||
         state.activePublisherFilter !== '' ||
         state.activeAuthorFilter !== '';
       resetBtn.classList.toggle('hidden', !hasActiveFilters);
@@ -2510,7 +2960,7 @@
     function renderWhiteCabinets() {
       const grid = document.getElementById('whiteCabinetsGrid');
       const filtering = isFilteringActive();
-      const activeSearchOrFilter = state.searchQuery.trim() !== '' || state.activeCategoryFilter !== '' || state.activeTab !== 'all';
+      const activeSearchOrFilter = state.searchQuery.trim() !== '' || state.activeCategoryFilters.length > 0 || state.activeTab !== 'all';
       let html = '';
 
       for (let cab = 1; cab <= 4; cab++) {
@@ -2642,7 +3092,7 @@
 
       const grid = document.getElementById('tarotCubbiesGrid');
       const filtering = isFilteringActive();
-      const activeSearchOrFilter = state.searchQuery.trim() !== '' || state.activeCategoryFilter !== '' || state.activeTab !== 'all';
+      const activeSearchOrFilter = state.searchQuery.trim() !== '' || state.activeCategoryFilters.length > 0 || state.activeTab !== 'all';
       let html = '';
 
       for (let idx = 0; idx < 12; idx++) {
@@ -3020,12 +3470,10 @@
 
     function handleFilterSelects() {
       const typeSelect = document.getElementById('typeFilterSelect');
-      const catSelect = document.getElementById('categoryFilterSelect');
       const pubSelect = document.getElementById('publisherFilterSelect');
       const authSelect = document.getElementById('authorFilterSelect');
 
       state.activeTab = typeSelect.value;
-      state.activeCategoryFilter = catSelect.value;
       state.activePublisherFilter = pubSelect ? pubSelect.value : '';
       state.activeAuthorFilter = authSelect ? authSelect.value : '';
       state.highlightedItemId = null;
@@ -3035,17 +3483,9 @@
         typeSelect.value = 'book';
       }
 
-      if (state.activeCategoryFilter.startsWith('book:') && state.activeTab !== 'book') {
-        state.activeTab = 'book';
-        typeSelect.value = 'book';
-      } else if (state.activeCategoryFilter.startsWith('tarot:') && state.activeTab !== 'tarot') {
-        state.activeTab = 'tarot';
-        typeSelect.value = 'tarot';
-      }
-
       if (
         state.activeTab !== 'all' ||
-        state.activeCategoryFilter !== '' ||
+        state.activeCategoryFilters.length > 0 ||
         state.activePublisherFilter !== '' ||
         state.activeAuthorFilter !== ''
       ) {
@@ -3060,13 +3500,12 @@
       input.value = '';
       state.searchQuery = '';
       state.activeTab = 'all';
-      state.activeCategoryFilter = '';
+      state.activeCategoryFilters = [];
       state.activePublisherFilter = '';
       state.activeAuthorFilter = '';
       state.highlightedItemId = null;
       document.getElementById('clearTextBtn').classList.add('hidden');
       document.getElementById('typeFilterSelect').value = 'all';
-      document.getElementById('categoryFilterSelect').value = '';
       const pubSelect = document.getElementById('publisherFilterSelect');
       if (pubSelect) pubSelect.value = '';
       const authSelect = document.getElementById('authorFilterSelect');
@@ -3094,11 +3533,19 @@
     }
 
     // Modal Añadir / Editar
-    function populateModalPickers(selectedColor = '#5D3552', selectedIcon = 'photoframe') {
-      const bookCatSelect = document.getElementById('fieldBookCategory');
-      bookCatSelect.innerHTML = BOOK_CATEGORIES.map(cat =>
-        `<option value="${escapeHTML(cat)}">${escapeHTML(cat)}</option>`
-      ).join('');
+    function populateModalPickers(selectedColor = '#5D3552', selectedIcon = 'photoframe', selectedBookCats = ['Ciencia ficción']) {
+      const bookCatChecklist = document.getElementById('fieldBookCategoriesChecklist');
+      const sortedCats = [...BOOK_CATEGORIES].sort((a, b) => a.localeCompare(b, 'es'));
+      const selectedLower = selectedBookCats.map(c => c.toLowerCase());
+      bookCatChecklist.innerHTML = sortedCats.map(cat => {
+        const checked = selectedLower.includes(cat.toLowerCase()) ? 'checked' : '';
+        return `
+          <label class="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-[#2B1F28] text-xs text-[#F4EDE2] cursor-pointer select-none">
+            <input type="checkbox" name="bookCategoryCheckbox" value="${escapeHTML(cat)}" ${checked} class="accent-[#F6C453] rounded cursor-pointer" />
+            <span class="truncate">${escapeHTML(cat)}</span>
+          </label>
+        `;
+      }).join('');
 
       const cubbySelect = document.getElementById('fieldCubby');
       cubbySelect.innerHTML = state.cubbyLabels.map((lbl, idx) =>
@@ -3155,8 +3602,8 @@
       document.getElementById('whiteLocationGroup').classList.toggle('hidden', type === 'tarot');
       document.getElementById('tarotLocationGroup').classList.toggle('hidden', type !== 'tarot');
       document.getElementById('objectIconGroup').classList.toggle('hidden', type !== 'object');
-      document.getElementById('fieldBookCategory').classList.toggle('hidden', type !== 'book');
-      document.getElementById('fieldTheme').classList.toggle('hidden', type === 'book');
+      document.getElementById('bookCategoriesGroup').classList.toggle('hidden', type !== 'book');
+      document.getElementById('nonBookThemeGroup').classList.toggle('hidden', type === 'book');
     }
 
     function openAddModal() {
@@ -3188,10 +3635,11 @@
       const item = state.items.find(i => i.id === itemId);
       if (!item) return;
 
+      const parsedBookThemes = item.type === 'book' ? parseItemThemes(item.theme) : [];
       document.getElementById('modalTitle').textContent = 'Editar Pieza';
       document.getElementById('editItemId').value = item.id;
       document.querySelector(`input[name="itemType"][value="${item.type}"]`).checked = true;
-      populateModalPickers(item.color || '#5D3552', item.icon || 'photoframe');
+      populateModalPickers(item.color || '#5D3552', item.icon || 'photoframe', parsedBookThemes);
       toggleLocationFields();
 
       document.getElementById('fieldTitle').value = item.title || '';
@@ -3199,19 +3647,7 @@
       document.getElementById('fieldPublisher').value = item.publisher || '';
       document.getElementById('fieldNotes').value = item.notes || '';
 
-      if (item.type === 'book') {
-        const catSelect = document.getElementById('fieldBookCategory');
-        const matchedCat = BOOK_CATEGORIES.find(c => c.toLowerCase() === (item.theme || '').toLowerCase());
-        if (matchedCat) {
-          catSelect.value = matchedCat;
-        } else if (item.theme) {
-          const opt = document.createElement('option');
-          opt.value = item.theme;
-          opt.textContent = item.theme;
-          catSelect.appendChild(opt);
-          catSelect.value = item.theme;
-        }
-      } else {
+      if (item.type !== 'book') {
         document.getElementById('fieldTheme').value = item.theme || '';
       }
 
@@ -3239,8 +3675,9 @@
 
       const author = document.getElementById('fieldAuthor').value.trim();
       const publisher = document.getElementById('fieldPublisher').value.trim();
+      const checkedBookCats = Array.from(document.querySelectorAll('input[name="bookCategoryCheckbox"]:checked')).map(el => el.value);
       const theme = type === 'book'
-        ? document.getElementById('fieldBookCategory').value
+        ? checkedBookCats.join(', ')
         : document.getElementById('fieldTheme').value.trim();
       const notes = document.getElementById('fieldNotes').value.trim();
       const color = document.getElementById('colorSwatches').dataset.selected || '#5D3552';
