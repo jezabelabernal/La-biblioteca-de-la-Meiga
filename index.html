@@ -427,7 +427,7 @@
           <button onclick="exportCSV()" class="ink-btn px-3.5 py-2 rounded-xl bg-[#A8D59D] text-[#151014] font-bold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer" title="Descargar toda tu biblioteca en formato CSV">
             <span>📊</span> <span>Exportar CSV</span>
           </button>
-          <button onclick="triggerCSVImport()" class="ink-btn px-3 py-2 rounded-xl bg-[#2B1F28] text-[#DCE6D6] font-semibold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer" title="Cargar un archivo CSV guardado">
+          <button onclick="triggerCSVImport()" class="ink-btn px-3.5 py-2 rounded-xl bg-[#2B1F28] text-[#DCE6D6] font-semibold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer" title="Cargar un archivo CSV guardado">
             <span>📂</span> <span>Importar CSV</span>
           </button>
         </div>
@@ -750,8 +750,10 @@
             <option value="default">↕ Orden: Estante / Ubicación</option>
             <option value="title_asc">🔤 Título (A → Z)</option>
             <option value="title_desc">🔤 Título (Z → A)</option>
-            <option value="publisher_asc">🏛️ Editorial / Autor (A → Z)</option>
-            <option value="publisher_desc">🏛️ Editorial / Autor (Z → A)</option>
+            <option value="author_asc">✍️ Autor (A → Z)</option>
+            <option value="author_desc">✍️ Autor (Z → A)</option>
+            <option value="publisher_asc">🏛️ Editorial (A → Z)</option>
+            <option value="publisher_desc">🏛️ Editorial (Z → A)</option>
             <option value="theme_asc">🏷️ Temática (A → Z)</option>
             <option value="type_asc">✦ Tipo</option>
           </select>
@@ -839,18 +841,18 @@
         </div>
 
         <!-- Autor, Editorial y Temática/Categoría -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div id="authorFieldGroup">
             <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Autor</label>
             <input id="fieldAuthor" type="text" placeholder="Ej. Isaac Asimov"
               class="w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]" />
           </div>
-          <div>
+          <div id="publisherFieldGroup">
             <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Editorial</label>
             <input id="fieldPublisher" type="text" placeholder="Ej. Minotauro"
               class="w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]" />
           </div>
-          <div class="sm:col-span-3" id="bookCategoriesGroup">
+          <div class="sm:col-span-2" id="bookCategoriesGroup">
             <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1.5">Categorías del libro (puedes marcar varias)</label>
             <div id="fieldBookCategoriesChecklist" class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 max-h-40 overflow-y-auto p-2.5 rounded-xl bg-[#151014] border-2 border-[#120D11]">
             </div>
@@ -989,7 +991,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = 'biblioteca_de_la_meiga_v16';
+    const STORAGE_KEY = 'biblioteca_de_la_meiga_v17';
     const ROMAN = ['I', 'II', 'III', 'IV'];
 
     // Categorías literarias ordenadas alfabéticamente (incluyendo Astronomía, Magia - Brujas y Mitología)
@@ -1016,19 +1018,19 @@
     const DEFAULT_CUPBOARD_NOTES = ['', '', '', ''];
 
     const DEFAULT_CUBBY_LABELS = [
-  "Ángeles y Demonios",
-  "Artísticos",
-  "Barajas",
-  "Terror",
-  "Gatos",
-  "Vampiros y Brujas",
-  "Magia Verde",
-  "En Uso",
-  "Oráculos",
-  "Dragones",
-  "Rol",
-  "Mix"
-];
+      "Ángeles y Demonios",
+      "Artísticos",
+      "Barajas",
+      "Terror",
+      "Gatos",
+      "Vampiros y Brujas",
+      "Magia Verde",
+      "En Uso",
+      "Oráculos",
+      "Dragones",
+      "Rol",
+      "Mix"
+    ];
 
     const SPINE_COLORS = [
       { name: 'Ciruela', hex: '#5D3552' },
@@ -1043,1263 +1045,139 @@
       { name: 'Obsidiana', hex: '#2B2429' }
     ];
 
-    // Repertorio completo de objetos decorativos (incluidos Cthulhu, peluches de dragones, caracola, piedras, soporte vela, cajas nácar y cajas madera)
+    // Repertorio completo de objetos decorativos ordenados alfabéticamente
     const OBJECT_ICONS = [
+      { id: 'orb', label: '🔮 Bola de cristal' },
+      { id: 'compass', label: '🧭 Brújula' },
       { id: 'cthulhu', label: '🐙 Busto Cthulhu' },
-      { id: 'dragon_green', label: '🐉 Dragona verde' },
-      { id: 'dragon_grey', label: '🐲 Dragón gris' },
-      { id: 'dragon_white', label: '🤍 Dragón blanco' },
-      { id: 'dragon_black', label: '🖤 Dragón negro' },
-      { id: 'shell', label: '🐚 Caracola' },
-      { id: 'crystal', label: '💎 Piedras (Ágata, jade, cuarzo...)' },
-      { id: 'candle', label: '🕯️ Soporte vela' },
-      { id: 'motherofpearl_box', label: '🦪 Caja nácar' },
       { id: 'wooden_box', label: '🪵 Caja madera' },
+      { id: 'motherofpearl_box', label: '🦪 Caja nácar' },
+      { id: 'skull', label: '💀 Calavera' },
+      { id: 'cauldron', label: '🫕 Calderito' },
+      { id: 'shell', label: '🐚 Caracola' },
+      { id: 'dragon_white', label: '🤍 Dragón blanco' },
+      { id: 'dragon_grey', label: '🐲 Dragón gris' },
+      { id: 'dragon_black', label: '🖤 Dragón negro' },
+      { id: 'dragon_green', label: '🐉 Dragona verde' },
       { id: 'photoframe', label: '🖼️ Marco de fotos' },
       { id: 'orrery', label: '🪐 Modelo celeste (Orrery)' },
-      { id: 'canopo', label: '🏺 Vaso canopo' },
-      { id: 'compass', label: '🧭 Brújula' },
+      { id: 'crystal', label: '💎 Piedras (Ágata, jade, cuarzo...)' },
+      { id: 'plant', label: '🌿 Planta' },
+      { id: 'scrollholder', label: '📜 Portapergaminos' },
+      { id: 'jar', label: '🧪 Pote de bruja' },
+      { id: 'operaglasses', label: '🎭 Prismáticos ópera' },
+      { id: 'octopusorb', label: '🐙 Pulpo bola cristal' },
       { id: 'sundial', label: '☀️ Reloj solar' },
       { id: 'sextant', label: '📐 Sextante' },
-      { id: 'scrollholder', label: '📜 Portapergaminos' },
-      { id: 'octopusorb', label: '🐙 Pulpo bola cristal' },
-      { id: 'operaglasses', label: '🎭 Prismáticos ópera' },
-      { id: 'jar', label: '🧪 Pote de bruja' },
-      { id: 'cauldron', label: '🫕 Calderito' },
-      { id: 'skull', label: '💀 Calavera' },
-      { id: 'plant', label: '🌿 Planta' },
-      { id: 'orb', label: '🔮 Bola de cristal' }
+      { id: 'candle', label: '🕯️ Soporte vela' },
+      { id: 'canopo', label: '🏺 Vaso canopo' }
     ];
 
     const DEFAULT_ITEMS = [
-  {
-    "id": "csv_1",
-    "type": "book",
-    "title": "Fundación",
-    "author": "Isaac Asimov",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_2",
-    "type": "book",
-    "title": "Hacia la fundación",
-    "author": "Isaac Asimov",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_3",
-    "type": "book",
-    "title": "Preludio a la fundación",
-    "author": "Isaac Asimov",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_4",
-    "type": "book",
-    "title": "Fundación e Imperio",
-    "author": "Isaac Asimov",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_5",
-    "type": "book",
-    "title": "Segunda Fundación",
-    "author": "Isaac Asimor",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_6",
-    "type": "book",
-    "title": "Mundo anillo",
-    "author": "Larry Niven",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_7",
-    "type": "object",
-    "title": "Modelo Celeste Orrery con cuarzo blanco",
-    "author": "",
-    "publisher": "",
-    "theme": "Decoración brujeril",
-    "color": "#CBB894",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1,
-    "icon": "orrery"
-  },
-  {
-    "id": "csv_8",
-    "type": "book",
-    "title": "A vuestros cuerpos dispersos",
-    "author": "Philip José Farmer",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_9",
-    "type": "book",
-    "title": "El granjero de las estrellas",
-    "author": "Robert A. Heinlein",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_10",
-    "type": "book",
-    "title": "Inundación",
-    "author": "Stephen Baxter",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_11",
-    "type": "book",
-    "title": "El arca",
-    "author": "Stephen Baxter",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_12",
-    "type": "book",
-    "title": "Dune",
-    "author": "Frank Herbert",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_13",
-    "type": "book",
-    "title": "Mesías de Dune",
-    "author": "Frank Herbert",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_14",
-    "type": "book",
-    "title": "La conspiración alejandrina",
-    "author": "Terry Bisson",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_15",
-    "type": "book",
-    "title": "Ready player One",
-    "author": "Ernest Cline",
-    "publisher": "Nova",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_16",
-    "type": "book",
-    "title": "Armada",
-    "author": "Ernest Cline",
-    "publisher": "Nova",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_17",
-    "type": "book",
-    "title": "Ender en el exilio",
-    "author": "Orson Scott Card",
-    "publisher": "Nova",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_18",
-    "type": "book",
-    "title": "Flashforward",
-    "author": "Robert J. Sawyer",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_19",
-    "type": "book",
-    "title": "Muerte de la luz",
-    "author": "George R. R. Martin",
-    "publisher": "Gigamesh",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_20",
-    "type": "book",
-    "title": "Los mejores cuentos de Ciencia Ficción",
-    "author": "Varios autores",
-    "publisher": "Ameghino",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_21",
-    "type": "book",
-    "title": "Guía del autoestopista galáctico",
-    "author": "Douglas Adams",
-    "publisher": "Anagrama",
-    "theme": "Ciencia ficción",
-    "color": "#9B4D3A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_22",
-    "type": "book",
-    "title": "Criptonomicón I",
-    "author": "Neal Stephenson",
-    "publisher": "Zeta",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_23",
-    "type": "book",
-    "title": "Criptonomicón II",
-    "author": "Neal Stephenson",
-    "publisher": "Zeta",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_24",
-    "type": "book",
-    "title": "La era diamante",
-    "author": "Neal Stephenson",
-    "publisher": "Nova",
-    "theme": "Ciencia ficción",
-    "color": "#CBB894",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_25",
-    "type": "book",
-    "title": "La vieja guardia",
-    "author": "John Scalzi",
-    "publisher": "Minotauro",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_26",
-    "type": "book",
-    "title": "La historia de Zoë",
-    "author": "John Scalzi",
-    "publisher": "booket",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_27",
-    "type": "book",
-    "title": "La colonia perdida",
-    "author": "John Scalzi",
-    "publisher": "booket",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_28",
-    "type": "book",
-    "title": "El tercer brazo",
-    "author": "L. Nivel y J. Pournelle",
-    "publisher": "Gran Super Ficción",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_29",
-    "type": "book",
-    "title": "La paja en el ojo de dios",
-    "author": "L. Nivel y J. Pournelle",
-    "publisher": "Gran Super Ficción",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 1
-  },
-  {
-    "id": "csv_30",
-    "type": "book",
-    "title": "El anacropete",
-    "author": "Enrique Gaspar",
-    "publisher": "Kronos Minotauro",
-    "theme": "Ciencia ficción",
-    "color": "#9B4D3A",
-    "notes": "Es el primer libro oficialmente de viajes en el tiempo (1887), antes que H. G. Wells 1895",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_31",
-    "type": "book",
-    "title": "Timeriders: Tiempo de dinosaurios",
-    "author": "Alex Scarrow",
-    "publisher": "Marlow",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "Saga",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_32",
-    "type": "book",
-    "title": "Timeriders: Los vigilantes del tiempo",
-    "author": "Alex Scarrow",
-    "publisher": "Marlow",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_33",
-    "type": "object",
-    "title": "Patente de corso de Barba Roja",
-    "author": "Jorge y Jeza",
-    "publisher": "",
-    "theme": "",
-    "color": "#B8893E",
-    "notes": "Patente de corso de Barba Roja",
-    "cabinet": 1,
-    "shelf": 2,
-    "icon": "scrollholder"
-  },
-  {
-    "id": "csv_34",
-    "type": "book",
-    "title": "Una aventura en el tiempo",
-    "author": "Charlotte Moberly y Eleanor Jourdain",
-    "publisher": "Fábulas de albión",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_35",
-    "type": "book",
-    "title": "An Adventure",
-    "author": "Charlotte Moberly y Eleanor Jourdain",
-    "publisher": "",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_36",
-    "type": "book",
-    "title": "El libro del día del juicio final",
-    "author": "Connie Willis",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_37",
-    "type": "book",
-    "title": "Los cronolitos",
-    "author": "Robert C. Wilson",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_38",
-    "type": "book",
-    "title": "El hechicero accidental",
-    "author": "K. E. Mills",
-    "publisher": "",
-    "theme": "Ciencia ficción",
-    "color": "#5E7563",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_39",
-    "type": "book",
-    "title": "Prodigioscopio",
-    "author": "José Fernández Guerra",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#9B4D3A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_40",
-    "type": "book",
-    "title": "Rescate en el tiempo (1999-1357)",
-    "author": "Michael Crichton",
-    "publisher": "Círculo de Lectores",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_41",
-    "type": "book",
-    "title": "El descrubrimiento de las brujas",
-    "author": "Deborah Harkness",
-    "publisher": "Debolsillo",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "Saga",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_42",
-    "type": "book",
-    "title": "La sombra de la noche",
-    "author": "Deborah Harkness",
-    "publisher": "Debolsillo",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_43",
-    "type": "book",
-    "title": "El libro de la vida",
-    "author": "Deborah Harkness",
-    "publisher": "Debolsillo",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_44",
-    "type": "book",
-    "title": "Memorias encontradas en una bañera",
-    "author": "Stanislaw Lem",
-    "publisher": "Bruguera- Libro amigo",
-    "theme": "Ciencia ficción",
-    "color": "#CBB894",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_45",
-    "type": "book",
-    "title": "Ciberíada",
-    "author": "Stanislaw Lem",
-    "publisher": "Bruguera- Libro amigo",
-    "theme": "Ciencia ficción",
-    "color": "#CBB894",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_46",
-    "type": "book",
-    "title": "Diarios de las estrellas. VIajes y memorias",
-    "author": "Stanislaw Lem",
-    "publisher": "Bruguera- Libro amigo",
-    "theme": "Ciencia ficción",
-    "color": "#CBB894",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_47",
-    "type": "book",
-    "title": "Darwinia",
-    "author": "Robert C. Wilson",
-    "publisher": "La factoría de Ideas",
-    "theme": "Ciencia ficción",
-    "color": "#CBB894",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_48",
-    "type": "book",
-    "title": "Bill, héroe galáctico",
-    "author": "Harry Harrison",
-    "publisher": "Grandes éxitos de bolsillo",
-    "theme": "Ciencia ficción",
-    "color": "#CBB894",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_49",
-    "type": "object",
-    "title": "Foto mía de cuando acabé el instituto + foto carnet de Jorge de chaval",
-    "author": "",
-    "publisher": "",
-    "theme": "",
-    "color": "#9B4D3A",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2,
-    "icon": "photoframe"
-  },
-  {
-    "id": "csv_50",
-    "type": "book",
-    "title": "El hombre ilustrado",
-    "author": "Ray Bradbury",
-    "publisher": "booket",
-    "theme": "Ciencia ficción",
-    "color": "#CBB894",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_51",
-    "type": "book",
-    "title": "Fahrenheit 451",
-    "author": "Ray Bradbury",
-    "publisher": "Debolsillo",
-    "theme": "Ciencia ficción",
-    "color": "#7A2E3B",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_52",
-    "type": "book",
-    "title": "Crónicas marcianas",
-    "author": "Ray Bradbury",
-    "publisher": "booket",
-    "theme": "Ciencia ficción",
-    "color": "#7A2E3B",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_53",
-    "type": "book",
-    "title": "Zen en el arte de escribir",
-    "author": "Ray Bradbury",
-    "publisher": "Minotauro",
-    "theme": "Ciencia ficción",
-    "color": "#CBB894",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_54",
-    "type": "book",
-    "title": "Conde cero - Trilogía del Sprawl 2",
-    "author": "William Gibson",
-    "publisher": "Minotauro",
-    "theme": "Ciencia ficción",
-    "color": "#CBB894",
-    "notes": "Saga",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_55",
-    "type": "book",
-    "title": "Mona Lisa acelerada - Trilogía del Sprawl 2",
-    "author": "William Gibson",
-    "publisher": "Minotauro",
-    "theme": "Ciencia ficción",
-    "color": "#CBB894",
-    "notes": "Saga",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_56",
-    "type": "object",
-    "title": "Caja libro - 2",
-    "author": "",
-    "publisher": "",
-    "theme": "",
-    "color": "#5E7563",
-    "notes": "",
-    "cabinet": 1,
-    "shelf": 2,
-    "icon": "wooden_box"
-  },
-  {
-    "id": "csv_57",
-    "type": "book",
-    "title": "850 Aniversario",
-    "author": "Félix Carreira Viso",
-    "publisher": "Libros Mablax",
-    "theme": "Ciencia ficción",
-    "color": "#2B2429",
-    "notes": "Con dedicatoria del autor",
-    "cabinet": 1,
-    "shelf": 2
-  },
-  {
-    "id": "csv_58",
-    "type": "book",
-    "title": "Drácula",
-    "author": "Bram Stoker",
-    "publisher": "",
-    "theme": "Terror",
-    "color": "#7A2E3B",
-    "notes": "",
-    "cabinet": 2,
-    "shelf": 1
-  },
-  {
-    "id": "csv_59",
-    "type": "book",
-    "title": "Frankenstein",
-    "author": "Mary Shelley",
-    "publisher": "",
-    "theme": "Terror",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 2,
-    "shelf": 1
-  },
-  {
-    "id": "csv_60",
-    "type": "object",
-    "title": "Pulpo sujeta bola de cristal",
-    "author": "Altar",
-    "publisher": "",
-    "theme": "Decoración brujeril",
-    "color": "#8B54C4",
-    "notes": "",
-    "cabinet": 2,
-    "shelf": 1,
-    "icon": "octopusorb"
-  },
-  {
-    "id": "csv_61",
-    "type": "book",
-    "title": "Cuentos Completos",
-    "author": "Edgar Allan Poe",
-    "publisher": "",
-    "theme": "Terror",
-    "color": "#5D3552",
-    "notes": "",
-    "cabinet": 2,
-    "shelf": 2
-  },
-  {
-    "id": "csv_62",
-    "type": "object",
-    "title": "Pote de bruja con hierbas",
-    "author": "Boticario",
-    "publisher": "",
-    "theme": "Decoración brujeril",
-    "color": "#4E7566",
-    "notes": "",
-    "cabinet": 2,
-    "shelf": 2,
-    "icon": "jar"
-  },
-  {
-    "id": "csv_63",
-    "type": "book",
-    "title": "Asesinato en el Orient Express",
-    "author": "Agatha Christie",
-    "publisher": "",
-    "theme": "Misterio",
-    "color": "#385947",
-    "notes": "",
-    "cabinet": 2,
-    "shelf": 3
-  },
-  {
-    "id": "csv_64",
-    "type": "object",
-    "title": "Drusa de amatistas",
-    "author": "Minerales",
-    "publisher": "",
-    "theme": "Cristales",
-    "color": "#9D65D0",
-    "notes": "",
-    "cabinet": 2,
-    "shelf": 3,
-    "icon": "crystal"
-  },
-  {
-    "id": "csv_65",
-    "type": "book",
-    "title": "El Silencio de los Corderos",
-    "author": "Thomas Harris",
-    "publisher": "",
-    "theme": "Thriller",
-    "color": "#2B2429",
-    "notes": "",
-    "cabinet": 2,
-    "shelf": 4
-  },
-  {
-    "id": "csv_66",
-    "type": "object",
-    "title": "Vaso canopo de alabastro",
-    "author": "Antigüedades",
-    "publisher": "",
-    "theme": "Decoración brujeril",
-    "color": "#EDE2CC",
-    "notes": "Con tapa de chacal",
-    "cabinet": 2,
-    "shelf": 4,
-    "icon": "canopo"
-  },
-  {
-    "id": "csv_67",
-    "type": "book",
-    "title": "Sandman",
-    "author": "Neil Gaiman",
-    "publisher": "",
-    "theme": "Cómic",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 3,
-    "shelf": 1
-  },
-  {
-    "id": "csv_68",
-    "type": "book",
-    "title": "Blacksad",
-    "author": "Díaz Canales & Guarnido",
-    "publisher": "",
-    "theme": "Cómic",
-    "color": "#B8893E",
-    "notes": "",
-    "cabinet": 3,
-    "shelf": 1
-  },
-  {
-    "id": "csv_69",
-    "type": "object",
-    "title": "Prismáticos de ópera nacarados",
-    "author": "Curiosidades",
-    "publisher": "",
-    "theme": "Decoración brujeril",
-    "color": "#E8C872",
-    "notes": "",
-    "cabinet": 3,
-    "shelf": 1,
-    "icon": "operaglasses"
-  },
-  {
-    "id": "csv_70",
-    "type": "book",
-    "title": "Follas Novas",
-    "author": "Rosalía de Castro",
-    "publisher": "",
-    "theme": "Poesía",
-    "color": "#5E7563",
-    "notes": "",
-    "cabinet": 3,
-    "shelf": 2
-  },
-  {
-    "id": "csv_71",
-    "type": "object",
-    "title": "Portapergaminos de cuero y latón",
-    "author": "Escritorio",
-    "publisher": "",
-    "theme": "Decoración brujeril",
-    "color": "#9B5A3C",
-    "notes": "",
-    "cabinet": 3,
-    "shelf": 2,
-    "icon": "scrollholder"
-  },
-  {
-    "id": "csv_72",
-    "type": "book",
-    "title": "La Casa de Bernarda Alba",
-    "author": "Federico García Lorca",
-    "publisher": "",
-    "theme": "Drama",
-    "color": "#7A2E3B",
-    "notes": "",
-    "cabinet": 3,
-    "shelf": 3
-  },
-  {
-    "id": "csv_73",
-    "type": "object",
-    "title": "Marco de fotos vintage tallado",
-    "author": "Recuerdos",
-    "publisher": "",
-    "theme": "Decoración brujeril",
-    "color": "#C8963E",
-    "notes": "",
-    "cabinet": 3,
-    "shelf": 3,
-    "icon": "photoframe"
-  },
-  {
-    "id": "csv_74",
-    "type": "book",
-    "title": "El Decamerón",
-    "author": "Giovanni Boccaccio",
-    "publisher": "",
-    "theme": "Erótico-festivo",
-    "color": "#9B4D3A",
-    "notes": "",
-    "cabinet": 3,
-    "shelf": 4
-  },
-  {
-    "id": "csv_75",
-    "type": "book",
-    "title": "Buenos Presagios",
-    "author": "Terry Pratchett & Neil Gaiman",
-    "publisher": "",
-    "theme": "Humor",
-    "color": "#CBB894",
-    "notes": "",
-    "cabinet": 4,
-    "shelf": 1
-  },
-  {
-    "id": "csv_76",
-    "type": "book",
-    "title": "Brujerías",
-    "author": "Terry Pratchett",
-    "publisher": "",
-    "theme": "Humor",
-    "color": "#385947",
-    "notes": "",
-    "cabinet": 4,
-    "shelf": 1
-  },
-  {
-    "id": "csv_77",
-    "type": "object",
-    "title": "Helecho de interior",
-    "author": "Botánica",
-    "publisher": "",
-    "theme": "Decoración brujeril",
-    "color": "#5E8563",
-    "notes": "",
-    "cabinet": 4,
-    "shelf": 1,
-    "icon": "plant"
-  },
-  {
-    "id": "csv_78",
-    "type": "book",
-    "title": "El Problema de los Tres Cuerpos",
-    "author": "Cixin Liu",
-    "publisher": "",
-    "theme": "Ciencia ficción",
-    "color": "#28364A",
-    "notes": "",
-    "cabinet": 4,
-    "shelf": 2
-  },
-  {
-    "id": "csv_79",
-    "type": "object",
-    "title": "Vela de cera de abeja",
-    "author": "Altar",
-    "publisher": "",
-    "theme": "Decoración brujeril",
-    "color": "#F6C453",
-    "notes": "",
-    "cabinet": 4,
-    "shelf": 2,
-    "icon": "candle"
-  },
-  {
-    "id": "csv_80",
-    "type": "object",
-    "title": "Modelo celeste Orrery de latón",
-    "author": "Astronomía",
-    "publisher": "",
-    "theme": "Decoración brujeril",
-    "color": "#D4A84F",
-    "notes": "Planetario mecánico",
-    "cabinet": 4,
-    "shelf": 3,
-    "icon": "orrery"
-  },
-  {
-    "id": "csv_81",
-    "type": "tarot",
-    "title": "Demon of the Day",
-    "author": "Oráculo",
-    "publisher": "",
-    "theme": "Ángeles y Demonios",
-    "color": "#8C2D2D",
-    "notes": "Caja roja",
-    "cubby": 0
-  },
-  {
-    "id": "csv_82",
-    "type": "tarot",
-    "title": "Angels & Demons Tarot",
-    "author": "Tarot",
-    "publisher": "",
-    "theme": "Ángeles y Demonios",
-    "color": "#4A262B",
-    "notes": "",
-    "cubby": 0
-  },
-  {
-    "id": "csv_83",
-    "type": "tarot",
-    "title": "Steampunk Art Nouveau Tarot",
-    "author": "Lo Scarabeo",
-    "publisher": "",
-    "theme": "Artísticos",
-    "color": "#3B646E",
-    "notes": "",
-    "cubby": 1
-  },
-  {
-    "id": "csv_84",
-    "type": "tarot",
-    "title": "Diario Arcano de Cuero",
-    "author": "Cuaderno de tiradas",
-    "publisher": "",
-    "theme": "Artísticos",
-    "color": "#6E4730",
-    "notes": "",
-    "cubby": 1
-  },
-  {
-    "id": "csv_85",
-    "type": "tarot",
-    "title": "Barajas Clásicas y Edición Especial",
-    "author": "Colección",
-    "publisher": "",
-    "theme": "Barajas",
-    "color": "#8F7B63",
-    "notes": "",
-    "cubby": 2
-  },
-  {
-    "id": "csv_86",
-    "type": "tarot",
-    "title": "El Necronomicón Tarot",
-    "author": "Donald Tyson",
-    "publisher": "",
-    "theme": "Terror",
-    "color": "#2B3033",
-    "notes": "",
-    "cubby": 3
-  },
-  {
-    "id": "csv_87",
-    "type": "tarot",
-    "title": "Occult Tarot",
-    "author": "Travis McHenry",
-    "publisher": "",
-    "theme": "Terror",
-    "color": "#6E2626",
-    "notes": "",
-    "cubby": 3
-  },
-  {
-    "id": "csv_88",
-    "type": "tarot",
-    "title": "El Tarot de los Gatos",
-    "author": "Librero",
-    "publisher": "",
-    "theme": "Gatos",
-    "color": "#C47451",
-    "notes": "78 cartas y guía",
-    "cubby": 4
-  },
-  {
-    "id": "csv_89",
-    "type": "tarot",
-    "title": "Tarot XIII",
-    "author": "Nekro",
-    "publisher": "",
-    "theme": "Vampiros y Brujas",
-    "color": "#262226",
-    "notes": "",
-    "cubby": 5
-  },
-  {
-    "id": "csv_90",
-    "type": "tarot",
-    "title": "Tarot del Libro de las Sombras",
-    "author": "Barbara Moore",
-    "publisher": "",
-    "theme": "Vampiros y Brujas",
-    "color": "#4B5744",
-    "notes": "",
-    "cubby": 5
-  },
-  {
-    "id": "csv_91",
-    "type": "tarot",
-    "title": "Tarot V (Vampiros)",
-    "author": "Tarot gótico",
-    "publisher": "",
-    "theme": "Vampiros y Brujas",
-    "color": "#3D2329",
-    "notes": "",
-    "cubby": 5
-  },
-  {
-    "id": "csv_92",
-    "type": "tarot",
-    "title": "The Green Witch's Oracle Deck",
-    "author": "Arin Murphy-Hiscock",
-    "publisher": "",
-    "theme": "Magia Verde",
-    "color": "#5D7A5C",
-    "notes": "",
-    "cubby": 6
-  },
-  {
-    "id": "csv_93",
-    "type": "tarot",
-    "title": "Green Witch Tarot",
-    "author": "Ann Moura",
-    "publisher": "",
-    "theme": "Magia Verde",
-    "color": "#4E7D78",
-    "notes": "",
-    "cubby": 6
-  },
-  {
-    "id": "csv_94",
-    "type": "tarot",
-    "title": "Baraja en Uso (Paño Estrellado)",
-    "author": "Lectura actual",
-    "publisher": "",
-    "theme": "En Uso",
-    "color": "#233252",
-    "notes": "",
-    "cubby": 7
-  },
-  {
-    "id": "csv_95",
-    "type": "tarot",
-    "title": "Circle of Life Tarot",
-    "author": "Maria Distefano",
-    "publisher": "",
-    "theme": "Oráculos",
-    "color": "#4C4373",
-    "notes": "",
-    "cubby": 8
-  },
-  {
-    "id": "csv_96",
-    "type": "tarot",
-    "title": "Earthbound Oracle",
-    "author": "Oráculo",
-    "publisher": "",
-    "theme": "Oráculos",
-    "color": "#B86F4B",
-    "notes": "",
-    "cubby": 8
-  },
-  {
-    "id": "csv_97",
-    "type": "tarot",
-    "title": "Past Life & Lenormand",
-    "author": "Oráculos",
-    "publisher": "",
-    "theme": "Oráculos",
-    "color": "#C9963E",
-    "notes": "",
-    "cubby": 8
-  },
-  {
-    "id": "csv_98",
-    "type": "tarot",
-    "title": "Star Dragon Oracle Cards",
-    "author": "Oráculo",
-    "publisher": "",
-    "theme": "Dragones",
-    "color": "#7D3530",
-    "notes": "",
-    "cubby": 9
-  },
-  {
-    "id": "csv_99",
-    "type": "tarot",
-    "title": "Dungeons & Dragons Tarot Deck",
-    "author": "Wizards of the Coast",
-    "publisher": "",
-    "theme": "Rol",
-    "color": "#242226",
-    "notes": "",
-    "cubby": 10
-  },
-  {
-    "id": "csv_100",
-    "type": "tarot",
-    "title": "Citadel: A Fantasy Oracle",
-    "author": "Fez Inkwright",
-    "publisher": "",
-    "theme": "Rol",
-    "color": "#D4CEC5",
-    "notes": "",
-    "cubby": 10
-  },
-  {
-    "id": "csv_101",
-    "type": "tarot",
-    "title": "Tarot Vintage",
-    "author": "Tarot",
-    "publisher": "",
-    "theme": "Mix",
-    "color": "#C9B796",
-    "notes": "",
-    "cubby": 11
-  },
-  {
-    "id": "csv_102",
-    "type": "tarot",
-    "title": "Mindscapes Tarot",
-    "author": "Tarot",
-    "publisher": "",
-    "theme": "Mix",
-    "color": "#395A75",
-    "notes": "",
-    "cubby": 11
-  },
-  {
-    "id": "csv_103",
-    "type": "tarot",
-    "title": "Celtic Tarot",
-    "author": "Tarot",
-    "publisher": "",
-    "theme": "Mix",
-    "color": "#6E4935",
-    "notes": "",
-    "cubby": 11
-  }
-];
+      { id: "csv_1", type: "book", title: "Fundación", author: "Isaac Asimov", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_2", type: "book", title: "Hacia la fundación", author: "Isaac Asimov", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_3", type: "book", title: "Preludio a la fundación", author: "Isaac Asimov", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_4", type: "book", title: "Fundación e Imperio", author: "Isaac Asimov", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_5", type: "book", title: "Segunda Fundación", author: "Isaac Asimor", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_6", type: "book", title: "Mundo anillo", author: "Larry Niven", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_7", type: "object", title: "Modelo Celeste Orrery con cuarzo blanco", author: "", publisher: "", theme: "Decoración brujeril", color: "#CBB894", notes: "", cabinet: 1, shelf: 1, icon: "orrery" },
+      { id: "csv_8", type: "book", title: "A vuestros cuerpos dispersos", author: "Philip José Farmer", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_9", type: "book", title: "El granjero de las estrellas", author: "Robert A. Heinlein", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_10", type: "book", title: "Inundación", author: "Stephen Baxter", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_11", type: "book", title: "El arca", author: "Stephen Baxter", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_12", type: "book", title: "Dune", author: "Frank Herbert", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_13", type: "book", title: "Mesías de Dune", author: "Frank Herbert", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_14", type: "book", title: "La conspiración alejandrina", author: "Terry Bisson", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_15", type: "book", title: "Ready player One", author: "Ernest Cline", publisher: "Nova", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_16", type: "book", title: "Armada", author: "Ernest Cline", publisher: "Nova", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_17", type: "book", title: "Ender en el exilio", author: "Orson Scott Card", publisher: "Nova", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_18", type: "book", title: "Flashforward", author: "Robert J. Sawyer", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_19", type: "book", title: "Muerte de la luz", author: "George R. R. Martin", publisher: "Gigamesh", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_20", type: "book", title: "Los mejores cuentos de Ciencia Ficción", author: "Varios autores", publisher: "Ameghino", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_21", type: "book", title: "Guía del autoestopista galáctico", author: "Douglas Adams", publisher: "Anagrama", theme: "Ciencia ficción", color: "#9B4D3A", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_22", type: "book", title: "Criptonomicón I", author: "Neal Stephenson", publisher: "Zeta", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_23", type: "book", title: "Criptonomicón II", author: "Neal Stephenson", publisher: "Zeta", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_24", type: "book", title: "La era diamante", author: "Neal Stephenson", publisher: "Nova", theme: "Ciencia ficción", color: "#CBB894", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_25", type: "book", title: "La vieja guardia", author: "John Scalzi", publisher: "Minotauro", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_26", type: "book", title: "La historia de Zoë", author: "John Scalzi", publisher: "booket", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_27", type: "book", title: "La colonia perdida", author: "John Scalzi", publisher: "booket", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_28", type: "book", title: "El tercer brazo", author: "L. Nivel y J. Pournelle", publisher: "Gran Super Ficción", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_29", type: "book", title: "La paja en el ojo de dios", author: "L. Nivel y J. Pournelle", publisher: "Gran Super Ficción", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 1 },
+      { id: "csv_30", type: "book", title: "El anacropete", author: "Enrique Gaspar", publisher: "Kronos Minotauro", theme: "Ciencia ficción", color: "#9B4D3A", notes: "Es el primer libro oficialmente de viajes en el tiempo (1887), antes que H. G. Wells 1895", cabinet: 1, shelf: 2 },
+      { id: "csv_31", type: "book", title: "Timeriders: Tiempo de dinosaurios", author: "Alex Scarrow", publisher: "Marlow", theme: "Ciencia ficción", color: "#2B2429", notes: "Saga", cabinet: 1, shelf: 2 },
+      { id: "csv_32", type: "book", title: "Timeriders: Los vigilantes del tiempo", author: "Alex Scarrow", publisher: "Marlow", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_33", type: "object", title: "Patente de corso de Barba Roja", author: "Jorge y Jeza", publisher: "", theme: "", color: "#B8893E", notes: "Patente de corso de Barba Roja", cabinet: 1, shelf: 2, icon: "scrollholder" },
+      { id: "csv_34", type: "book", title: "Una aventura en el tiempo", author: "Charlotte Moberly y Eleanor Jourdain", publisher: "Fábulas de albión", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_35", type: "book", title: "An Adventure", author: "Charlotte Moberly y Eleanor Jourdain", publisher: "", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_36", type: "book", title: "El libro del día del juicio final", author: "Connie Willis", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_37", type: "book", title: "Los cronolitos", author: "Robert C. Wilson", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_38", type: "book", title: "El hechicero accidental", author: "K. E. Mills", publisher: "", theme: "Ciencia ficción", color: "#5E7563", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_39", type: "book", title: "Prodigioscopio", author: "José Fernández Guerra", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#9B4D3A", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_40", type: "book", title: "Rescate en el tiempo (1999-1357)", author: "Michael Crichton", publisher: "Círculo de Lectores", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_41", type: "book", title: "El descrubrimiento de las brujas", author: "Deborah Harkness", publisher: "Debolsillo", theme: "Ciencia ficción", color: "#2B2429", notes: "Saga", cabinet: 1, shelf: 2 },
+      { id: "csv_42", type: "book", title: "La sombra de la noche", author: "Deborah Harkness", publisher: "Debolsillo", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_43", type: "book", title: "El libro de la vida", author: "Deborah Harkness", publisher: "Debolsillo", theme: "Ciencia ficción", color: "#2B2429", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_44", type: "book", title: "Memorias encontradas en una bañera", author: "Stanislaw Lem", publisher: "Bruguera- Libro amigo", theme: "Ciencia ficción", color: "#CBB894", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_45", type: "book", title: "Ciberíada", author: "Stanislaw Lem", publisher: "Bruguera- Libro amigo", theme: "Ciencia ficción", color: "#CBB894", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_46", type: "book", title: "Diarios de las estrellas. VIajes y memorias", author: "Stanislaw Lem", publisher: "Bruguera- Libro amigo", theme: "Ciencia ficción", color: "#CBB894", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_47", type: "book", title: "Darwinia", author: "Robert C. Wilson", publisher: "La factoría de Ideas", theme: "Ciencia ficción", color: "#CBB894", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_48", type: "book", title: "Bill, héroe galáctico", author: "Harry Harrison", publisher: "Grandes éxitos de bolsillo", theme: "Ciencia ficción", color: "#CBB894", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_49", type: "object", title: "Foto mía de cuando acabé el instituto + foto carnet de Jorge de chaval", author: "", publisher: "", theme: "", color: "#9B4D3A", notes: "", cabinet: 1, shelf: 2, icon: "photoframe" },
+      { id: "csv_50", type: "book", title: "El hombre ilustrado", author: "Ray Bradbury", publisher: "booket", theme: "Ciencia ficción", color: "#CBB894", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_51", type: "book", title: "Fahrenheit 451", author: "Ray Bradbury", publisher: "Debolsillo", theme: "Ciencia ficción", color: "#7A2E3B", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_52", type: "book", title: "Crónicas marcianas", author: "Ray Bradbury", publisher: "booket", theme: "Ciencia ficción", color: "#7A2E3B", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_53", type: "book", title: "Zen en el arte de escribir", author: "Ray Bradbury", publisher: "Minotauro", theme: "Ciencia ficción", color: "#CBB894", notes: "", cabinet: 1, shelf: 2 },
+      { id: "csv_54", type: "book", title: "Conde cero - Trilogía del Sprawl 2", author: "William Gibson", publisher: "Minotauro", theme: "Ciencia ficción", color: "#CBB894", notes: "Saga", cabinet: 1, shelf: 2 },
+      { id: "csv_55", type: "book", title: "Mona Lisa acelerada - Trilogía del Sprawl 2", author: "William Gibson", publisher: "Minotauro", theme: "Ciencia ficción", color: "#CBB894", notes: "Saga", cabinet: 1, shelf: 2 },
+      { id: "csv_56", type: "object", title: "Caja libro - 2", author: "", publisher: "", theme: "", color: "#5E7563", notes: "", cabinet: 1, shelf: 2, icon: "wooden_box" },
+      { id: "csv_57", type: "book", title: "850 Aniversario", author: "Félix Carreira Viso", publisher: "Libros Mablax", theme: "Ciencia ficción", color: "#2B2429", notes: "Con dedicatoria del autor", cabinet: 1, shelf: 2 },
+      { id: "csv_58", type: "book", title: "Drácula", author: "Bram Stoker", publisher: "", theme: "Terror", color: "#7A2E3B", notes: "", cabinet: 2, shelf: 1 },
+      { id: "csv_59", type: "book", title: "Frankenstein", author: "Mary Shelley", publisher: "", theme: "Terror", color: "#2B2429", notes: "", cabinet: 2, shelf: 1 },
+      { id: "csv_60", type: "object", title: "Pulpo sujeta bola de cristal", author: "Altar", publisher: "", theme: "Decoración brujeril", color: "#8B54C4", notes: "", cabinet: 2, shelf: 1, icon: "octopusorb" },
+      { id: "csv_61", type: "book", title: "Cuentos Completos", author: "Edgar Allan Poe", publisher: "", theme: "Terror", color: "#5D3552", notes: "", cabinet: 2, shelf: 2 },
+      { id: "csv_62", type: "object", title: "Pote de bruja con hierbas", author: "Boticario", publisher: "", theme: "Decoración brujeril", color: "#4E7566", notes: "", cabinet: 2, shelf: 2, icon: "jar" },
+      { id: "csv_63", type: "book", title: "Asesinato en el Orient Express", author: "Agatha Christie", publisher: "", theme: "Misterio", color: "#385947", notes: "", cabinet: 2, shelf: 3 },
+      { id: "csv_64", type: "object", title: "Drusa de amatistas", author: "Minerales", publisher: "", theme: "Cristales", color: "#9D65D0", notes: "", cabinet: 2, shelf: 3, icon: "crystal" },
+      { id: "csv_65", type: "book", title: "El Silencio de los Corderos", author: "Thomas Harris", publisher: "", theme: "Thriller", color: "#2B2429", notes: "", cabinet: 2, shelf: 4 },
+      { id: "csv_66", type: "object", title: "Vaso canopo de alabastro", author: "Antigüedades", publisher: "", theme: "Decoración brujeril", color: "#EDE2CC", notes: "Con tapa de chacal", cabinet: 2, shelf: 4, icon: "canopo" },
+      { id: "csv_67", type: "book", title: "Sandman", author: "Neil Gaiman", publisher: "", theme: "Cómic", color: "#28364A", notes: "", cabinet: 3, shelf: 1 },
+      { id: "csv_68", type: "book", title: "Blacksad", author: "Díaz Canales & Guarnido", publisher: "", theme: "Cómic", color: "#B8893E", notes: "", cabinet: 3, shelf: 1 },
+      { id: "csv_69", type: "object", title: "Prismáticos de ópera nacarados", author: "Curiosidades", publisher: "", theme: "Decoración brujeril", color: "#E8C872", notes: "", cabinet: 3, shelf: 1, icon: "operaglasses" },
+      { id: "csv_70", type: "book", title: "Follas Novas", author: "Rosalía de Castro", publisher: "", theme: "Poesía", color: "#5E7563", notes: "", cabinet: 3, shelf: 2 },
+      { id: "csv_71", type: "object", title: "Portapergaminos de cuero y latón", author: "Escritorio", publisher: "", theme: "Decoración brujeril", color: "#9B5A3C", notes: "", cabinet: 3, shelf: 2, icon: "scrollholder" },
+      { id: "csv_72", type: "book", title: "La Casa de Bernarda Alba", author: "Federico García Lorca", publisher: "", theme: "Drama", color: "#7A2E3B", notes: "", cabinet: 3, shelf: 3 },
+      { id: "csv_73", type: "object", title: "Marco de fotos vintage tallado", author: "Recuerdos", publisher: "", theme: "Decoración brujeril", color: "#C8963E", notes: "", cabinet: 3, shelf: 3, icon: "photoframe" },
+      { id: "csv_74", type: "book", title: "El Decamerón", author: "Giovanni Boccaccio", publisher: "", theme: "Erótico-festivo", color: "#9B4D3A", notes: "", cabinet: 3, shelf: 4 },
+      { id: "csv_75", type: "book", title: "Buenos Presagios", author: "Terry Pratchett & Neil Gaiman", publisher: "", theme: "Humor", color: "#CBB894", notes: "", cabinet: 4, shelf: 1 },
+      { id: "csv_76", type: "book", title: "Brujerías", author: "Terry Pratchett", publisher: "", theme: "Humor", color: "#385947", notes: "", cabinet: 4, shelf: 1 },
+      { id: "csv_77", type: "object", title: "Helecho de interior", author: "Botánica", publisher: "", theme: "Decoración brujeril", color: "#5E8563", notes: "", cabinet: 4, shelf: 1, icon: "plant" },
+      { id: "csv_78", type: "book", title: "El Problema de los Tres Cuerpos", author: "Cixin Liu", publisher: "", theme: "Ciencia ficción", color: "#28364A", notes: "", cabinet: 4, shelf: 2 },
+      { id: "csv_79", type: "object", title: "Vela de cera de abeja", author: "Altar", publisher: "", theme: "Decoración brujeril", color: "#F6C453", notes: "", cabinet: 4, shelf: 2, icon: "candle" },
+      { id: "csv_80", type: "object", title: "Modelo celeste Orrery de latón", author: "Astronomía", publisher: "", theme: "Decoración brujeril", color: "#D4A84F", notes: "Planetario mecánico", cabinet: 4, shelf: 3, icon: "orrery" },
+      { id: "csv_81", type: "tarot", title: "Demon of the Day", author: "Oráculo", publisher: "", theme: "Ángeles y Demonios", color: "#8C2D2D", notes: "Caja roja", cubby: 0 },
+      { id: "csv_82", type: "tarot", title: "Angels & Demons Tarot", author: "Tarot", publisher: "", theme: "Ángeles y Demonios", color: "#4A262B", notes: "", cubby: 0 },
+      { id: "csv_83", type: "tarot", title: "Steampunk Art Nouveau Tarot", author: "Lo Scarabeo", publisher: "", theme: "Artísticos", color: "#3B646E", notes: "", cubby: 1 },
+      { id: "csv_84", type: "tarot", title: "Diario Arcano de Cuero", author: "Cuaderno de tiradas", publisher: "", theme: "Artísticos", color: "#6E4730", notes: "", cubby: 1 },
+      { id: "csv_85", type: "tarot", title: "Barajas Clásicas y Edición Especial", author: "Colección", publisher: "", theme: "Barajas", color: "#8F7B63", notes: "", cubby: 2 },
+      { id: "csv_86", type: "tarot", title: "El Necronomicón Tarot", author: "Donald Tyson", publisher: "", theme: "Terror", color: "#2B3033", notes: "", cubby: 3 },
+      { id: "csv_87", type: "tarot", title: "Occult Tarot", author: "Travis McHenry", publisher: "", theme: "Terror", color: "#6E2626", notes: "", cubby: 3 },
+      { id: "csv_88", type: "tarot", title: "El Tarot de los Gatos", author: "Librero", publisher: "", theme: "Gatos", color: "#C47451", notes: "78 cartas y guía", cubby: 4 },
+      { id: "csv_89", type: "tarot", title: "Tarot XIII", author: "Nekro", publisher: "", theme: "Vampiros y Brujas", color: "#262226", notes: "", cubby: 5 },
+      { id: "csv_90", type: "tarot", title: "Tarot del Libro de las Sombras", author: "Barbara Moore", publisher: "", theme: "Vampiros y Brujas", color: "#4B5744", notes: "", cubby: 5 },
+      { id: "csv_91", type: "tarot", title: "Tarot V (Vampiros)", author: "Tarot gótico", publisher: "", theme: "Vampiros y Brujas", color: "#3D2329", notes: "", cubby: 5 },
+      { id: "csv_92", type: "tarot", title: "The Green Witch's Oracle Deck", author: "Arin Murphy-Hiscock", publisher: "", theme: "Magia Verde", color: "#5D7A5C", notes: "", cubby: 6 },
+      { id: "csv_93", type: "tarot", title: "Green Witch Tarot", author: "Ann Moura", publisher: "", theme: "Magia Verde", color: "#4E7D78", notes: "", cubby: 6 },
+      { id: "csv_94", type: "tarot", title: "Baraja en Uso (Paño Estrellado)", author: "Lectura actual", publisher: "", theme: "En Uso", color: "#233252", notes: "", cubby: 7 },
+      { id: "csv_95", type: "tarot", title: "Circle of Life Tarot", author: "Maria Distefano", publisher: "", theme: "Oráculos", color: "#4C4373", notes: "", cubby: 8 },
+      { id: "csv_96", type: "tarot", title: "Earthbound Oracle", author: "Oráculo", publisher: "", theme: "Oráculos", color: "#B86F4B", notes: "", cubby: 8 },
+      { id: "csv_97", type: "tarot", title: "Past Life & Lenormand", author: "Oráculos", publisher: "", theme: "Oráculos", color: "#C9963E", notes: "", cubby: 8 },
+      { id: "csv_98", type: "tarot", title: "Star Dragon Oracle Cards", author: "Oráculo", publisher: "", theme: "Dragones", color: "#7D3530", notes: "", cubby: 9 },
+      { id: "csv_99", type: "tarot", title: "Dungeons & Dragons Tarot Deck", author: "Wizards of the Coast", publisher: "", theme: "Rol", color: "#242226", notes: "", cubby: 10 },
+      { id: "csv_100", type: "tarot", title: "Citadel: A Fantasy Oracle", author: "Fez Inkwright", publisher: "", theme: "Rol", color: "#D4CEC5", notes: "", cubby: 10 },
+      { id: "csv_101", type: "tarot", title: "Tarot Vintage", author: "Tarot", publisher: "", theme: "Mix", color: "#C9B796", notes: "", cubby: 11 },
+      { id: "csv_102", type: "tarot", title: "Mindscapes Tarot", author: "Tarot", publisher: "", theme: "Mix", color: "#395A75", notes: "", cubby: 11 },
+      { id: "csv_103", type: "tarot", title: "Celtic Tarot", author: "Tarot", publisher: "", theme: "Mix", color: "#6E4935", notes: "", cubby: 11 }
+    ];
 
     let state = {
       items: [],
@@ -2442,7 +1320,7 @@
     function getTrinketSVG(iconId, color) {
       const fill = color || '#D4A84F';
       switch (iconId) {
-        case 'cthulhu': // Busto de Cthulhu en bronce envejecido con tentáculos y peana inscrita
+        case 'cthulhu':
           return `<svg class="w-7 h-8" viewBox="0 0 34 38" fill="none">
             <rect x="7" y="28" width="20" height="7.5" rx="1.5" fill="#9E7B3B" stroke="#120D11" stroke-width="1.8"/>
             <line x1="10" y1="30.5" x2="14" y2="30.5" stroke="#120D11" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
@@ -2463,7 +1341,7 @@
             <path d="M27 18 C29.5 20, 29 24, 26 25" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
           </svg>`;
 
-        case 'dragon_green': // Peluche verde lima de dragona con cuernos naranjas y crestas verdes
+        case 'dragon_green':
           return `<svg class="w-7 h-8" viewBox="0 0 34 36" fill="none">
             <path d="M24 24 C29 23, 31 19, 28 17" stroke="#6B9E3B" stroke-width="3.2" stroke-linecap="round"/>
             <path d="M24 24 C29 23, 31 19, 28 17" stroke="#120D11" stroke-width="1.3" stroke-linecap="round"/>
@@ -2482,7 +1360,7 @@
             <path d="M10 16.5 Q11.5 17.5 13 16.5" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
           </svg>`;
 
-        case 'dragon_grey': // Peluche gris azulado de dragón con barriga crema y alitas moradas
+        case 'dragon_grey':
           return `<svg class="w-7 h-8" viewBox="0 0 34 36" fill="none">
             <path d="M23 25 C28 25, 30 22, 28 19" stroke="#6B7D8C" stroke-width="3.2" stroke-linecap="round"/>
             <path d="M23 25 C28 25, 30 22, 28 19" stroke="#120D11" stroke-width="1.3" stroke-linecap="round"/>
@@ -2499,7 +1377,7 @@
             <circle cx="11" cy="13.4" r="0.6" fill="#FFFFFF"/>
           </svg>`;
 
-        case 'dragon_white': // Peluche blanco de dragón con ojos azules y alas blancas
+        case 'dragon_white':
           return `<svg class="w-7 h-8" viewBox="0 0 34 36" fill="none">
             <path d="M23 25 C28 24, 30 20, 28 17" stroke="#EAE6DF" stroke-width="3.2" stroke-linecap="round"/>
             <path d="M23 25 C28 24, 30 20, 28 17" stroke="#120D11" stroke-width="1.3" stroke-linecap="round"/>
@@ -2516,7 +1394,7 @@
             <path d="M8.5 16.5 Q11.5 17.5 14 16.5" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
           </svg>`;
 
-        case 'dragon_black': // Peluche negro de dragón con ojos verdes y alas oscuras
+        case 'dragon_black':
           return `<svg class="w-7 h-8" viewBox="0 0 34 36" fill="none">
             <path d="M23 25 C28 24, 30 20, 28 17" stroke="#262229" stroke-width="3.2" stroke-linecap="round"/>
             <path d="M23 25 C28 24, 30 20, 28 17" stroke="#120D11" stroke-width="1.3" stroke-linecap="round"/>
@@ -2532,7 +1410,8 @@
             <circle cx="11" cy="12.7" r="0.6" fill="#FFFFFF"/>
             <path d="M8.5 16.5 Q11.5 17.5 14 16.5" stroke="#5A5261" stroke-width="1.2" stroke-linecap="round"/>
           </svg>`;
-        case 'photoframe': // Marco de fotos vintage tallado con paisaje lunar interior
+
+        case 'photoframe':
           return `<svg class="w-7 h-8" viewBox="0 0 32 36" fill="none">
             <path d="M22 25 L26 32 L21 32" stroke="#120D11" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             <rect x="5" y="4" width="22" height="28" rx="3.5" fill="${fill}" stroke="#120D11" stroke-width="2"/>
@@ -2546,7 +1425,7 @@
             <path d="M9.5 27.5 Q14 22.5 17.5 25 Q20 22 22.5 24.5 L22.5 27.5 Z" fill="#3B5249" stroke="#120D11" stroke-width="0.9"/>
           </svg>`;
 
-        case 'orrery': // Modelo celeste (Orrery) planetario mecánico de latón sobre peana torneada
+        case 'orrery':
           return `<svg class="w-8 h-8" viewBox="0 0 36 34" fill="none">
             <ellipse cx="18" cy="30.5" rx="8" ry="2.2" fill="${fill}" stroke="#120D11" stroke-width="1.7"/>
             <path d="M15.5 29.5 L16.8 24 L19.2 24 L20.5 29.5 Z" fill="#C8963E" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
@@ -2564,7 +1443,7 @@
             <circle cx="23.5" cy="9.2" r="1.6" fill="#9D65D0" stroke="#120D11" stroke-width="1.2"/>
           </svg>`;
 
-        case 'canopo': // Vaso canopo egipcio de alabastro marfil con tapa de chacal
+        case 'canopo':
           return `<svg class="w-7 h-8" viewBox="0 0 32 36" fill="none">
             <path d="M10 14 C8 18, 9 27, 11 32 L21 32 C23 27, 24 18, 22 14 Z" fill="${fill}" stroke="#120D11" stroke-width="1.9" stroke-linejoin="round"/>
             <rect x="9.5" y="31.5" width="13" height="2.5" rx="1" fill="#C8963E" stroke="#120D11" stroke-width="1.5"/>
@@ -2580,7 +1459,7 @@
             <circle cx="17.2" cy="9.6" r="1" fill="#F6C453"/>
           </svg>`;
 
-        case 'compass': // Brújula antigua
+        case 'compass':
           return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
             <circle cx="16" cy="4" r="2.2" stroke="#120D11" stroke-width="1.6"/>
             <circle cx="16" cy="17" r="10.5" fill="${fill}" stroke="#120D11" stroke-width="2"/>
@@ -2589,7 +1468,7 @@
             <circle cx="16" cy="17" r="1.4" fill="#120D11"/>
           </svg>`;
 
-        case 'sundial': // Reloj solar
+        case 'sundial':
           return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
             <ellipse cx="16" cy="22" rx="12" ry="5.5" fill="${fill}" stroke="#120D11" stroke-width="2"/>
             <ellipse cx="16" cy="21" rx="9" ry="3.5" fill="#F3EAD8" stroke="#120D11" stroke-width="1.2"/>
@@ -2598,7 +1477,7 @@
             <line x1="20" y1="20" x2="23" y2="21" stroke="#120D11" stroke-width="1.2"/>
           </svg>`;
 
-        case 'sextant': // Sextante náutico
+        case 'sextant':
           return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
             <path d="M7 22 Q16 28 25 22 L16 7 Z" fill="${fill}" fill-opacity="0.35" stroke="#120D11" stroke-width="2" stroke-linejoin="round"/>
             <path d="M6 21 Q16 27.5 26 21" stroke="${fill}" stroke-width="3" stroke-linecap="round"/>
@@ -2607,7 +1486,7 @@
             <rect x="9" y="13" width="6" height="2.8" transform="rotate(-25 9 13)" fill="#2B2429" stroke="#120D11" stroke-width="1.2"/>
           </svg>`;
 
-        case 'scrollholder': // Portapergaminos
+        case 'scrollholder':
           return `<svg class="w-8 h-7" viewBox="0 0 36 30" fill="none">
             <rect x="6" y="12" width="24" height="8" rx="2" fill="${fill}" stroke="#120D11" stroke-width="1.8"/>
             <rect x="4" y="11" width="4" height="10" rx="1.5" fill="#D4A84F" stroke="#120D11" stroke-width="1.6"/>
@@ -2617,7 +1496,7 @@
             <line x1="22" y1="12" x2="22" y2="20" stroke="#120D11" stroke-width="1.4"/>
           </svg>`;
 
-        case 'octopusorb': // Pulpo sujeta bola de cristal
+        case 'octopusorb':
           return `<svg class="w-8 h-8" viewBox="0 0 34 34" fill="none">
             <circle cx="17" cy="11" r="7.5" fill="${fill}" stroke="#120D11" stroke-width="1.8"/>
             <path d="M13.5 8.5 C15 7, 17 6.5, 19 7" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
@@ -2633,7 +1512,7 @@
             <path d="M16 25 L15 29 M18 25 L19 29" stroke="#120D11" stroke-width="1.8" stroke-linecap="round"/>
           </svg>`;
 
-        case 'operaglasses': // Prismáticos de ópera
+        case 'operaglasses':
           return `<svg class="w-8 h-7" viewBox="0 0 36 30" fill="none">
             <path d="M10 10 L8 22 L15 22 L15 10 Z" fill="${fill}" stroke="#120D11" stroke-width="1.8" stroke-linejoin="round"/>
             <path d="M21 10 L21 22 L28 22 L26 10 Z" fill="${fill}" stroke="#120D11" stroke-width="1.8" stroke-linejoin="round"/>
@@ -2644,7 +1523,7 @@
             <line x1="27" y1="18" x2="33" y2="26" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
           </svg>`;
 
-        case 'motherofpearl_box': // Cajita de nácar iridiscente
+        case 'motherofpearl_box':
           return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
             <rect x="6" y="13" width="20" height="13" rx="2" fill="#2A2129" stroke="#120D11" stroke-width="1.9"/>
             <rect x="5" y="9" width="22" height="5" rx="1.5" fill="#F5EFE6" stroke="#120D11" stroke-width="1.8"/>
@@ -2653,7 +1532,7 @@
             <circle cx="16" cy="13.5" r="1.4" fill="#F6C453" stroke="#120D11" stroke-width="1"/>
           </svg>`;
 
-        case 'wooden_box': // Cajita de madera tallada con herrajes
+        case 'wooden_box':
           return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
             <rect x="6" y="13" width="20" height="13" rx="1.8" fill="#8B5A36" stroke="#120D11" stroke-width="1.9"/>
             <rect x="5" y="9" width="22" height="5" rx="1.5" fill="#A46D43" stroke="#120D11" stroke-width="1.8"/>
@@ -3262,8 +2141,6 @@
           const locationLabel = item.type === 'tarot'
             ? `Vitrina Verde • Cub. «${escapeHTML(state.cubbyLabels[item.cubby] || '')}»`
             : `Vitrina ${ROMAN[(item.cabinet || 1) - 1]} • Est. ${item.shelf}`;
-          const creatorOrPub = [item.author, item.publisher].filter(Boolean).join(' • ') || '—';
-
           return `
             <tr class="border-t border-[#281C25] hover:bg-[#221720] transition ${isHighlighted ? 'bg-[#362814]/60' : ''}">
               <td class="px-3 py-2.5 text-xs font-semibold whitespace-nowrap text-[#E6D7E2]">${typeLabel}</td>
@@ -3273,7 +2150,8 @@
                   <span>${escapeHTML(item.title)}</span>
                 </div>
               </td>
-              <td class="px-3 py-2.5 text-xs text-[#D3C0CB]">${escapeHTML(creatorOrPub)}</td>
+              <td class="px-3 py-2.5 text-xs text-[#D3C0CB]">${escapeHTML(item.author || '—')}</td>
+              <td class="px-3 py-2.5 text-xs text-[#D3C0CB]">${escapeHTML(item.publisher || '—')}</td>
               <td class="px-3 py-2.5 text-xs whitespace-nowrap">
                 ${item.theme ? `<span class="px-2 py-0.5 rounded-full bg-[#261C23] text-[#F6C453] font-semibold">${escapeHTML(item.theme)}</span>` : '—'}
               </td>
@@ -3294,7 +2172,8 @@
               <tr class="bg-[#231821] text-[#F6C453] text-[11px] uppercase tracking-wider">
                 <th onclick="sortByColumn('type')" class="px-3 py-2.5 cursor-pointer hover:text-white select-none">Tipo${sortIndicator('type_asc', '')}</th>
                 <th onclick="sortByColumn('title')" class="px-3 py-2.5 cursor-pointer hover:text-white select-none">Título${sortIndicator('title_asc', 'title_desc')}</th>
-                <th onclick="sortByColumn('publisher')" class="px-3 py-2.5 cursor-pointer hover:text-white select-none">Autor / Editorial${sortIndicator('publisher_asc', 'publisher_desc')}</th>
+                <th onclick="sortByColumn('author')" class="px-3 py-2.5 cursor-pointer hover:text-white select-none">Autor${sortIndicator('author_asc', 'author_desc')}</th>
+                <th onclick="sortByColumn('publisher')" class="px-3 py-2.5 cursor-pointer hover:text-white select-none">Editorial${sortIndicator('publisher_asc', 'publisher_desc')}</th>
                 <th onclick="sortByColumn('theme')" class="px-3 py-2.5 cursor-pointer hover:text-white select-none">Temática${sortIndicator('theme_asc', '')}</th>
                 <th class="px-3 py-2.5">Ubicación</th>
                 <th class="px-3 py-2.5 text-right">Acciones</th>
@@ -3333,7 +2212,8 @@
               <h3 class="mt-2 font-serif-label text-base sm:text-lg font-bold text-[#F7EFE2] leading-snug">
                 ${escapeHTML(item.title)}
               </h3>
-              ${item.author ? `<p class="text-xs text-[#BFAAB6]">${escapeHTML(item.author)}</p>` : ''}
+              ${item.author ? `<p class="text-xs text-[#BFAAB6]">✍️ <span class="text-[#9E8895]">Autor:</span> ${escapeHTML(item.author)}</p>` : ''}
+              ${item.publisher ? `<p class="text-xs text-[#BFAAB6]">🏛️ <span class="text-[#9E8895]">Editorial:</span> ${escapeHTML(item.publisher)}</p>` : ''}
               ${item.notes ? `<p class="text-[11px] text-[#96838E] italic mt-1 line-clamp-2">«${escapeHTML(item.notes)}»</p>` : ''}
             </div>
 
@@ -3433,6 +2313,7 @@
     function sortByColumn(colKey) {
       const map = {
         title: ['title_asc', 'title_desc'],
+        author: ['author_asc', 'author_desc'],
         publisher: ['publisher_asc', 'publisher_desc'],
         theme: ['theme_asc', 'default'],
         type: ['type_asc', 'default']
@@ -3455,10 +2336,14 @@
           return arr.sort((a, b) => byText(a.title, b.title, true));
         case 'title_desc':
           return arr.sort((a, b) => byText(a.title, b.title, false));
+        case 'author_asc':
+          return arr.sort((a, b) => byText(a.author, b.author, true) || byText(a.title, b.title, true));
+        case 'author_desc':
+          return arr.sort((a, b) => byText(a.author, b.author, false) || byText(a.title, b.title, true));
         case 'publisher_asc':
-          return arr.sort((a, b) => byText(a.author || a.publisher, b.author || b.publisher, true) || byText(a.title, b.title, true));
+          return arr.sort((a, b) => byText(a.publisher, b.publisher, true) || byText(a.title, b.title, true));
         case 'publisher_desc':
-          return arr.sort((a, b) => byText(a.author || a.publisher, b.author || b.publisher, false) || byText(a.title, b.title, true));
+          return arr.sort((a, b) => byText(a.publisher, b.publisher, false) || byText(a.title, b.title, true));
         case 'theme_asc':
           return arr.sort((a, b) => byText(a.theme, b.theme, true) || byText(a.title, b.title, true));
         case 'type_asc':
@@ -3602,6 +2487,7 @@
       document.getElementById('whiteLocationGroup').classList.toggle('hidden', type === 'tarot');
       document.getElementById('tarotLocationGroup').classList.toggle('hidden', type !== 'tarot');
       document.getElementById('objectIconGroup').classList.toggle('hidden', type !== 'object');
+      document.getElementById('publisherFieldGroup').classList.toggle('hidden', type === 'object');
       document.getElementById('bookCategoriesGroup').classList.toggle('hidden', type !== 'book');
       document.getElementById('nonBookThemeGroup').classList.toggle('hidden', type === 'book');
     }
@@ -3674,7 +2560,7 @@
       if (!title) return;
 
       const author = document.getElementById('fieldAuthor').value.trim();
-      const publisher = document.getElementById('fieldPublisher').value.trim();
+      const publisher = type === 'object' ? '' : document.getElementById('fieldPublisher').value.trim();
       const checkedBookCats = Array.from(document.querySelectorAll('input[name="bookCategoryCheckbox"]:checked')).map(el => el.value);
       const theme = type === 'book'
         ? checkedBookCats.join(', ')
@@ -3816,23 +2702,6 @@
       closeCubbyLabelModal();
     }
 
-    // Vaciar ejemplos
-    let clearConfirmPending = false;
-    function confirmClearExamples() {
-      if (!clearConfirmPending) {
-        clearConfirmPending = true;
-        showToast('⚠️ Pulsa de nuevo «Vaciar ejemplos» para dejar todos los estantes en blanco');
-        setTimeout(() => { clearConfirmPending = false; }, 4500);
-        return;
-      }
-      clearConfirmPending = false;
-      state.items = [];
-      state.highlightedItemId = null;
-      saveState();
-      renderAll();
-      showToast('🧹 Estantes vaciados. ¡Listos para tu colección!');
-    }
-
     // ==========================================
     // EXPORTAR E IMPORTAR CSV + COPIA JSON
     // ==========================================
@@ -3913,34 +2782,8 @@
       showToast('📊 Archivo CSV descargado con toda tu biblioteca');
     }
 
-    function exportJSON() {
-      const payload = {
-        app: 'La Biblioteca de la Meiga',
-        exportedAt: new Date().toISOString(),
-        items: state.items,
-        cubbyLabels: state.cubbyLabels,
-        cupboardNotes: state.cupboardNotes
-      };
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'la-biblioteca-de-la-meiga-copia.json';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-      showToast('📥 Copia JSON descargada');
-    }
-
     function triggerCSVImport() {
       const input = document.getElementById('csvFileInput');
-      input.value = '';
-      input.click();
-    }
-
-    function triggerJSONImport() {
-      const input = document.getElementById('jsonFileInput');
       input.value = '';
       input.click();
     }
