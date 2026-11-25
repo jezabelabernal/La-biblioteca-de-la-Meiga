@@ -1158,16 +1158,19 @@
     ];
 
     const SPINE_COLORS = [
-      { name: 'Ciruela', hex: '#5D3552' },
-      { name: 'Bosque', hex: '#385947' },
-      { name: 'Borgoña', hex: '#7A2E3B' },
-      { name: 'Noche', hex: '#28364A' },
-      { name: 'Latón / Ocre', hex: '#B8893E' },
       { name: 'Amatista', hex: '#684785' },
-      { name: 'Terracota', hex: '#9B4D3A' },
-      { name: 'Salvia', hex: '#5E7563' },
+      { name: 'Azul claro', hex: '#6FA3C7' },
+      { name: 'Borgoña', hex: '#7A2E3B' },
+      { name: 'Bosque', hex: '#385947' },
+      { name: 'Ciruela', hex: '#5D3552' },
+      { name: 'Gris', hex: '#7C8288' },
+      { name: 'Latón / Ocre', hex: '#B8893E' },
+      { name: 'Marrón', hex: '#6B442A' },
+      { name: 'Noche', hex: '#28364A' },
+      { name: 'Obsidiana', hex: '#2B2429' },
       { name: 'Pergamino', hex: '#CBB894' },
-      { name: 'Obsidiana', hex: '#2B2429' }
+      { name: 'Salvia', hex: '#5E7563' },
+      { name: 'Terracota', hex: '#9B4D3A' }
     ];
 
     // Repertorio completo de objetos decorativos ordenados alfabéticamente
@@ -1177,6 +1180,7 @@
       { id: 'cthulhu', label: '🐙 Busto Cthulhu' },
       { id: 'wooden_box', label: '🪵 Caja madera' },
       { id: 'motherofpearl_box', label: '🦪 Caja nácar' },
+      { id: 'silver_box', label: '🪙 Cajita plateada' },
       { id: 'skull', label: '💀 Calavera' },
       { id: 'cauldron', label: '🫕 Calderito' },
       { id: 'shell', label: '🐚 Caracola' },
@@ -1690,6 +1694,16 @@
             <line x1="15" y1="14" x2="21" y2="14" stroke="#120D11" stroke-width="2.2"/>
             <line x1="27" y1="18" x2="33" y2="26" stroke="#D4A84F" stroke-width="2.6" stroke-linecap="round"/>
             <line x1="27" y1="18" x2="33" y2="26" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>`;
+
+        case 'silver_box':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <rect x="6" y="13" width="20" height="13" rx="2" fill="#B8C0C8" stroke="#120D11" stroke-width="1.9"/>
+            <rect x="5" y="9" width="22" height="5" rx="1.5" fill="#E3E8ED" stroke="#120D11" stroke-width="1.8"/>
+            <path d="M8 10.8 H24" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round"/>
+            <rect x="8.5" y="16" width="15" height="7" rx="1" fill="#CFD6DD" stroke="#120D11" stroke-width="1.1"/>
+            <circle cx="16" cy="13.5" r="1.5" fill="#F8FAFC" stroke="#120D11" stroke-width="1.1"/>
+            <path d="M11 19.5 L16 17.5 L21 19.5 L16 21.5 Z" fill="#E6ECF2" stroke="#120D11" stroke-width="0.9"/>
           </svg>`;
 
         case 'motherofpearl_box':
@@ -2810,6 +2824,19 @@
         el.classList.toggle('scale-110', el.dataset.color === hex);
         el.classList.toggle('border-[#120D11]', el.dataset.color !== hex);
       });
+      const iconPicker = document.getElementById('objectIconPicker');
+      if (iconPicker) {
+        const currentIcon = iconPicker.dataset.selected || 'photoframe';
+        iconPicker.innerHTML = OBJECT_ICONS.map(ic => `
+          <button type="button" onclick="selectObjectIcon('${ic.id}')"
+            data-icon="${ic.id}"
+            title="${ic.label}"
+            class="obj-icon-btn p-1.5 rounded-xl border-2 flex flex-col items-center justify-center bg-[#151014] ${ic.id === currentIcon ? 'border-[#D8B4FE] bg-[#2D1F36]' : 'border-[#120D11]'} cursor-pointer">
+            ${getTrinketSVG(ic.id, hex)}
+            <span class="text-[8.5px] text-[#C8B4C0] mt-0.5 truncate max-w-full">${ic.label}</span>
+          </button>
+        `).join('');
+      }
     }
 
     function selectObjectIcon(iconId) {
