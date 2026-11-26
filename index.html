@@ -56,7 +56,6 @@
       font-family: 'Cormorant Garamond', serif;
     }
 
-    /* Trazo ilustrado estilo dibujo a tinta */
     .ink-box {
       border: 2.5px solid var(--ink);
       box-shadow: 3px 4px 0px var(--ink);
@@ -81,7 +80,6 @@
       cursor: not-allowed;
     }
 
-    /* Estancia principal rodeada de elementos brujeriles */
     .sanctum-wall {
       background:
         radial-gradient(ellipse at 50% 0%, rgba(246, 196, 83, 0.12) 0%, transparent 62%),
@@ -93,7 +91,6 @@
       position: relative;
     }
 
-    /* 4 Vitrinas blancas dibujadas a mano */
     .white-cabinet {
       background:
         repeating-linear-gradient(
@@ -170,7 +167,6 @@
       pointer-events: none;
     }
 
-    /* Vitrina verde salvia grisáceo de Tarots (12 cubículos) */
     .tarot-cabinet {
       background:
         repeating-linear-gradient(
@@ -235,7 +231,6 @@
       letter-spacing: 0.03em;
     }
 
-    /* Estante clickable */
     .shelf-zone {
       cursor: pointer;
       transition: background-color 0.2s ease, outline 0.2s ease;
@@ -249,7 +244,6 @@
       outline-offset: -2px;
     }
 
-    /* Drag & Drop estilos visuales */
     .draggable-piece {
       cursor: grab;
       user-select: none;
@@ -273,7 +267,6 @@
       box-shadow: 4px 0 0 #2E7D32, 0 0 10px rgba(46, 125, 50, 0.75) !important;
     }
 
-    /* Lomos de libros y cajas de tarot dibujados a tinta */
     .book-spine {
       border: 1.8px solid var(--ink);
       border-radius: 2px 2px 1px 1px;
@@ -291,7 +284,6 @@
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.45), 0 0 8px rgba(246, 196, 83, 0.55);
     }
 
-    /* Hueco reservado elegante cuando un libro está prestado */
     .loaned-slot {
       border: 1.6px dashed rgba(94, 67, 52, 0.72);
       border-radius: 2px 2px 1px 1px;
@@ -343,7 +335,20 @@
       filter: drop-shadow(1px 3px 0px var(--ink)) drop-shadow(0 0 7px rgba(246, 196, 83, 0.78));
     }
 
-    /* Halo dorado localizador */
+    .ebook-icon-btn {
+      transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+      cursor: pointer;
+      filter: drop-shadow(1px 2px 0px var(--ink));
+    }
+    .ebook-icon-btn:hover {
+      transform: translateY(-3px) scale(1.08);
+      filter: drop-shadow(1px 3px 0px var(--ink)) drop-shadow(0 0 9px rgba(103, 232, 249, 0.75));
+    }
+    .ebook-icon-active {
+      transform: scale(1.06);
+      filter: drop-shadow(0 0 12px rgba(103, 232, 249, 0.95));
+    }
+
     @keyframes goldenPulse {
       0%, 100% {
         box-shadow:
@@ -380,7 +385,6 @@
       filter: grayscale(0.55);
     }
 
-    /* Animaciones suaves de vela y bola de cristal en los márgenes */
     @keyframes candleFlicker {
       0%, 100% { transform: scale(1) rotate(-1deg); opacity: 0.95; }
       35% { transform: scale(1.06, 0.96) rotate(1.5deg); opacity: 1; }
@@ -418,7 +422,6 @@
 </head>
 <body class="pb-12">
 
-  <!-- Inputs ocultos para importar archivos CSV o JSON -->
   <input type="file" id="csvFileInput" accept=".csv,text/csv" class="hidden" onchange="handleCSVFileSelected(event)" />
   <input type="file" id="jsonFileInput" accept=".json,application/json" class="hidden" onchange="handleJSONFileSelected(event)" />
 
@@ -426,7 +429,6 @@
   <header class="max-w-[1720px] mx-auto px-3 sm:px-6 pt-4 pb-3 relative z-30">
     <div class="bg-[#21181F]/95 rounded-2xl p-4 sm:p-5 ink-box relative">
       <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
-        <!-- Título y contadores directos -->
         <div class="flex items-center gap-3.5">
           <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-[#382735] via-[#2B1E28] to-[#1D141B] ink-box flex items-center justify-center shrink-0 relative overflow-hidden">
             <div class="absolute inset-1 rounded-lg bg-[#F6C453]/12 blur-[2px] pointer-events-none"></div>
@@ -437,12 +439,6 @@
               <path d="M7 23C13 21.5 20.5 22.5 26 25.5C31.5 22.5 39 21.5 45 23L43.5 40C38 38.5 31.5 39.5 26 42.5C20.5 39.5 14 38.5 8.5 40L7 23Z" fill="#6B3758" stroke="#120D11" stroke-width="2.1" stroke-linejoin="round"/>
               <path d="M9.5 21C15 19.8 21.2 20.8 26 23.8C30.8 20.8 37 19.8 42.5 21L41.2 37.5C36.5 36.2 30.8 37.2 26 40C21.2 37.2 15.5 36.2 10.8 37.5L9.5 21Z" fill="#F6EFE2" stroke="#120D11" stroke-width="1.8" stroke-linejoin="round"/>
               <line x1="26" y1="23.8" x2="26" y2="40" stroke="#120D11" stroke-width="1.8"/>
-              <line x1="13" y1="25.5" x2="22.5" y2="26.8" stroke="#7A5E4B" stroke-width="1.3" stroke-linecap="round"/>
-              <line x1="13" y1="29.5" x2="22" y2="30.6" stroke="#7A5E4B" stroke-width="1.3" stroke-linecap="round"/>
-              <line x1="13.5" y1="33.5" x2="21.5" y2="34.4" stroke="#7A5E4B" stroke-width="1.3" stroke-linecap="round"/>
-              <line x1="29.5" y1="26.8" x2="39" y2="25.5" stroke="#7A5E4B" stroke-width="1.3" stroke-linecap="round"/>
-              <line x1="30" y1="30.6" x2="39" y2="29.5" stroke="#7A5E4B" stroke-width="1.3" stroke-linecap="round"/>
-              <line x1="30.5" y1="34.4" x2="38.5" y2="33.5" stroke="#7A5E4B" stroke-width="1.3" stroke-linecap="round"/>
               <path d="M18 44.5C22.5 43 29.5 43 34 44.5" stroke="#6E9E76" stroke-width="2" stroke-linecap="round"/>
               <ellipse cx="22.5" cy="43.5" rx="3.4" ry="1.6" transform="rotate(-14 22.5 43.5)" fill="#7EB386" stroke="#120D11" stroke-width="1.2"/>
               <ellipse cx="29.5" cy="43.5" rx="3.4" ry="1.6" transform="rotate(14 29.5 43.5)" fill="#6E9E76" stroke="#120D11" stroke-width="1.2"/>
@@ -456,6 +452,10 @@
               <span class="px-2.5 py-0.5 rounded-full bg-[#2E222B] border border-[#120D11] text-[#F3EAD8] font-medium">
                 📚 <strong id="countBooks" class="text-[#F6C453]">0</strong> Libros
               </span>
+              <button type="button" onclick="scrollToEbookSection()" title="Ir al apartado de Libro Mágico"
+                class="px-2.5 py-0.5 rounded-full bg-[#1C2A32] hover:bg-[#243742] border border-[#120D11] text-[#DDF4FA] font-medium transition cursor-pointer">
+                ✨ <strong id="countEbooks" class="text-[#67E8F9]">0</strong> Libros Mágicos
+              </button>
               <span class="px-2.5 py-0.5 rounded-full bg-[#262D25] border border-[#120D11] text-[#E4EDE0] font-medium">
                 🃏 <strong id="countTarots" class="text-[#A8D59D]">0</strong> Tarots y Oráculos
               </span>
@@ -470,7 +470,6 @@
           </div>
         </div>
 
-        <!-- Acciones principales -->
         <div class="flex flex-wrap items-center gap-2">
           <button onclick="openAddModal()" class="ink-btn px-3.5 py-2 rounded-xl bg-[#F6C453] text-[#171115] font-bold text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer">
             <span>✦</span> <span>+ Añadir</span>
@@ -519,6 +518,7 @@
             >
               <option value="all">✦ Todos los tipos</option>
               <option value="book">📚 Libros</option>
+              <option value="ebook">✨ Libro Mágico</option>
               <option value="tarot">🃏 Tarots y Oráculos</option>
               <option value="object">🔮 Objetos</option>
             </select>
@@ -635,9 +635,10 @@
         </svg>
       </div>
 
-      <!-- DECORACIÓN IZQUIERDA -->
-      <div class="hidden xl:flex flex-col items-center justify-between pointer-events-none absolute left-2 top-28 bottom-10 w-11 z-10 select-none" aria-hidden="true">
-        <svg class="w-10 h-20" viewBox="0 0 44 84" fill="none">
+      <!-- DECORACIÓN IZQUIERDA (A LA IZQUIERDA DE LA VITRINA I, CON ICONO DE LIBRO MÁGICO) -->
+      <div class="hidden xl:flex flex-col items-center justify-between absolute left-2 top-24 bottom-8 w-12 z-20 select-none">
+        <!-- Poción -->
+        <svg class="w-10 h-16 pointer-events-none" viewBox="0 0 44 84" fill="none" aria-hidden="true">
           <rect x="8" y="24" width="28" height="52" rx="6" fill="#4E7566" stroke="#120D11" stroke-width="2.2"/>
           <rect x="16" y="15" width="12" height="10" fill="#4E7566" stroke="#120D11" stroke-width="2"/>
           <rect x="17" y="9" width="10" height="7" rx="1.5" fill="#B5895A" stroke="#120D11" stroke-width="1.8"/>
@@ -646,14 +647,54 @@
           <line x1="15" y1="50" x2="26" y2="50" stroke="#3A2B26" stroke-width="1.4"/>
           <line x1="2" y1="77" x2="42" y2="77" stroke="#5A4338" stroke-width="3" stroke-linecap="round"/>
         </svg>
-        <svg class="w-11 h-20" viewBox="0 0 48 84" fill="none">
+
+        <!-- Cristales -->
+        <svg class="w-11 h-16 pointer-events-none" viewBox="0 0 48 84" fill="none" aria-hidden="true">
           <polygon points="10,72 16,38 24,72" fill="#9D65D0" stroke="#120D11" stroke-width="2" stroke-linejoin="round"/>
           <polygon points="19,72 27,26 35,72" fill="#B983EA" stroke="#120D11" stroke-width="2.2" stroke-linejoin="round"/>
           <polygon points="30,72 37,44 43,72" fill="#7E48B0" stroke="#120D11" stroke-width="2" stroke-linejoin="round"/>
           <path d="M27 14 L28.5 18 L32.5 19.5 L28.5 21 L27 25 L25.5 21 L21.5 19.5 L25.5 18 Z" fill="#FFE082"/>
           <line x1="3" y1="74" x2="45" y2="74" stroke="#5A4338" stroke-width="3" stroke-linecap="round"/>
         </svg>
-        <svg class="w-11 h-24" viewBox="0 0 48 92" fill="none">
+
+        <!-- ICONO INTERACTIVO: LIBRO MÁGICO -->
+        <button
+          id="ebookIconBtn"
+          type="button"
+          onclick="selectEbookScope()"
+          ondragover="handleEbookIconDragOver(event)"
+          ondragleave="handleEbookIconDragLeave(event)"
+          ondrop="handleEbookIconDrop(event)"
+          title="Libro Mágico — Pulsa para filtrar o ir a su apartado, o suelta un libro aquí para guardarlo en el Libro Mágico"
+          aria-label="Libro Mágico"
+          class="ebook-icon-btn flex flex-col items-center gap-0.5 py-1 px-1 rounded-xl focus:outline-none"
+        >
+          <svg class="w-10 h-14" viewBox="0 0 44 58" fill="none">
+            <!-- Cuerpo del Libro Mágico -->
+            <rect x="6" y="4" width="32" height="46" rx="4" fill="#2A222B" stroke="#120D11" stroke-width="2.2"/>
+            <!-- Bisel interior -->
+            <rect x="8.5" y="6.5" width="27" height="41" rx="2.5" fill="#1D171E" stroke="#463544" stroke-width="1"/>
+            <!-- Pantalla de tinta electrónica -->
+            <rect x="10.5" y="9" width="23" height="31" rx="1.5" fill="#DCECF0" stroke="#120D11" stroke-width="1.4"/>
+            <!-- Líneas de lectura en pantalla -->
+            <line x1="13.5" y1="14" x2="30.5" y2="14" stroke="#2B2429" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="13.5" y1="18.5" x2="29" y2="18.5" stroke="#3E353C" stroke-width="1.3" stroke-linecap="round"/>
+            <line x1="13.5" y1="22.5" x2="30" y2="22.5" stroke="#3E353C" stroke-width="1.3" stroke-linecap="round"/>
+            <line x1="13.5" y1="26.5" x2="25" y2="26.5" stroke="#3E353C" stroke-width="1.3" stroke-linecap="round"/>
+            <!-- Destello mágico en pantalla -->
+            <path d="M28.5 31.5 L29.4 34 L31.9 34.9 L29.4 35.8 L28.5 38.3 L27.6 35.8 L25.1 34.9 L27.6 34 Z" fill="#67E8F9" stroke="#120D11" stroke-width="0.9"/>
+            <!-- Botón inferior -->
+            <circle cx="22" cy="43.8" r="1.8" fill="#67E8F9" stroke="#120D11" stroke-width="1.1"/>
+            <!-- Repisa -->
+            <line x1="2" y1="53" x2="42" y2="53" stroke="#5A4338" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span class="px-1.5 py-0.2 rounded bg-[#15242B] border border-[#120D11] text-[8px] font-bold tracking-tight text-[#67E8F9] leading-tight text-center">
+            Libro Mágico
+          </span>
+        </button>
+
+        <!-- Vela -->
+        <svg class="w-11 h-16 pointer-events-none" viewBox="0 0 48 92" fill="none" aria-hidden="true">
           <rect x="12" y="34" width="14" height="40" rx="2" fill="#F5EAD6" stroke="#120D11" stroke-width="2.2"/>
           <g class="flame-anim">
             <path d="M19 10 C25 19, 26 27, 19 31 C12 27, 13 19, 19 10 Z" fill="#F6C453" stroke="#120D11" stroke-width="1.8"/>
@@ -698,10 +739,20 @@
       <div class="grid grid-cols-1 2xl:grid-cols-12 gap-6 items-end relative z-20">
         <div class="2xl:col-span-8">
           <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5 px-1">
-            <h2 class="font-serif-label text-lg sm:text-xl font-bold text-[#F3EAD8] tracking-wide flex items-center gap-2">
-              <span class="text-[#F6C453]">✦</span> Vitrinas de Libros y Curiosidades
-            </h2>
-            <span class="text-[11px] text-[#C4B0BC]">Arrastra piezas entre sagas o baldas · Pulsa para ver o editar</span>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <h2 class="font-serif-label text-lg sm:text-xl font-bold text-[#F3EAD8] tracking-wide flex items-center gap-2">
+                <span class="text-[#F6C453]">✦</span> Vitrinas de Libros y Curiosidades
+              </h2>
+              <button
+                type="button"
+                onclick="selectEbookScope()"
+                class="xl:hidden px-2.5 py-0.5 rounded-lg bg-[#16262E] hover:bg-[#1E3440] border border-[#120D11] text-[#67E8F9] text-xs font-bold flex items-center gap-1 cursor-pointer transition"
+                title="Ver o filtrar Libro Mágico"
+              >
+                <span>✨</span> <span>Libro Mágico</span>
+              </button>
+            </div>
+            <span class="text-[11px] text-[#C4B0BC]">Arrastra piezas entre sagas, baldas o Libro Mágico · Pulsa para ver o editar</span>
           </div>
 
           <div id="whiteCabinetsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5"></div>
@@ -756,7 +807,7 @@
             </h2>
           </div>
           <p id="inspectorSubtitle" class="text-xs sm:text-sm text-[#C4B0BC] mt-1">
-            Haz clic en cualquier estante, cubículo o vitrina arriba para filtrar este listado, o pulsa «📍 Localizar» en cualquier pieza para iluminarla.
+            Distinción activa entre piezas en vitrina y en Libro Mágico. Haz clic en un estante, cubículo o Libro Mágico para filtrar.
           </p>
         </div>
 
@@ -814,6 +865,7 @@
         <button onclick="selectWhiteCabinetScope(3)" class="px-2.5 py-1 rounded-lg bg-[#2B1F28] hover:bg-[#3A2A36] border border-[#120D11] text-[#F3EAD8] cursor-pointer">Vitrina III</button>
         <button onclick="selectWhiteCabinetScope(4)" class="px-2.5 py-1 rounded-lg bg-[#2B1F28] hover:bg-[#3A2A36] border border-[#120D11] text-[#F3EAD8] cursor-pointer">Vitrina IV</button>
         <button onclick="selectTarotCabinetScope()" class="px-2.5 py-1 rounded-lg bg-[#262F26] hover:bg-[#323F32] border border-[#120D11] text-[#DCE6D6] cursor-pointer">☾ Vitrina de Tarots</button>
+        <button onclick="selectEbookScope()" class="px-2.5 py-1 rounded-lg bg-[#16262E] hover:bg-[#1E3440] border border-[#120D11] text-[#67E8F9] font-semibold cursor-pointer">✨ Libro Mágico</button>
       </div>
 
       <div id="inspectorGrid" class="mt-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3"></div>
@@ -837,6 +889,26 @@
       </div>
 
       <div id="loanedBooksContainer" class="mt-3.5"></div>
+    </section>
+
+    <!-- APARTADO INFERIOR EXCLUSIVO: LIBRO MÁGICO -->
+    <section id="ebookSection" class="bg-[#21181F]/95 rounded-2xl p-4 sm:p-5 ink-box">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#392935]">
+        <div class="flex flex-wrap items-center gap-2.5">
+          <h2 class="font-witchy text-base sm:text-lg text-[#F7E7C4] flex items-center gap-2">
+            <span>✨</span> <span>Libro Mágico</span>
+          </h2>
+          <span id="ebookSectionBadge" class="px-2.5 py-0.5 rounded-full bg-[#16262E] border border-[#120D11] text-[#67E8F9] text-xs font-bold">
+            0 en el Libro Mágico
+          </span>
+        </div>
+        <button type="button" onclick="openAddEbookModal()"
+          class="ink-btn px-3 py-1.5 rounded-xl bg-[#67E8F9] text-[#151014] font-bold text-xs flex items-center gap-1.5 cursor-pointer">
+          <span>+</span> <span>Añadir al Libro Mágico</span>
+        </button>
+      </div>
+
+      <div id="ebookBooksContainer" class="mt-3.5"></div>
     </section>
   </main>
 
@@ -898,7 +970,6 @@
       <form id="itemForm" onsubmit="saveItem(event)" class="mt-4 space-y-3.5 text-sm">
         <input type="hidden" id="editItemId" />
 
-        <!-- Tipo -->
         <div>
           <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1.5">Tipo de pieza</label>
           <div class="grid grid-cols-3 gap-2">
@@ -923,14 +994,24 @@
           </div>
         </div>
 
-        <!-- Título -->
+        <!-- Selector Libro Mágico vs Vitrina (solo libros) -->
+        <div id="bookEbookToggleGroup" class="p-3 rounded-xl bg-[#171116] border-2 border-[#120D11] flex items-center justify-between gap-2">
+          <div>
+            <span class="text-xs uppercase tracking-wider text-[#67E8F9] font-semibold block">✨ Soporte / Ubicación del libro</span>
+            <span class="text-[11px] text-[#B8A5B0]">Marca si está en el Libro Mágico o en una vitrina física</span>
+          </div>
+          <label class="inline-flex items-center gap-2 cursor-pointer select-none text-xs font-bold text-[#67E8F9] shrink-0">
+            <input id="fieldIsEbook" type="checkbox" onchange="handleEbookCheckboxChange()" class="accent-[#67E8F9] w-4 h-4 rounded cursor-pointer" />
+            <span>Libro Mágico</span>
+          </label>
+        </div>
+
         <div>
           <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Título o Nombre *</label>
           <input id="fieldTitle" type="text" required placeholder="Ej. Guía del Autoestopista Galáctico / Modelo celeste Orrery"
             class="w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]" />
         </div>
 
-        <!-- Autor, Editorial y Temática/Categoría -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div id="authorFieldGroup">
             <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Autor</label>
@@ -953,7 +1034,6 @@
           </div>
         </div>
 
-        <!-- Ubicación para Vitrinas Blancas -->
         <div id="whiteLocationGroup" class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Vitrina Blanca</label>
@@ -975,13 +1055,11 @@
           </div>
         </div>
 
-        <!-- Ubicación para Vitrina Verde de Tarots -->
         <div id="tarotLocationGroup" class="hidden">
           <label class="block text-xs uppercase tracking-wider text-[#A8D59D] font-semibold mb-1">Cubículo en Vitrina Verde</label>
           <select id="fieldCubby" onchange="refreshPositionSelector()" class="w-full px-3 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#A8D59D]"></select>
         </div>
 
-        <!-- SELECTOR DE POSICIÓN Y BOTONES ◀ MOVER / MOVER ▶ -->
         <div id="positionControlGroup" class="p-3 rounded-xl bg-[#171116] border-2 border-[#120D11] space-y-2">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <label for="fieldPositionSelect" class="text-xs uppercase tracking-wider text-[#F6C453] font-semibold">
@@ -1005,7 +1083,6 @@
           </div>
         </div>
 
-        <!-- Selector visual de icono (objetos) y color -->
         <div id="objectIconGroup" class="hidden">
           <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1.5">Ilustración del objeto</label>
           <div class="grid grid-cols-3 sm:grid-cols-5 gap-2" id="objectIconPicker"></div>
@@ -1016,7 +1093,6 @@
           <div class="flex flex-wrap gap-2" id="colorSwatches"></div>
         </div>
 
-        <!-- Estado de préstamo (solo libros) -->
         <div id="bookLoanGroup" class="p-3 rounded-xl bg-[#171116] border-2 border-[#120D11] space-y-2.5">
           <div class="flex items-center justify-between gap-2">
             <span class="text-xs uppercase tracking-wider text-[#E8A5B8] font-semibold">🤝 Estado de préstamo</span>
@@ -1039,14 +1115,12 @@
           </div>
         </div>
 
-        <!-- Notas -->
         <div>
           <label class="block text-xs uppercase tracking-wider text-[#C8B4C0] font-semibold mb-1">Notas personales</label>
           <textarea id="fieldNotes" rows="2" placeholder="Ej. Edición ilustrada, leído, con guía en español..."
             class="w-full px-3.5 py-2 rounded-xl bg-[#151014] border-2 border-[#120D11] text-[#F6EFE4] focus:outline-none focus:border-[#F6C453]"></textarea>
         </div>
 
-        <!-- Botones -->
         <div class="pt-2 flex items-center justify-between gap-2">
           <button type="button" id="deleteItemBtn" onclick="deleteCurrentItem()" class="hidden ink-btn px-3.5 py-2 rounded-xl bg-[#7F2D36] text-white font-semibold text-xs cursor-pointer">
             🗑️ Eliminar
@@ -1124,44 +1198,21 @@
   </div>
 
   <script>
-    const STORAGE_KEY = 'biblioteca_de_la_meiga_v21';
+    const STORAGE_KEY = 'biblioteca_de_la_meiga_v22';
     const ROMAN = ['I', 'II', 'III', 'IV'];
 
     const BOOK_CATEGORIES = [
-      'Astronomía',
-      'Aventura',
-      'Ciencia',
-      'Ciencia ficción',
-      'Cómic',
-      'Cuento',
-      'Drama',
-      'Erótico-festivo',
-      'Humor',
-      'Lógico -Deducción',
-      'Magia - Brujas',
-      'Matemáticas',
-      'Misterio',
-      'Mitología',
-      'Poesía',
-      'Terror',
-      'Thriller'
+      'Astronomía', 'Aventura', 'Ciencia', 'Ciencia ficción', 'Cómic', 'Cuento',
+      'Drama', 'Erótico-festivo', 'Humor', 'Lógico -Deducción', 'Magia - Brujas',
+      'Matemáticas', 'Misterio', 'Mitología', 'Poesía', 'Terror', 'Thriller'
     ];
 
     const DEFAULT_CUPBOARD_NOTES = ['', '', '', ''];
 
     const DEFAULT_CUBBY_LABELS = [
-      "Ángeles y Demonios",
-      "Artísticos",
-      "Barajas",
-      "Terror",
-      "Gatos",
-      "Vampiros y Brujas",
-      "Magia Verde",
-      "En Uso",
-      "Oráculos",
-      "Dragones",
-      "Rol",
-      "Mix"
+      "Ángeles y Demonios", "Artísticos", "Barajas", "Terror",
+      "Gatos", "Vampiros y Brujas", "Magia Verde", "En Uso",
+      "Oráculos", "Dragones", "Rol", "Mix"
     ];
 
     const SPINE_COLORS = [
@@ -1392,7 +1443,6 @@
       highlightedItemId: null
     };
 
-    // Estado de Drag & Drop
     let dragState = {
       draggedId: null,
       overElement: null,
@@ -1405,6 +1455,10 @@
       const m = String(now.getMonth() + 1).padStart(2, '0');
       const d = String(now.getDate()).padStart(2, '0');
       return `${y}-${m}-${d}`;
+    }
+
+    function isEbook(item) {
+      return Boolean(item && item.type === 'book' && item.isEbook === true);
     }
 
     function isBookLoaned(item) {
@@ -1464,7 +1518,11 @@
     }
 
     function itemMatchesGlobalFilter(item) {
-      if (state.activeTab !== 'all' && item.type !== state.activeTab) return false;
+      if (state.activeTab === 'ebook') {
+        if (!isEbook(item)) return false;
+      } else if (state.activeTab !== 'all' && item.type !== state.activeTab) {
+        return false;
+      }
 
       if (Array.isArray(state.activeCategoryFilters) && state.activeCategoryFilters.length > 0) {
         const itemThemesLower = parseItemThemes(item.theme).map(t => t.toLowerCase());
@@ -1504,14 +1562,10 @@
         const q = state.searchQuery.trim().toLowerCase();
         const cubbyName = item.type === 'tarot' ? (state.cubbyLabels[item.cubby] || '') : '';
         const loanInfo = isBookLoaned(item) ? `prestado ${item.loanedTo || ''} ${item.loanedDate || ''}` : '';
+        const ebookInfo = isEbook(item) ? 'libro magico mágico electronico electrónico ebook ereader' : 'vitrina estante';
         const haystack = [
-          item.title,
-          item.author,
-          item.publisher,
-          item.theme,
-          item.notes,
-          loanInfo,
-          cubbyName,
+          item.title, item.author, item.publisher, item.theme, item.notes,
+          loanInfo, ebookInfo, cubbyName,
           item.type !== 'tarot' ? `vitrina ${item.cabinet} estante ${item.shelf}` : ''
         ].join(' ').toLowerCase();
         if (!haystack.includes(q)) return false;
@@ -1540,6 +1594,7 @@
       }
       return state.items.filter(
         i => (i.type === 'book' || i.type === 'object') &&
+             !isEbook(i) &&
              Number(i.cabinet) === Number(targetLoc.cabinet) &&
              Number(i.shelf) === Number(targetLoc.shelf)
       );
@@ -1550,12 +1605,12 @@
       if (idx === -1) return false;
       const item = state.items[idx];
 
-      // Ajustar tipo automáticamente si se suelta en cubículo de tarot o en estante blanco
       if (targetLoc.type === 'tarot') {
         item.type = 'tarot';
         item.cubby = Number(targetLoc.cubby);
         delete item.cabinet;
         delete item.shelf;
+        delete item.isEbook;
         delete item.loaned;
         delete item.loanedTo;
         delete item.loanedDate;
@@ -1564,19 +1619,18 @@
           item.type = 'book';
           delete item.cubby;
         }
+        if (item.type === 'book') {
+          item.isEbook = false;
+        }
         item.cabinet = Number(targetLoc.cabinet);
         item.shelf = Number(targetLoc.shelf);
       }
 
-      // Extraer el elemento de su posición actual en state.items
       const [extracted] = state.items.splice(idx, 1);
-
-      // Obtener los demás elementos ya presentes en el destino
       const destItems = getContainerItems(targetLoc);
       const clampedIdx = Math.max(0, Math.min(destItems.length, insertIndexInContainer));
 
       if (destItems.length === 0 || clampedIdx >= destItems.length) {
-        // Insertar justo después del último elemento del destino, o al final si está vacío
         if (destItems.length > 0) {
           const lastDestId = destItems[destItems.length - 1].id;
           const afterPos = state.items.findIndex(i => i.id === lastDestId);
@@ -1594,11 +1648,51 @@
       return true;
     }
 
+    function handleEbookIconDragOver(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!dragState.draggedId) return;
+      const item = state.items.find(i => i.id === dragState.draggedId);
+      if (item && item.type === 'book') {
+        if (event.dataTransfer) event.dataTransfer.dropEffect = 'move';
+        event.currentTarget.classList.add('ebook-icon-active');
+      }
+    }
+
+    function handleEbookIconDragLeave(event) {
+      event.currentTarget.classList.remove('ebook-icon-active');
+    }
+
+    function handleEbookIconDrop(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      const draggedId = dragState.draggedId || (event.dataTransfer && event.dataTransfer.getData('text/plain'));
+      event.currentTarget.classList.remove('ebook-icon-active');
+      clearDragVisuals();
+      dragState.draggedId = null;
+
+      if (!draggedId) return;
+      const item = state.items.find(i => i.id === draggedId);
+      if (!item || item.type !== 'book') {
+        showToast('✨ Solo los libros pueden pasarse al Libro Mágico');
+        return;
+      }
+      item.isEbook = true;
+      item.loaned = false;
+      item.loanedTo = '';
+      item.loanedDate = '';
+      state.highlightedItemId = item.id;
+      saveState();
+      renderAll();
+      showToast(`✨ «${item.title}» guardado en el Libro Mágico`);
+    }
+
     function clearDragVisuals() {
       document.querySelectorAll('.piece-dragging').forEach(el => el.classList.remove('piece-dragging'));
       document.querySelectorAll('.drop-target-zone').forEach(el => el.classList.remove('drop-target-zone'));
       document.querySelectorAll('.drop-before').forEach(el => el.classList.remove('drop-before'));
       document.querySelectorAll('.drop-after').forEach(el => el.classList.remove('drop-after'));
+      document.querySelectorAll('.ebook-icon-active').forEach(el => el.classList.remove('ebook-icon-active'));
       dragState.overElement = null;
     }
 
@@ -1651,7 +1745,7 @@
 
       const targetLoc = targetItem.type === 'tarot'
         ? { type: 'tarot', cubby: Number(targetItem.cubby) }
-        : { type: 'white', cabinet: Number(targetItem.cabinet), shelf: Number(targetItem.shelf) };
+        : { type: 'white', cabinet: Number(targetItem.cabinet || 1), shelf: Number(targetItem.shelf || 1) };
 
       const siblings = getContainerItems(targetLoc).filter(i => i.id !== draggedId);
       const targetIdxInSiblings = siblings.findIndex(i => i.id === targetItemId);
@@ -1735,289 +1829,52 @@
         case 'cthulhu':
           return `<svg class="w-7 h-8" viewBox="0 0 34 38" fill="none">
             <rect x="7" y="28" width="20" height="7.5" rx="1.5" fill="#9E7B3B" stroke="#120D11" stroke-width="1.8"/>
-            <line x1="10" y1="30.5" x2="14" y2="30.5" stroke="#120D11" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
-            <line x1="17" y1="30.5" x2="24" y2="30.5" stroke="#120D11" stroke-width="1.1" stroke-dasharray="2 1.5"/>
-            <line x1="10" y1="33.5" x2="23" y2="33.5" stroke="#120D11" stroke-width="1.1" stroke-dasharray="1.8 1.5"/>
             <path d="M9 12 C9 6, 25 6, 25 12 C27 16, 26 23, 24 28 L10 28 C8 23, 7 16, 9 12 Z" fill="${fill}" stroke="#120D11" stroke-width="1.9" stroke-linejoin="round"/>
-            <path d="M10 11 C13 8.5, 21 8.5, 24 11" stroke="#120D11" stroke-width="1.2"/>
             <circle cx="13" cy="15.5" r="2" fill="#1A1216" stroke="#120D11" stroke-width="1"/>
             <circle cx="21" cy="15.5" r="2" fill="#1A1216" stroke="#120D11" stroke-width="1"/>
             <path d="M17 16.5 L15.5 19.5 L18.5 19.5 Z" fill="#1A1216"/>
-            <path d="M11 20 C10 24, 11 27, 12.5 28" stroke="#120D11" stroke-width="1.7" stroke-linecap="round"/>
-            <path d="M14.5 20.5 C14 24.5, 14.5 27, 15.5 28" stroke="#120D11" stroke-width="1.7" stroke-linecap="round"/>
-            <path d="M19.5 20.5 C20 24.5, 19.5 27, 18.5 28" stroke="#120D11" stroke-width="1.7" stroke-linecap="round"/>
-            <path d="M23 20 C24 24, 23 27, 21.5 28" stroke="#120D11" stroke-width="1.7" stroke-linecap="round"/>
-            <path d="M7 18 C4.5 20, 5 24, 8 25" stroke="${fill}" stroke-width="2.4" stroke-linecap="round"/>
-            <path d="M7 18 C4.5 20, 5 24, 8 25" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
-            <path d="M27 18 C29.5 20, 29 24, 26 25" stroke="${fill}" stroke-width="2.4" stroke-linecap="round"/>
-            <path d="M27 18 C29.5 20, 29 24, 26 25" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
           </svg>`;
-
         case 'dragon_green':
           return `<svg class="w-7 h-8" viewBox="0 0 34 36" fill="none">
-            <path d="M24 24 C29 23, 31 19, 28 17" stroke="#6B9E3B" stroke-width="3.2" stroke-linecap="round"/>
-            <path d="M24 24 C29 23, 31 19, 28 17" stroke="#120D11" stroke-width="1.3" stroke-linecap="round"/>
-            <path d="M18 19 L25 15 L23 22 Z" fill="#E8D8B0" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
             <ellipse cx="17" cy="24" rx="7.5" ry="7.5" fill="#9BCB4B" stroke="#120D11" stroke-width="1.8"/>
-            <ellipse cx="15.5" cy="24.5" rx="4.5" ry="5.5" fill="#F3EAD8"/>
-            <ellipse cx="12" cy="31" rx="3.2" ry="2.2" fill="#E88B2C" stroke="#120D11" stroke-width="1.5"/>
-            <ellipse cx="20.5" cy="31" rx="3.2" ry="2.2" fill="#E88B2C" stroke="#120D11" stroke-width="1.5"/>
-            <ellipse cx="11.5" cy="23.5" rx="2.6" ry="2" fill="#E88B2C" stroke="#120D11" stroke-width="1.4"/>
             <circle cx="15" cy="13.5" r="8.2" fill="#A4D452" stroke="#120D11" stroke-width="1.8"/>
-            <path d="M11 7 L13 3.5 L15.5 6.5 L18 3.5 L19.5 7.5" fill="#4B8B3B" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
-            <path d="M21 10 C25 8.5, 25.5 13, 22 13.5" fill="#E88B2C" stroke="#120D11" stroke-width="1.5"/>
-            <path d="M22.5 13.5 C26 14, 25.5 18, 22 17" fill="#4B8B3B" stroke="#120D11" stroke-width="1.4"/>
             <circle cx="12.5" cy="13.5" r="1.7" fill="#120D11"/>
-            <circle cx="12" cy="12.9" r="0.6" fill="#FFFFFF"/>
-            <path d="M10 16.5 Q11.5 17.5 13 16.5" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
           </svg>`;
-
-        case 'dragon_grey':
-          return `<svg class="w-7 h-8" viewBox="0 0 34 36" fill="none">
-            <path d="M23 25 C28 25, 30 22, 28 19" stroke="#6B7D8C" stroke-width="3.2" stroke-linecap="round"/>
-            <path d="M23 25 C28 25, 30 22, 28 19" stroke="#120D11" stroke-width="1.3" stroke-linecap="round"/>
-            <path d="M19 19 L27 14 L25 22 Z" fill="#7D8E9E" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M21 19 L26.5 16 L24.5 21 Z" fill="#7D3B6E"/>
-            <ellipse cx="16.5" cy="24.5" rx="7.5" ry="7.5" fill="#7D8E9E" stroke="#120D11" stroke-width="1.8"/>
-            <ellipse cx="14.5" cy="25" rx="4.5" ry="5.5" fill="#EEDBC0"/>
-            <ellipse cx="11.5" cy="31.5" rx="3.3" ry="2.1" fill="#6B7D8C" stroke="#120D11" stroke-width="1.5"/>
-            <ellipse cx="20" cy="31.5" rx="3.3" ry="2.1" fill="#6B7D8C" stroke="#120D11" stroke-width="1.5"/>
-            <rect x="6" y="10" width="18" height="10.5" rx="5.2" fill="#7D8E9E" stroke="#120D11" stroke-width="1.8"/>
-            <path d="M7 16.5 Q15 19.5 23.5 16.5 L23.5 20 Q15 21.5 7 20 Z" fill="#EEDBC0" stroke="#120D11" stroke-width="1.2"/>
-            <path d="M17 10.5 L19 6.5 L21.5 10.5" fill="#4A3832" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
-            <circle cx="11.5" cy="14" r="1.7" fill="#120D11"/>
-            <circle cx="11" cy="13.4" r="0.6" fill="#FFFFFF"/>
-          </svg>`;
-
-        case 'dragon_white':
-          return `<svg class="w-7 h-8" viewBox="0 0 34 36" fill="none">
-            <path d="M23 25 C28 24, 30 20, 28 17" stroke="#EAE6DF" stroke-width="3.2" stroke-linecap="round"/>
-            <path d="M23 25 C28 24, 30 20, 28 17" stroke="#120D11" stroke-width="1.3" stroke-linecap="round"/>
-            <path d="M18 19 L29 12 L24 22 Z" fill="#F8F6F2" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
-            <ellipse cx="16.5" cy="24.5" rx="7" ry="7.5" fill="#F8F6F2" stroke="#120D11" stroke-width="1.8"/>
-            <ellipse cx="11.5" cy="31.5" rx="3" ry="2" fill="#F8F6F2" stroke="#120D11" stroke-width="1.5"/>
-            <ellipse cx="19.5" cy="31.5" rx="3" ry="2" fill="#F8F6F2" stroke="#120D11" stroke-width="1.5"/>
-            <ellipse cx="15" cy="13.5" rx="8" ry="7.5" fill="#F8F6F2" stroke="#120D11" stroke-width="1.8"/>
-            <path d="M11 7 L12 3.5 L14.5 6.8" fill="#F8F6F2" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
-            <path d="M18 7 L19.5 3.5 L21.5 7.5" fill="#F8F6F2" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
-            <ellipse cx="11.5" cy="13.8" rx="2.4" ry="2.8" fill="#5CA4D6" stroke="#120D11" stroke-width="1.1"/>
-            <ellipse cx="11.8" cy="13.8" rx="1.1" ry="1.8" fill="#120D11"/>
-            <circle cx="11" cy="12.7" r="0.6" fill="#FFFFFF"/>
-            <path d="M8.5 16.5 Q11.5 17.5 14 16.5" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>`;
-
-        case 'dragon_black':
-          return `<svg class="w-7 h-8" viewBox="0 0 34 36" fill="none">
-            <path d="M23 25 C28 24, 30 20, 28 17" stroke="#262229" stroke-width="3.2" stroke-linecap="round"/>
-            <path d="M23 25 C28 24, 30 20, 28 17" stroke="#120D11" stroke-width="1.3" stroke-linecap="round"/>
-            <path d="M18 19 L29 12 L24 22 Z" fill="#2B262E" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
-            <ellipse cx="16.5" cy="24.5" rx="7" ry="7.5" fill="#262229" stroke="#120D11" stroke-width="1.8"/>
-            <ellipse cx="11.5" cy="31.5" rx="3" ry="2" fill="#262229" stroke="#120D11" stroke-width="1.5"/>
-            <ellipse cx="19.5" cy="31.5" rx="3" ry="2" fill="#262229" stroke="#120D11" stroke-width="1.5"/>
-            <ellipse cx="15" cy="13.5" rx="8" ry="7.5" fill="#262229" stroke="#120D11" stroke-width="1.8"/>
-            <path d="M11 7 L12 3.5 L14.5 6.8" fill="#262229" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
-            <path d="M18 7 L19.5 3.5 L21.5 7.5" fill="#262229" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
-            <ellipse cx="11.5" cy="13.8" rx="2.4" ry="2.8" fill="#9ED656" stroke="#120D11" stroke-width="1.1"/>
-            <ellipse cx="11.8" cy="13.8" rx="1.1" ry="1.8" fill="#120D11"/>
-            <circle cx="11" cy="12.7" r="0.6" fill="#FFFFFF"/>
-            <path d="M8.5 16.5 Q11.5 17.5 14 16.5" stroke="#5A5261" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>`;
-
-        case 'photoframe':
-          return `<svg class="w-7 h-8" viewBox="0 0 32 36" fill="none">
-            <path d="M22 25 L26 32 L21 32" stroke="#120D11" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            <rect x="5" y="4" width="22" height="28" rx="3.5" fill="${fill}" stroke="#120D11" stroke-width="2"/>
-            <circle cx="7.5" cy="6.5" r="1.3" fill="#FFF3C4" stroke="#120D11" stroke-width="0.9"/>
-            <circle cx="24.5" cy="6.5" r="1.3" fill="#FFF3C4" stroke="#120D11" stroke-width="0.9"/>
-            <circle cx="7.5" cy="29.5" r="1.3" fill="#FFF3C4" stroke="#120D11" stroke-width="0.9"/>
-            <circle cx="24.5" cy="29.5" r="1.3" fill="#FFF3C4" stroke="#120D11" stroke-width="0.9"/>
-            <rect x="9" y="8" width="14" height="20" rx="1.5" fill="#231B2E" stroke="#120D11" stroke-width="1.4"/>
-            <path d="M18.5 11.5 C16.3 11.8 14.8 13.7 14.8 16 C14.8 18.3 16.3 20.2 18.5 20.5 C16 20.8 13.5 18.9 13.5 16 C13.5 13.1 16 11.2 18.5 11.5 Z" fill="#F6C453"/>
-            <circle cx="19.5" cy="13" r="0.8" fill="#FFF3C4"/>
-            <path d="M9.5 27.5 Q14 22.5 17.5 25 Q20 22 22.5 24.5 L22.5 27.5 Z" fill="#3B5249" stroke="#120D11" stroke-width="0.9"/>
-          </svg>`;
-
         case 'orrery':
           return `<svg class="w-8 h-8" viewBox="0 0 36 34" fill="none">
             <ellipse cx="18" cy="30.5" rx="8" ry="2.2" fill="${fill}" stroke="#120D11" stroke-width="1.7"/>
-            <path d="M15.5 29.5 L16.8 24 L19.2 24 L20.5 29.5 Z" fill="#C8963E" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
             <line x1="18" y1="24" x2="18" y2="14" stroke="#120D11" stroke-width="2" stroke-linecap="round"/>
             <ellipse cx="18" cy="14" rx="14" ry="5.5" transform="rotate(-14 18 14)" stroke="${fill}" stroke-width="2.4"/>
-            <ellipse cx="18" cy="14" rx="14" ry="5.5" transform="rotate(-14 18 14)" stroke="#120D11" stroke-width="1.2"/>
-            <ellipse cx="18" cy="14" rx="9.5" ry="3.6" transform="rotate(18 18 14)" stroke="#120D11" stroke-width="1.1" stroke-dasharray="2.5 2"/>
-            <line x1="18" y1="14" x2="7.5" y2="11.5" stroke="#120D11" stroke-width="1.4"/>
-            <line x1="18" y1="14" x2="29" y2="15.5" stroke="#120D11" stroke-width="1.4"/>
             <circle cx="18" cy="14" r="4" fill="#F6C453" stroke="#120D11" stroke-width="1.6"/>
-            <circle cx="16.8" cy="12.8" r="1" fill="#FFF7D6"/>
-            <circle cx="7" cy="11.5" r="2.2" fill="#4E8098" stroke="#120D11" stroke-width="1.3"/>
-            <circle cx="29.5" cy="15.5" r="2.5" fill="#B85D43" stroke="#120D11" stroke-width="1.3"/>
-            <ellipse cx="29.5" cy="15.5" rx="4.2" ry="1.1" transform="rotate(-20 29.5 15.5)" stroke="#F3EAD8" stroke-width="1"/>
-            <circle cx="23.5" cy="9.2" r="1.6" fill="#9D65D0" stroke="#120D11" stroke-width="1.2"/>
           </svg>`;
-
         case 'canopo':
           return `<svg class="w-7 h-8" viewBox="0 0 32 36" fill="none">
             <path d="M10 14 C8 18, 9 27, 11 32 L21 32 C23 27, 24 18, 22 14 Z" fill="${fill}" stroke="#120D11" stroke-width="1.9" stroke-linejoin="round"/>
-            <rect x="9.5" y="31.5" width="13" height="2.5" rx="1" fill="#C8963E" stroke="#120D11" stroke-width="1.5"/>
-            <rect x="9.2" y="18" width="13.6" height="3.2" fill="#D4A84F" stroke="#120D11" stroke-width="1.3"/>
-            <line x1="13" y1="18" x2="13" y2="21.2" stroke="#1D4ED8" stroke-width="1.6"/>
-            <line x1="16" y1="18" x2="16" y2="21.2" stroke="#1D4ED8" stroke-width="1.6"/>
-            <line x1="19" y1="18" x2="19" y2="21.2" stroke="#1D4ED8" stroke-width="1.6"/>
-            <line x1="14" y1="23.5" x2="14" y2="29" stroke="#5C4938" stroke-width="1.2" stroke-linecap="round"/>
-            <line x1="18" y1="23.5" x2="18" y2="29" stroke="#5C4938" stroke-width="1.2" stroke-linecap="round"/>
-            <circle cx="16" cy="25.5" r="1" fill="#5C4938"/>
             <path d="M11 14 L12 8.5 L11 3.5 L14 7.5 L18 7.5 L21 3.5 L20 8.5 L21 14 Z" fill="#2A2630" stroke="#120D11" stroke-width="1.7" stroke-linejoin="round"/>
-            <path d="M18.5 9.5 L23.5 11 L22.5 13 L18.5 12.5 Z" fill="#2A2630" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
-            <circle cx="17.2" cy="9.6" r="1" fill="#F6C453"/>
           </svg>`;
-
-        case 'compass':
-          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
-            <circle cx="16" cy="4" r="2.2" stroke="#120D11" stroke-width="1.6"/>
-            <circle cx="16" cy="17" r="10.5" fill="${fill}" stroke="#120D11" stroke-width="2"/>
-            <circle cx="16" cy="17" r="7.5" fill="#F6EFE2" stroke="#120D11" stroke-width="1.3"/>
-            <polygon points="16,10.5 18.2,17 16,23.5 13.8,17" fill="#9E2A2B" stroke="#120D11" stroke-width="1"/>
-            <circle cx="16" cy="17" r="1.4" fill="#120D11"/>
-          </svg>`;
-
-        case 'sundial':
-          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
-            <ellipse cx="16" cy="22" rx="12" ry="5.5" fill="${fill}" stroke="#120D11" stroke-width="2"/>
-            <ellipse cx="16" cy="21" rx="9" ry="3.5" fill="#F3EAD8" stroke="#120D11" stroke-width="1.2"/>
-            <polygon points="16,21 16,10 23,21" fill="#C8963E" stroke="#120D11" stroke-width="1.6" stroke-linejoin="round"/>
-            <line x1="9" y1="21" x2="12" y2="20" stroke="#120D11" stroke-width="1.2"/>
-            <line x1="20" y1="20" x2="23" y2="21" stroke="#120D11" stroke-width="1.2"/>
-          </svg>`;
-
-        case 'sextant':
-          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
-            <path d="M7 22 Q16 28 25 22 L16 7 Z" fill="${fill}" fill-opacity="0.35" stroke="#120D11" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M6 21 Q16 27.5 26 21" stroke="${fill}" stroke-width="3" stroke-linecap="round"/>
-            <path d="M6 21 Q16 27.5 26 21" stroke="#120D11" stroke-width="1.6" stroke-linecap="round"/>
-            <line x1="16" y1="7" x2="19" y2="24.5" stroke="#120D11" stroke-width="2" stroke-linecap="round"/>
-            <rect x="9" y="13" width="6" height="2.8" transform="rotate(-25 9 13)" fill="#2B2429" stroke="#120D11" stroke-width="1.2"/>
-          </svg>`;
-
-        case 'scrollholder':
-          return `<svg class="w-8 h-7" viewBox="0 0 36 30" fill="none">
-            <rect x="6" y="12" width="24" height="8" rx="2" fill="${fill}" stroke="#120D11" stroke-width="1.8"/>
-            <rect x="4" y="11" width="4" height="10" rx="1.5" fill="#D4A84F" stroke="#120D11" stroke-width="1.6"/>
-            <rect x="28" y="11" width="4" height="10" rx="1.5" fill="#D4A84F" stroke="#120D11" stroke-width="1.6"/>
-            <path d="M31 13.5 C34 13.5, 34 18.5, 31 18.5" stroke="#F5EAD6" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="14" y1="12" x2="14" y2="20" stroke="#120D11" stroke-width="1.4"/>
-            <line x1="22" y1="12" x2="22" y2="20" stroke="#120D11" stroke-width="1.4"/>
-          </svg>`;
-
-        case 'octopusorb':
-          return `<svg class="w-8 h-8" viewBox="0 0 34 34" fill="none">
-            <circle cx="17" cy="11" r="7.5" fill="${fill}" stroke="#120D11" stroke-width="1.8"/>
-            <path d="M13.5 8.5 C15 7, 17 6.5, 19 7" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
-            <ellipse cx="17" cy="21" rx="5.5" ry="4.2" fill="#8C583A" stroke="#120D11" stroke-width="1.7"/>
-            <circle cx="15" cy="20.5" r="1" fill="#F6C453"/>
-            <circle cx="19" cy="20.5" r="1" fill="#F6C453"/>
-            <path d="M12 22 C8 20, 7 15, 10 14" stroke="#8C583A" stroke-width="2.6" stroke-linecap="round"/>
-            <path d="M12 22 C8 20, 7 15, 10 14" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
-            <path d="M22 22 C26 20, 27 15, 24 14" stroke="#8C583A" stroke-width="2.6" stroke-linecap="round"/>
-            <path d="M22 22 C26 20, 27 15, 24 14" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
-            <path d="M13 24 C10 27, 7 27, 6 25" stroke="#8C583A" stroke-width="2.4" stroke-linecap="round"/>
-            <path d="M21 24 C24 27, 27 27, 28 25" stroke="#8C583A" stroke-width="2.4" stroke-linecap="round"/>
-            <path d="M16 25 L15 29 M18 25 L19 29" stroke="#120D11" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>`;
-
-        case 'operaglasses':
-          return `<svg class="w-8 h-7" viewBox="0 0 36 30" fill="none">
-            <path d="M10 10 L8 22 L15 22 L15 10 Z" fill="${fill}" stroke="#120D11" stroke-width="1.8" stroke-linejoin="round"/>
-            <path d="M21 10 L21 22 L28 22 L26 10 Z" fill="${fill}" stroke="#120D11" stroke-width="1.8" stroke-linejoin="round"/>
-            <rect x="9" y="13" width="5" height="5" fill="#F6EFE2" stroke="#120D11" stroke-width="1.1"/>
-            <rect x="22" y="13" width="5" height="5" fill="#F6EFE2" stroke="#120D11" stroke-width="1.1"/>
-            <line x1="15" y1="14" x2="21" y2="14" stroke="#120D11" stroke-width="2.2"/>
-            <line x1="27" y1="18" x2="33" y2="26" stroke="#D4A84F" stroke-width="2.6" stroke-linecap="round"/>
-            <line x1="27" y1="18" x2="33" y2="26" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>`;
-
-        case 'silver_box':
-          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
-            <rect x="6" y="13" width="20" height="13" rx="2" fill="#B8C0C8" stroke="#120D11" stroke-width="1.9"/>
-            <rect x="5" y="9" width="22" height="5" rx="1.5" fill="#E3E8ED" stroke="#120D11" stroke-width="1.8"/>
-            <path d="M8 10.8 H24" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round"/>
-            <rect x="8.5" y="16" width="15" height="7" rx="1" fill="#CFD6DD" stroke="#120D11" stroke-width="1.1"/>
-            <circle cx="16" cy="13.5" r="1.5" fill="#F8FAFC" stroke="#120D11" stroke-width="1.1"/>
-            <path d="M11 19.5 L16 17.5 L21 19.5 L16 21.5 Z" fill="#E6ECF2" stroke="#120D11" stroke-width="0.9"/>
-          </svg>`;
-
-        case 'motherofpearl_box':
-          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
-            <rect x="6" y="13" width="20" height="13" rx="2" fill="#2A2129" stroke="#120D11" stroke-width="1.9"/>
-            <rect x="5" y="9" width="22" height="5" rx="1.5" fill="#F5EFE6" stroke="#120D11" stroke-width="1.8"/>
-            <rect x="8.5" y="16" width="6.5" height="7" rx="1" fill="#E8F4F2" stroke="#120D11" stroke-width="1.1"/>
-            <rect x="17" y="16" width="6.5" height="7" rx="1" fill="#F6E6F2" stroke="#120D11" stroke-width="1.1"/>
-            <circle cx="16" cy="13.5" r="1.4" fill="#F6C453" stroke="#120D11" stroke-width="1"/>
-          </svg>`;
-
-        case 'wooden_box':
-          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
-            <rect x="6" y="13" width="20" height="13" rx="1.8" fill="#8B5A36" stroke="#120D11" stroke-width="1.9"/>
-            <rect x="5" y="9" width="22" height="5" rx="1.5" fill="#A46D43" stroke="#120D11" stroke-width="1.8"/>
-            <line x1="10" y1="13" x2="10" y2="26" stroke="#120D11" stroke-width="1.4"/>
-            <line x1="22" y1="13" x2="22" y2="26" stroke="#120D11" stroke-width="1.4"/>
-            <rect x="14.2" y="12.5" width="3.6" height="4" rx="0.8" fill="#D4A84F" stroke="#120D11" stroke-width="1.1"/>
-          </svg>`;
-
-        case 'shell':
-          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
-            <path d="M16 5 C9 5, 5 11, 6 18 C7 23, 12 27, 16 27 C20 27, 25 23, 26 18 C27 11, 23 5, 16 5 Z" fill="${fill}" stroke="#120D11" stroke-width="2"/>
-            <path d="M16 26 L10 9 M16 26 L16 6 M16 26 L22 9" stroke="#120D11" stroke-width="1.3"/>
-          </svg>`;
-
         case 'jar':
           return `<svg class="w-6 h-8" viewBox="0 0 28 34" fill="none">
             <rect x="6" y="10" width="16" height="20" rx="4" fill="${fill}" stroke="#120D11" stroke-width="2"/>
             <rect x="10" y="4" width="8" height="6" rx="1" fill="#C49A6C" stroke="#120D11" stroke-width="1.8"/>
-            <rect x="9" y="15" width="10" height="8" fill="#F3EAD8" stroke="#120D11" stroke-width="1.2"/>
           </svg>`;
-
         case 'crystal':
           return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
             <polygon points="8,27 12,11 17,27" fill="${fill}" stroke="#120D11" stroke-width="1.8"/>
             <polygon points="14,27 19,6 24,27" fill="#C084FC" stroke="#120D11" stroke-width="1.8"/>
-            <polygon points="5,27 8,16 11,27" fill="#7E22CE" stroke="#120D11" stroke-width="1.6"/>
           </svg>`;
-
         case 'candle':
           return `<svg class="w-6 h-8" viewBox="0 0 26 34" fill="none">
             <rect x="8" y="14" width="10" height="15" rx="1.5" fill="#F5EAD6" stroke="#120D11" stroke-width="1.8"/>
             <path d="M13 4 C16 8, 16 11, 13 13 C10 11, 10 8, 13 4 Z" fill="#F6C453" stroke="#120D11" stroke-width="1.5"/>
-            <ellipse cx="13" cy="30" rx="8" ry="2.5" fill="#C8963E" stroke="#120D11" stroke-width="1.6"/>
           </svg>`;
-
-        case 'cauldron':
-          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
-            <path d="M7 12 L25 12 C27 20, 24 27, 16 27 C8 27, 5 20, 7 12 Z" fill="#262025" stroke="#120D11" stroke-width="2"/>
-            <rect x="6" y="10" width="20" height="3.5" rx="1.5" fill="#3B3139" stroke="#120D11" stroke-width="1.6"/>
-            <path d="M10 26 L8 30 M22 26 L24 30" stroke="#120D11" stroke-width="2.2" stroke-linecap="round"/>
-          </svg>`;
-
-        case 'skull':
-          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
-            <path d="M16 5 C10 5, 7 9, 7 15 C7 18, 9 20, 11 21 L11 26 L21 26 L21 21 C23 20, 25 18, 25 15 C25 9, 22 5, 16 5 Z" fill="#EFE4D2" stroke="#120D11" stroke-width="2"/>
-            <circle cx="12.5" cy="15" r="2.2" fill="#120D11"/>
-            <circle cx="19.5" cy="15" r="2.2" fill="#120D11"/>
-            <line x1="14" y1="22" x2="14" y2="26" stroke="#120D11" stroke-width="1.4"/>
-            <line x1="18" y1="22" x2="18" y2="26" stroke="#120D11" stroke-width="1.4"/>
-          </svg>`;
-
         case 'plant':
           return `<svg class="w-7 h-8" viewBox="0 0 30 34" fill="none">
             <polygon points="9,20 21,20 19,31 11,31" fill="#A65A3E" stroke="#120D11" stroke-width="1.8"/>
-            <path d="M15 20 C11 13, 6 11, 5 14 C8 17, 11 19, 15 20 Z" fill="#5E8563" stroke="#120D11" stroke-width="1.5"/>
-            <path d="M15 20 C19 13, 24 11, 25 14 C22 17, 19 19, 15 20 Z" fill="#5E8563" stroke="#120D11" stroke-width="1.5"/>
             <path d="M15 19 C13 12, 14 6, 15 4 C16 6, 17 12, 15 19 Z" fill="#73A179" stroke="#120D11" stroke-width="1.5"/>
           </svg>`;
-
         default:
           return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
             <circle cx="16" cy="14" r="9" fill="${fill}" stroke="#120D11" stroke-width="2"/>
-            <path d="M12 10 C13 8, 16 7, 18 8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
             <polygon points="10,23 22,23 24,28 8,28" fill="#2B1F27" stroke="#120D11" stroke-width="1.8"/>
           </svg>`;
       }
@@ -2038,11 +1895,15 @@
       renderTarotCabinet();
       renderInspectorPanel();
       renderLoanedBooksSection();
+      renderEbookSection();
       updateSearchFeedback();
     }
 
     function updateCounters() {
       document.getElementById('countBooks').textContent = state.items.filter(i => i.type === 'book').length;
+      const ebookCount = state.items.filter(isEbook).length;
+      const countEbooksEl = document.getElementById('countEbooks');
+      if (countEbooksEl) countEbooksEl.textContent = ebookCount;
       document.getElementById('countTarots').textContent = state.items.filter(i => i.type === 'tarot').length;
       document.getElementById('countObjects').textContent = state.items.filter(i => i.type === 'object').length;
       const loanedCount = state.items.filter(isBookLoaned).length;
@@ -2055,6 +1916,23 @@
       if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    function scrollToEbookSection() {
+      const sec = document.getElementById('ebookSection');
+      if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function selectEbookScope() {
+      state.activeTab = state.activeTab === 'ebook' ? 'all' : 'ebook';
+      state.inspectorScope = 'all';
+      state.highlightedItemId = null;
+      const iconBtn = document.getElementById('ebookIconBtn');
+      if (iconBtn) iconBtn.classList.toggle('ebook-icon-active', state.activeTab === 'ebook');
+      renderAll();
+      if (state.activeTab === 'ebook') {
+        showToast('✨ Mostrando libros en el Libro Mágico');
+      }
+    }
+
     function toggleCategoryFilterDropdown(event) {
       if (event) event.stopPropagation();
       const menu = document.getElementById('categoryFilterMenu');
@@ -2063,15 +1941,10 @@
 
     function toggleCategoryFilterValue(val) {
       const idx = state.activeCategoryFilters.indexOf(val);
-      if (idx === -1) {
-        state.activeCategoryFilters.push(val);
-      } else {
-        state.activeCategoryFilters.splice(idx, 1);
-      }
+      if (idx === -1) state.activeCategoryFilters.push(val);
+      else state.activeCategoryFilters.splice(idx, 1);
       state.highlightedItemId = null;
-      if (state.activeCategoryFilters.length > 0) {
-        state.inspectorScope = 'all';
-      }
+      if (state.activeCategoryFilters.length > 0) state.inspectorScope = 'all';
       renderAll();
     }
 
@@ -2135,26 +2008,6 @@
         `;
       }).join('');
 
-      const allParsedThemes = state.items.flatMap(i => parseItemThemes(i.theme));
-      const extraThemes = Array.from(new Set(
-        allParsedThemes.filter(t => t && !BOOK_CATEGORIES.some(b => b.toLowerCase() === t.toLowerCase()) && !state.cubbyLabels.some(c => c.toLowerCase() === t.toLowerCase()))
-      )).sort((a, b) => a.localeCompare(b, 'es'));
-
-      const otherOpts = extraThemes.map(th => {
-        const val = `theme:${th}`;
-        const count = state.items.filter(i => parseItemThemes(i.theme).some(t => t.toLowerCase() === th.toLowerCase())).length;
-        const checked = state.activeCategoryFilters.includes(val) ? 'checked' : '';
-        return `
-          <label class="flex items-center justify-between gap-2 px-2 py-1 rounded-lg hover:bg-[#2B1F28] cursor-pointer select-none">
-            <span class="flex items-center gap-2 truncate text-[#EEDCF5]">
-              <input type="checkbox" ${checked} onchange="toggleCategoryFilterValue('${escapeHTML(val)}')" class="accent-[#D8B4FE] rounded cursor-pointer" />
-              <span class="truncate">🔮 ${escapeHTML(th)}</span>
-            </span>
-            <span class="text-[10px] text-[#A995A1] shrink-0">${count}</span>
-          </label>
-        `;
-      }).join('');
-
       checklist.innerHTML = `
         <div>
           <p class="text-[10px] uppercase tracking-wider text-[#F6C453] font-bold px-2 mb-1">Temáticas de Libros (A-Z)</p>
@@ -2164,50 +2017,30 @@
           <p class="text-[10px] uppercase tracking-wider text-[#A8D59D] font-bold px-2 mb-1">Vitrina de Tarots y Oráculos</p>
           <div class="space-y-0.5">${tarotOpts}</div>
         </div>
-        ${otherOpts ? `
-          <div class="pt-2 border-t border-[#392935]">
-            <p class="text-[10px] uppercase tracking-wider text-[#D8B4FE] font-bold px-2 mb-1">Otras temáticas</p>
-            <div class="space-y-0.5">${otherOpts}</div>
-          </div>
-        ` : ''}
       `;
 
       const booksOnly = state.items.filter(i => i.type === 'book');
 
       const pubSelect = document.getElementById('publisherFilterSelect');
       if (pubSelect) {
-        const publishers = Array.from(new Set(
-          booksOnly.map(i => (i.publisher || '').trim()).filter(Boolean)
-        )).sort((a, b) => a.localeCompare(b, 'es'));
-
-        const pubOpts = publishers.map(pub => {
-          const count = booksOnly.filter(i => (i.publisher || '').trim().toLowerCase() === pub.toLowerCase()).length;
-          const selected = state.activePublisherFilter.toLowerCase() === pub.toLowerCase() ? 'selected' : '';
-          return `<option value="${escapeHTML(pub)}" ${selected}>${escapeHTML(pub)} (${count})</option>`;
-        }).join('');
-
-        pubSelect.innerHTML = `
-          <option value="" ${state.activePublisherFilter === '' ? 'selected' : ''}>🏛️ Editoriales (libros)</option>
-          ${pubOpts}
-        `;
+        const publishers = Array.from(new Set(booksOnly.map(i => (i.publisher || '').trim()).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'es'));
+        pubSelect.innerHTML = `<option value="" ${state.activePublisherFilter === '' ? 'selected' : ''}>🏛️ Editoriales (libros)</option>` +
+          publishers.map(pub => {
+            const count = booksOnly.filter(i => (i.publisher || '').trim().toLowerCase() === pub.toLowerCase()).length;
+            const selected = state.activePublisherFilter.toLowerCase() === pub.toLowerCase() ? 'selected' : '';
+            return `<option value="${escapeHTML(pub)}" ${selected}>${escapeHTML(pub)} (${count})</option>`;
+          }).join('');
       }
 
       const authSelect = document.getElementById('authorFilterSelect');
       if (authSelect) {
-        const authors = Array.from(new Set(
-          booksOnly.map(i => (i.author || '').trim()).filter(Boolean)
-        )).sort((a, b) => a.localeCompare(b, 'es'));
-
-        const authOpts = authors.map(auth => {
-          const count = booksOnly.filter(i => (i.author || '').trim().toLowerCase() === auth.toLowerCase()).length;
-          const selected = state.activeAuthorFilter.toLowerCase() === auth.toLowerCase() ? 'selected' : '';
-          return `<option value="${escapeHTML(auth)}" ${selected}>${escapeHTML(auth)} (${count})</option>`;
-        }).join('');
-
-        authSelect.innerHTML = `
-          <option value="" ${state.activeAuthorFilter === '' ? 'selected' : ''}>✍️ Autores (libros)</option>
-          ${authOpts}
-        `;
+        const authors = Array.from(new Set(booksOnly.map(i => (i.author || '').trim()).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'es'));
+        authSelect.innerHTML = `<option value="" ${state.activeAuthorFilter === '' ? 'selected' : ''}>✍️ Autores (libros)</option>` +
+          authors.map(auth => {
+            const count = booksOnly.filter(i => (i.author || '').trim().toLowerCase() === auth.toLowerCase()).length;
+            const selected = state.activeAuthorFilter.toLowerCase() === auth.toLowerCase() ? 'selected' : '';
+            return `<option value="${escapeHTML(auth)}" ${selected}>${escapeHTML(auth)} (${count})</option>`;
+          }).join('');
       }
 
       const typeSelect = document.getElementById('typeFilterSelect');
@@ -2224,6 +2057,9 @@
         state.activePublisherFilter !== '' ||
         state.activeAuthorFilter !== '';
       resetBtn.classList.toggle('hidden', !hasActiveFilters);
+
+      const iconBtn = document.getElementById('ebookIconBtn');
+      if (iconBtn) iconBtn.classList.toggle('ebook-icon-active', state.activeTab === 'ebook');
     }
 
     function selectShelfScope(cab, shelf, event) {
@@ -2282,7 +2118,10 @@
         let shelvesHTML = '';
         for (let shelf = 1; shelf <= 4; shelf++) {
           const shelfItems = state.items.filter(
-            i => (i.type === 'book' || i.type === 'object') && Number(i.cabinet) === cab && Number(i.shelf) === shelf
+            i => (i.type === 'book' || i.type === 'object') &&
+                 !isEbook(i) &&
+                 Number(i.cabinet) === cab &&
+                 Number(i.shelf) === shelf
           );
 
           const hasSearchMatch = activeSearchOrFilter && shelfItems.some(itemMatchesGlobalFilter);
@@ -2313,14 +2152,13 @@
             } else if (isBookLoaned(item)) {
               const hClass = getBookHeightClass(item.title);
               const borrower = (item.loanedTo || '').trim() || 'Prestado';
-              const dateInfo = item.loanedDate ? ` · ${item.loanedDate}` : '';
               itemsHTML += `
                 <div ${dragAttrs}
                   onclick="event.stopPropagation(); openEditModal('${item.id}')"
-                  title="🤝 Hueco reservado: «${escapeHTML(item.title)}» prestado a ${escapeHTML(borrower)}${escapeHTML(dateInfo)} — Arrastra o clic para editar"
+                  title="🤝 Hueco reservado: «${escapeHTML(item.title)}» prestado a ${escapeHTML(borrower)}"
                   class="loaned-slot draggable-piece ${hClass} w-[21px] sm:w-[23px] shrink-0 flex flex-col items-center justify-between py-1 px-0.5 overflow-hidden select-none ${stateClass}">
-                  <span class="px-0.5 rounded-[2px] bg-[#7A2E3B] text-[#FFF7E8] text-[6.5px] font-bold leading-tight tracking-tighter">🤝</span>
-                  <span class="font-serif-label text-[7.5px] font-bold leading-none tracking-tighter text-[#5B2530] [writing-mode:vertical-rl] rotate-180 max-h-[30px] overflow-hidden text-ellipsis whitespace-nowrap">
+                  <span class="px-0.5 rounded-[2px] bg-[#7A2E3B] text-[#FFF7E8] text-[6.5px] font-bold leading-tight">🤝</span>
+                  <span class="font-serif-label text-[7.5px] font-bold leading-none text-[#5B2530] [writing-mode:vertical-rl] rotate-180 max-h-[30px] overflow-hidden truncate">
                     ${escapeHTML(borrower)}
                   </span>
                   <span class="w-2.5 h-[1.5px] bg-[#7A2E3B]/60 rounded-full"></span>
@@ -2334,11 +2172,11 @@
               itemsHTML += `
                 <div ${dragAttrs}
                   onclick="event.stopPropagation(); openEditModal('${item.id}')"
-                  title="${escapeHTML(item.title)}${item.author ? ' — ' + escapeHTML(item.author) : ''} [${escapeHTML(item.theme || 'Sin categoría')}] — Arrastra para mover o clic para editar"
+                  title="${escapeHTML(item.title)}${item.author ? ' — ' + escapeHTML(item.author) : ''} — Arrastra para mover o clic para editar"
                   style="background-color: ${bgColor};"
                   class="book-spine draggable-piece ${hClass} w-[21px] sm:w-[23px] shrink-0 flex flex-col items-center justify-between py-1 px-0.5 overflow-hidden select-none ${stateClass}">
                   <span class="w-full h-[2px] bg-[#F6C453]/75 rounded-full"></span>
-                  <span class="font-serif-label text-[8px] font-bold leading-none tracking-tighter ${textColor} [writing-mode:vertical-rl] rotate-180 max-h-[34px] overflow-hidden text-ellipsis whitespace-nowrap">
+                  <span class="font-serif-label text-[8px] font-bold leading-none ${textColor} [writing-mode:vertical-rl] rotate-180 max-h-[34px] overflow-hidden truncate">
                     ${escapeHTML(item.title)}
                   </span>
                   <span class="w-full h-[2px] bg-[#F6C453]/75 rounded-full"></span>
@@ -2385,8 +2223,6 @@
               <div class="cabinet-interior rounded-xs border-2 border-[#120D11] relative overflow-hidden">
                 ${shelvesHTML}
                 <div class="pointer-events-none absolute inset-y-0 left-1/2 -translate-x-1/2 w-[5px] bg-[var(--cabinet-white)]/90 border-x-2 border-[#120D11] z-20"></div>
-                <div class="pointer-events-none absolute top-1/2 left-[calc(50%-8px)] w-2 h-2 rounded-full bg-slate-300 border-[1.5px] border-[#120D11] z-30"></div>
-                <div class="pointer-events-none absolute top-1/2 left-[calc(50%+3px)] w-2 h-2 rounded-full bg-slate-300 border-[1.5px] border-[#120D11] z-30"></div>
                 <div class="glass-reflection absolute inset-0 z-20"></div>
               </div>
             </div>
@@ -2397,11 +2233,9 @@
               <div class="grid grid-cols-2 gap-1.5 h-14">
                 <div class="rounded-xs border-2 border-[#120D11] bg-[var(--cabinet-white)] p-1.5 relative flex items-center justify-end group-hover:brightness-95 transition">
                   <div class="w-full h-full border-[1.5px] border-[#3B2D28]/65 rounded-xs"></div>
-                  <div class="absolute right-2 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-gradient-to-br from-white via-slate-300 to-slate-600 border-[1.5px] border-[#120D11]"></div>
                 </div>
                 <div class="rounded-xs border-2 border-[#120D11] bg-[var(--cabinet-white)] p-1.5 relative flex items-center justify-start group-hover:brightness-95 transition">
                   <div class="w-full h-full border-[1.5px] border-[#3B2D28]/65 rounded-xs"></div>
-                  <div class="absolute left-2 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-gradient-to-br from-white via-slate-300 to-slate-600 border-[1.5px] border-[#120D11]"></div>
                 </div>
               </div>
               <div class="mt-1.5 h-2.5 -mx-2 -mb-2 bg-[var(--cabinet-shade)] border-t-2 border-[#120D11] flex items-center justify-center">
@@ -2452,7 +2286,7 @@
           decksHTML += `
             <div ${dragAttrs}
               onclick="event.stopPropagation(); openEditModal('${deck.id}')"
-              title="${escapeHTML(deck.title)}${deck.author ? ' — ' + escapeHTML(deck.author) : ''} (Cubículo: ${escapeHTML(label)}) — Arrastra para reordenar o clic para editar"
+              title="${escapeHTML(deck.title)}${deck.author ? ' — ' + escapeHTML(deck.author) : ''} (Cubículo: ${escapeHTML(label)})"
               style="background-color: ${bg};"
               class="tarot-box draggable-piece h-[46px] min-w-[26px] max-w-[44px] flex-1 p-1 flex flex-col items-center justify-between overflow-hidden select-none ${stateClass}">
               <span class="text-[7px] text-[#F6C453] leading-none">✦</span>
@@ -2498,8 +2332,38 @@
     }
 
     // ==========================================
-    // PANEL DE LISTADO INTERACTIVO SINCRONIZADO
+    // PANEL DE LISTADO INTERACTIVO (DISTINCIÓN VITRINA VS LIBRO MÁGICO)
     // ==========================================
+    function getItemFormatAndLocation(item) {
+      if (item.type === 'tarot') {
+        return {
+          formatBadge: '<span class="px-2 py-0.5 rounded bg-[#273628] text-[#A8D59D] text-[10px] font-bold">🃏 Tarot / Oráculo</span>',
+          locationBadge: `<span class="px-2 py-0.5 rounded bg-[#222C23] border border-[#3B4E3C] text-[#CBE0C8] text-[10px] font-semibold">🗄️ Vitrina Verde • Cub. «${escapeHTML(state.cubbyLabels[item.cubby] || '')}»</span>`,
+          locationText: `Vitrina Verde • Cub. «${escapeHTML(state.cubbyLabels[item.cubby] || '')}»`
+        };
+      }
+      if (item.type === 'object') {
+        return {
+          formatBadge: '<span class="px-2 py-0.5 rounded bg-[#352640] text-[#D8B4FE] text-[10px] font-bold">🔮 Objeto</span>',
+          locationBadge: `<span class="px-2 py-0.5 rounded bg-[#2A1F33] border border-[#473357] text-[#E6D4F7] text-[10px] font-semibold">🗄️ En vitrina · Vitrina ${ROMAN[(item.cabinet || 1) - 1]} • Est. ${item.shelf || 1}</span>`,
+          locationText: `En vitrina · Vitrina ${ROMAN[(item.cabinet || 1) - 1]} • Est. ${item.shelf || 1}`
+        };
+      }
+      // Libro
+      if (isEbook(item)) {
+        return {
+          formatBadge: '<span class="px-2 py-0.5 rounded bg-[#162C36] border border-[#2B576B] text-[#67E8F9] text-[10px] font-bold">✨ Libro Mágico</span>',
+          locationBadge: '<span class="px-2 py-0.5 rounded bg-[#15252E] border border-[#274B5E] text-[#9BE7F5] text-[10px] font-semibold">✨ En Libro Mágico</span>',
+          locationText: '✨ En Libro Mágico'
+        };
+      }
+      return {
+        formatBadge: '<span class="px-2 py-0.5 rounded bg-[#3A2B36] text-[#F6C453] text-[10px] font-bold">📚 Libro físico</span>',
+        locationBadge: `<span class="px-2 py-0.5 rounded bg-[#2D2219] border border-[#543E29] text-[#F7DFAD] text-[10px] font-semibold">🗄️ En vitrina · Vitrina ${ROMAN[(item.cabinet || 1) - 1]} • Est. ${item.shelf || 1}</span>`,
+        locationText: `🗄️ En vitrina · Vitrina ${ROMAN[(item.cabinet || 1) - 1]} • Est. ${item.shelf || 1}`
+      };
+    }
+
     function renderInspectorPanel() {
       const titleEl = document.getElementById('inspectorTitle');
       const subEl = document.getElementById('inspectorSubtitle');
@@ -2519,7 +2383,7 @@
       let scopedItems = [];
       if (state.inspectorScope === 'all') {
         titleEl.textContent = 'Toda la Biblioteca';
-        subEl.textContent = 'Listado completo de libros, barajas de tarot, oráculos y objetos decorativos.';
+        subEl.textContent = 'Se distingue claramente cada pieza según esté en vitrina o en Libro Mágico.';
         addLabelEl.textContent = 'Añadir pieza';
         scopedItems = [...state.items];
       } else if (state.inspectorScope === 'cabinet') {
@@ -2531,10 +2395,10 @@
         } else {
           const cabRoman = ROMAN[state.selectedCabinet - 1];
           titleEl.textContent = `Vitrina Blanca ${cabRoman} (4 estantes)`;
-          subEl.textContent = `Todos los libros y objetos colocados en la Vitrina ${cabRoman}.`;
+          subEl.textContent = `Piezas físicas colocadas en la Vitrina ${cabRoman}.`;
           addLabelEl.textContent = `Añadir en Vitrina ${cabRoman}`;
           scopedItems = state.items.filter(
-            i => (i.type === 'book' || i.type === 'object') && Number(i.cabinet) === state.selectedCabinet
+            i => (i.type === 'book' || i.type === 'object') && !isEbook(i) && Number(i.cabinet) === state.selectedCabinet
           );
         }
       } else {
@@ -2543,16 +2407,15 @@
           titleEl.textContent = `Vitrina Verde → Cubículo «${cubbyName}»`;
           subEl.textContent = 'Barajas almacenadas en este compartimento.';
           addLabelEl.textContent = `Añadir en «${cubbyName}»`;
-          scopedItems = state.items.filter(
-            i => i.type === 'tarot' && Number(i.cubby) === state.selectedCubby
-          );
+          scopedItems = state.items.filter(i => i.type === 'tarot' && Number(i.cubby) === state.selectedCubby);
         } else {
           const cabRoman = ROMAN[state.selectedCabinet - 1];
           titleEl.textContent = `Vitrina ${cabRoman} → Estante ${state.selectedShelf}`;
-          subEl.textContent = 'Libros y curiosidades colocados en esta balda.';
+          subEl.textContent = 'Libros físicos y curiosidades colocados en esta balda.';
           addLabelEl.textContent = `Añadir en Estante ${state.selectedShelf}`;
           scopedItems = state.items.filter(
             i => (i.type === 'book' || i.type === 'object') &&
+                 !isEbook(i) &&
                  Number(i.cabinet) === state.selectedCabinet &&
                  Number(i.shelf) === state.selectedShelf
           );
@@ -2598,16 +2461,13 @@
         const rowsHTML = visibleItems.map(item => {
           const isHighlighted = state.highlightedItemId === item.id;
           const loaned = isBookLoaned(item);
-          const typeLabel = item.type === 'book' ? '📚 Libro' : item.type === 'tarot' ? '🃏 Tarot' : '🔮 Objeto';
-          const locationLabel = item.type === 'tarot'
-            ? `Vitrina Verde • Cub. «${escapeHTML(state.cubbyLabels[item.cubby] || '')}»`
-            : `Vitrina ${ROMAN[(item.cabinet || 1) - 1]} • Est. ${item.shelf}`;
+          const meta = getItemFormatAndLocation(item);
           const loanBadge = loaned
             ? `<span class="ml-1.5 inline-flex items-center px-2 py-0.5 rounded-full bg-[#331F27] border border-[#7A2E3B]/70 text-[#E8A5B8] text-[10px] font-semibold">🤝 Prestado a ${escapeHTML(item.loanedTo || '—')}</span>`
             : '';
           return `
             <tr class="border-t border-[#281C25] hover:bg-[#221720] transition ${isHighlighted ? 'bg-[#362814]/60' : ''}">
-              <td class="px-3 py-2.5 text-xs font-semibold whitespace-nowrap text-[#E6D7E2]">${typeLabel}</td>
+              <td class="px-3 py-2.5 text-xs font-semibold whitespace-nowrap text-[#E6D7E2]">${meta.formatBadge}</td>
               <td class="px-3 py-2.5 text-sm font-serif-label font-bold text-[#F7EFE2]">
                 <div class="flex flex-wrap items-center gap-1.5">
                   <span class="w-2.5 h-4 rounded-xs border border-[#120D11] shrink-0" style="background-color: ${item.color || '#5D3552'};"></span>
@@ -2620,7 +2480,7 @@
               <td class="px-3 py-2.5 text-xs whitespace-nowrap">
                 ${item.theme ? `<span class="px-2 py-0.5 rounded-full bg-[#261C23] text-[#F6C453] font-semibold">${escapeHTML(item.theme)}</span>` : '—'}
               </td>
-              <td class="px-3 py-2.5 text-xs text-[#C2B0BA] whitespace-nowrap">${locationLabel}</td>
+              <td class="px-3 py-2.5 text-xs whitespace-nowrap">${meta.locationBadge}</td>
               <td class="px-3 py-2.5 text-right whitespace-nowrap">
                 <div class="inline-flex items-center gap-1.5">
                   <button onclick="locateItem('${item.id}')" class="ink-btn px-2 py-1 rounded-lg bg-[#F6C453] text-[#151014] font-bold text-[11px] cursor-pointer">📍</button>
@@ -2640,7 +2500,7 @@
                 <th onclick="sortByColumn('author')" class="px-3 py-2.5 cursor-pointer hover:text-white select-none">Autor${sortIndicator('author_asc', 'author_desc')}</th>
                 <th onclick="sortByColumn('publisher')" class="px-3 py-2.5 cursor-pointer hover:text-white select-none">Editorial${sortIndicator('publisher_asc', 'publisher_desc')}</th>
                 <th onclick="sortByColumn('theme')" class="px-3 py-2.5 cursor-pointer hover:text-white select-none">Temática${sortIndicator('theme_asc', '')}</th>
-                <th class="px-3 py-2.5">Ubicación</th>
+                <th class="px-3 py-2.5">Vitrina / Libro Mágico</th>
                 <th class="px-3 py-2.5 text-right">Acciones</th>
               </tr>
             </thead>
@@ -2654,26 +2514,17 @@
       grid.innerHTML = visibleItems.map(item => {
         const isHighlighted = state.highlightedItemId === item.id;
         const loaned = isBookLoaned(item);
-        const typeBadge = item.type === 'book'
-          ? '<span class="px-2 py-0.5 rounded bg-[#3A2B36] text-[#F6C453] text-[10px] font-bold">📚 Libro</span>'
-          : item.type === 'tarot'
-            ? '<span class="px-2 py-0.5 rounded bg-[#273628] text-[#A8D59D] text-[10px] font-bold">🃏 Tarot / Oráculo</span>'
-            : '<span class="px-2 py-0.5 rounded bg-[#352640] text-[#D8B4FE] text-[10px] font-bold">🔮 Objeto</span>';
-
+        const meta = getItemFormatAndLocation(item);
         const loanBadge = loaned
           ? `<span class="px-2 py-0.5 rounded-full bg-[#331F27] border border-[#7A2E3B]/70 text-[#E8A5B8] text-[10px] font-semibold">🤝 Prestado a ${escapeHTML(item.loanedTo || '—')}</span>`
           : '';
-
-        const locationLabel = item.type === 'tarot'
-          ? `Vitrina Verde • Cubículo «${escapeHTML(state.cubbyLabels[item.cubby] || '')}»`
-          : `Vitrina ${ROMAN[(item.cabinet || 1) - 1]} • Estante ${item.shelf}`;
 
         return `
           <div class="p-3.5 rounded-xl bg-[#161015] border-2 ${isHighlighted ? 'border-[#F6C453] shadow-[0_0_16px_rgba(246,196,83,0.35)]' : 'border-[#33242F]'} flex flex-col justify-between gap-2.5 transition">
             <div>
               <div class="flex items-start justify-between gap-2">
                 <div class="flex flex-wrap items-center gap-1.5">
-                  ${typeBadge}
+                  ${meta.formatBadge}
                   ${loanBadge}
                   ${item.theme ? `<span class="px-2 py-0.5 rounded-full bg-[#261C23] text-[#D8C3CE] text-[10px] font-semibold">#${escapeHTML(item.theme)}</span>` : ''}
                 </div>
@@ -2689,10 +2540,10 @@
             </div>
 
             <div class="pt-2 border-t border-[#2B1F28] flex items-center justify-between gap-2">
-              <span class="text-[11px] font-medium text-[#D6C4B0] truncate">📍 ${locationLabel}</span>
+              <div class="truncate">${meta.locationBadge}</div>
               <div class="flex items-center gap-1.5 shrink-0">
                 <button onclick="locateItem('${item.id}')"
-                  title="Iluminar en la vitrina"
+                  title="${isEbook(item) ? 'Ir al apartado de Libro Mágico' : 'Iluminar en la vitrina'}"
                   class="ink-btn px-2.5 py-1 rounded-lg bg-[#F6C453] text-[#151014] font-bold text-[11px] cursor-pointer">
                   📍 Localizar
                 </button>
@@ -2708,7 +2559,9 @@
       }).join('');
     }
 
+    // ==========================================
     // SECCIÓN INFERIOR COMPACTA: LIBROS PRESTADOS
+    // ==========================================
     function renderLoanedBooksSection() {
       const container = document.getElementById('loanedBooksContainer');
       const badge = document.getElementById('loanedSectionBadge');
@@ -2722,8 +2575,8 @@
 
       if (loanedBooks.length === 0) {
         container.innerHTML = `
-          <div class="py-3 px-4 rounded-xl bg-[#161015] border border-dashed border-[#3B2B37] text-xs sm:text-sm text-[#B8A5B0] flex items-center justify-between gap-2">
-            <span>✨ Todos los libros descansan en sus estantes.</span>
+          <div class="py-3 px-4 rounded-xl bg-[#161015] border border-dashed border-[#3B2B37] text-xs sm:text-sm text-[#B8A5B0]">
+            ✨ Todos los libros descansan en sus estantes.
           </div>
         `;
         return;
@@ -2753,12 +2606,10 @@
 
                 <div class="pt-2 border-t border-[#281C24] flex items-center justify-end gap-1.5">
                   <button type="button" onclick="locateItem('${book.id}')"
-                    title="Iluminar su hueco reservado en la vitrina"
                     class="ink-btn px-2.5 py-1 rounded-lg bg-[#F6C453] text-[#151014] font-bold text-[11px] cursor-pointer">
                     📍 Hueco
                   </button>
                   <button type="button" onclick="returnLoanedBook('${book.id}')"
-                    title="Marcar libro como devuelto a su estante"
                     class="ink-btn px-2.5 py-1 rounded-lg bg-[#A8D59D] text-[#151014] font-bold text-[11px] cursor-pointer">
                     ↩️ Devolver
                   </button>
@@ -2768,6 +2619,87 @@
           }).join('')}
         </div>
       `;
+    }
+
+    // ==========================================
+    // APARTADO INFERIOR EXCLUSIVO: LIBRO MÁGICO
+    // ==========================================
+    function renderEbookSection() {
+      const container = document.getElementById('ebookBooksContainer');
+      const badge = document.getElementById('ebookSectionBadge');
+      if (!container || !badge) return;
+
+      const ebooks = state.items.filter(isEbook).sort((a, b) =>
+        String(a.title || '').localeCompare(String(b.title || ''), 'es', { sensitivity: 'base' })
+      );
+
+      badge.textContent = `${ebooks.length} ${ebooks.length === 1 ? 'en el Libro Mágico' : 'en el Libro Mágico'}`;
+
+      if (ebooks.length === 0) {
+        container.innerHTML = `
+          <div class="py-3 px-4 rounded-xl bg-[#161015] border border-dashed border-[#2C4552] text-xs sm:text-sm text-[#A8C2CF] flex flex-wrap items-center justify-between gap-2">
+            <span>✨ Aún no has añadido libros a tu Libro Mágico. Puedes crear uno o arrastrar un libro al icono del Libro Mágico.</span>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2.5">
+          ${ebooks.map(book => {
+            const isHighlighted = state.highlightedItemId === book.id;
+            return `
+              <div class="p-3 rounded-xl bg-[#161015] border-2 ${isHighlighted ? 'border-[#67E8F9] shadow-[0_0_14px_rgba(103,232,249,0.35)]' : 'border-[#273B46]'} flex flex-col justify-between gap-2">
+                <div class="flex items-start justify-between gap-2">
+                  <div class="min-w-0">
+                    <h3 class="font-serif-label text-base font-bold text-[#F7EFE2] leading-snug truncate" title="${escapeHTML(book.title)}">
+                      ${escapeHTML(book.title)}
+                    </h3>
+                    ${book.author ? `<p class="text-[11px] text-[#BFAAB6] truncate">✍️ ${escapeHTML(book.author)}</p>` : ''}
+                    ${book.theme ? `<p class="text-[10px] text-[#67E8F9] mt-0.5 truncate">#${escapeHTML(book.theme)}</p>` : ''}
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-[#162C36] border border-[#2B576B] text-[#67E8F9] text-[10px] font-bold shrink-0">✨ Libro Mágico</span>
+                </div>
+
+                ${book.notes ? `<p class="text-[11px] text-[#96838E] italic line-clamp-1">«${escapeHTML(book.notes)}»</p>` : ''}
+
+                <div class="pt-2 border-t border-[#22313A] flex items-center justify-end gap-1.5">
+                  <button type="button" onclick="moveEbookToShelf('${book.id}')"
+                    title="Pasar este libro a una vitrina física"
+                    class="ink-btn px-2.5 py-1 rounded-lg bg-[#2B1F28] text-[#F6C453] font-semibold text-[11px] cursor-pointer">
+                    🗄️ A vitrina
+                  </button>
+                  <button type="button" onclick="openEditModal('${book.id}')"
+                    title="Editar libro mágico"
+                    class="ink-btn px-2 py-1 rounded-lg bg-[#342631] text-[#F4EDE2] text-[11px] cursor-pointer">
+                    ✏️
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function moveEbookToShelf(bookId) {
+      const book = state.items.find(i => i.id === bookId);
+      if (!book) return;
+      book.isEbook = false;
+      if (!book.cabinet) book.cabinet = 1;
+      if (!book.shelf) book.shelf = 1;
+      state.highlightedItemId = book.id;
+      saveState();
+      renderAll();
+      showToast(`🗄️ «${book.title}» pasado a Vitrina ${ROMAN[(book.cabinet || 1) - 1]}, Estante ${book.shelf || 1}`);
+    }
+
+    function openAddEbookModal() {
+      openAddModal();
+      document.querySelector('input[name="itemType"][value="book"]').checked = true;
+      document.getElementById('fieldIsEbook').checked = true;
+      toggleLocationFields();
+      handleEbookCheckboxChange();
     }
 
     function returnLoanedBook(itemId) {
@@ -2782,9 +2714,9 @@
     }
 
     function openQuickLoanModal() {
-      const availableBooks = state.items.filter(i => i.type === 'book' && !isBookLoaned(i));
+      const availableBooks = state.items.filter(i => i.type === 'book' && !isBookLoaned(i) && !isEbook(i));
       if (availableBooks.length === 0) {
-        showToast('📚 No quedan libros disponibles para prestar en este momento');
+        showToast('📚 No quedan libros en vitrina disponibles para prestar');
         return;
       }
       document.getElementById('quickLoanFilterInput').value = '';
@@ -2805,7 +2737,7 @@
       if (!select) return;
 
       const availableBooks = state.items
-        .filter(i => i.type === 'book' && !isBookLoaned(i))
+        .filter(i => i.type === 'book' && !isBookLoaned(i) && !isEbook(i))
         .filter(b => {
           if (!filterTerm) return true;
           return `${b.title || ''} ${b.author || ''}`.toLowerCase().includes(filterTerm);
@@ -2845,7 +2777,9 @@
     }
 
     function addInCurrentScope() {
-      if (state.inspectorScope !== 'all' && state.selectedFurniture === 'tarot') {
+      if (state.activeTab === 'ebook') {
+        openAddEbookModal();
+      } else if (state.inspectorScope !== 'all' && state.selectedFurniture === 'tarot') {
         openAddModalForTarot(state.selectedCubby);
       } else if (state.inspectorScope !== 'all' && state.selectedFurniture === 'white') {
         openAddModalForWhite(state.selectedCabinet, state.selectedShelf);
@@ -2859,6 +2793,17 @@
       if (!item) return;
 
       state.highlightedItemId = item.id;
+
+      if (isEbook(item)) {
+        renderAll();
+        setTimeout(() => {
+          const sec = document.getElementById('ebookSection');
+          if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          showToast(`✨ «${item.title}» está en el Libro Mágico`);
+        }, 90);
+        return;
+      }
+
       if (item.type === 'tarot') {
         state.selectedFurniture = 'tarot';
         state.selectedCubby = Number(item.cubby);
@@ -2881,7 +2826,7 @@
 
         const locText = item.type === 'tarot'
           ? `Vitrina Verde → Cubículo «${state.cubbyLabels[item.cubby]}»`
-          : `Vitrina Blanca ${ROMAN[item.cabinet - 1]} → Estante ${item.shelf}${isBookLoaned(item) ? ` (Hueco prestado a ${item.loanedTo})` : ''}`;
+          : `Vitrina Blanca ${ROMAN[item.cabinet - 1]} → Estante ${item.shelf}`;
         showToast(`📍 ${item.title}: ${locText}`);
       }, 90);
     }
@@ -2891,9 +2836,7 @@
       state.searchQuery = input.value;
       state.highlightedItemId = null;
       document.getElementById('clearTextBtn').classList.toggle('hidden', state.searchQuery.length === 0);
-      if (state.searchQuery.trim() !== '') {
-        state.inspectorScope = 'all';
-      }
+      if (state.searchQuery.trim() !== '') state.inspectorScope = 'all';
       renderAll();
     }
 
@@ -3017,6 +2960,7 @@
       const matches = state.items.filter(itemMatchesGlobalFilter);
       const parts = [];
       if (state.activeTab === 'book') parts.push('Libros');
+      if (state.activeTab === 'ebook') parts.push('Libro Mágico');
       if (state.activeTab === 'tarot') parts.push('Tarots y Oráculos');
       if (state.activeTab === 'object') parts.push('Objetos');
       if (state.activeCategoryFilters.length > 0) {
@@ -3032,7 +2976,7 @@
     }
 
     // ==========================================
-    // MODAL AÑADIR / EDITAR + POSICIÓN Y ◀ MOVER / MOVER ▶
+    // MODAL AÑADIR / EDITAR
     // ==========================================
     let selectedColor = SPINE_COLORS[0].hex;
     let selectedObjectIcon = 'orb';
@@ -3111,8 +3055,11 @@
       const isTarot = type === 'tarot';
       const isObject = type === 'object';
       const isBook = type === 'book';
+      const ebookChecked = isBook && Boolean(document.getElementById('fieldIsEbook')?.checked);
 
-      document.getElementById('whiteLocationGroup').classList.toggle('hidden', isTarot);
+      document.getElementById('bookEbookToggleGroup').classList.toggle('hidden', !isBook);
+      document.getElementById('whiteLocationGroup').classList.toggle('hidden', isTarot || ebookChecked);
+      document.getElementById('positionControlGroup').classList.toggle('hidden', isTarot || ebookChecked);
       document.getElementById('tarotLocationGroup').classList.toggle('hidden', !isTarot);
       document.getElementById('objectIconGroup').classList.toggle('hidden', !isObject);
 
@@ -3123,14 +3070,19 @@
 
       const loanGroup = document.getElementById('bookLoanGroup');
       if (loanGroup) {
-        loanGroup.classList.toggle('hidden', !isBook);
-        if (!isBook) {
+        loanGroup.classList.toggle('hidden', !isBook || ebookChecked);
+        if (!isBook || ebookChecked) {
           document.getElementById('fieldLoaned').checked = false;
           toggleBookLoanFields();
         }
       }
 
       if (isObject) renderObjectIconPicker();
+    }
+
+    function handleEbookCheckboxChange() {
+      toggleLocationFields();
+      refreshPositionSelector();
     }
 
     function toggleBookLoanFields() {
@@ -3183,30 +3135,21 @@
       } else {
         for (let s = 0; s <= others.length; s++) {
           let label = '';
-          if (s === 0) {
-            label = `1. Al principio (antes de «${others[0].title}»)`;
-          } else if (s === others.length) {
-            label = `${s + 1}. Al final (después de «${others[others.length - 1].title}»)`;
-          } else {
-            label = `${s + 1}. Entre «${others[s - 1].title}» y «${others[s].title}»`;
-          }
+          if (s === 0) label = `1. Al principio (antes de «${others[0].title}»)`;
+          else if (s === others.length) label = `${s + 1}. Al final (después de «${others[others.length - 1].title}»)`;
+          else label = `${s + 1}. Entre «${others[s - 1].title}» y «${others[s].title}»`;
           optionsHTML += `<option value="${s}" ${s === currentSlot ? 'selected' : ''}>${escapeHTML(label)}</option>`;
         }
       }
       posSelect.innerHTML = optionsHTML;
 
-      const prevNeighbor = others[currentSlot - 1];
-      const nextNeighbor = others[currentSlot];
       if (hintEl) {
-        if (prevNeighbor && nextNeighbor) {
-          hintEl.textContent = `Vecinos: ◀ «${prevNeighbor.title}» | «${nextNeighbor.title}» ▶`;
-        } else if (prevNeighbor) {
-          hintEl.textContent = `Tras: ◀ «${prevNeighbor.title}»`;
-        } else if (nextNeighbor) {
-          hintEl.textContent = `Antes de: «${nextNeighbor.title}» ▶`;
-        } else {
-          hintEl.textContent = 'Hueco libre';
-        }
+        const prevNeighbor = others[currentSlot - 1];
+        const nextNeighbor = others[currentSlot];
+        if (prevNeighbor && nextNeighbor) hintEl.textContent = `Vecinos: ◀ «${prevNeighbor.title}» | «${nextNeighbor.title}» ▶`;
+        else if (prevNeighbor) hintEl.textContent = `Tras: ◀ «${prevNeighbor.title}»`;
+        else if (nextNeighbor) hintEl.textContent = `Antes de: «${nextNeighbor.title}» ▶`;
+        else hintEl.textContent = 'Hueco libre';
       }
 
       if (leftBtn) leftBtn.disabled = currentSlot <= 0;
@@ -3232,11 +3175,8 @@
       const posSelect = document.getElementById('fieldPositionSelect');
       if (!posSelect) return;
       const slot = Number(posSelect.value);
-      if (itemId) {
-        applyPositionToStore(itemId, slot);
-      } else {
-        refreshPositionSelector(slot);
-      }
+      if (itemId) applyPositionToStore(itemId, slot);
+      else refreshPositionSelector(slot);
     }
 
     function stepMoveItem(delta) {
@@ -3245,17 +3185,15 @@
       if (!posSelect) return;
       const currentSlot = Number(posSelect.value || 0);
       const nextSlot = currentSlot + delta;
-      if (itemId) {
-        applyPositionToStore(itemId, nextSlot);
-      } else {
-        refreshPositionSelector(nextSlot);
-      }
+      if (itemId) applyPositionToStore(itemId, nextSlot);
+      else refreshPositionSelector(nextSlot);
     }
 
     function openAddModal() {
       document.getElementById('editItemId').value = '';
       document.getElementById('modalTitle').textContent = 'Añadir a la Biblioteca';
       document.querySelector('input[name="itemType"][value="book"]').checked = true;
+      document.getElementById('fieldIsEbook').checked = false;
       document.getElementById('fieldTitle').value = '';
       document.getElementById('fieldAuthor').value = '';
       document.getElementById('fieldPublisher').value = '';
@@ -3282,6 +3220,7 @@
     function openAddModalForWhite(cab, shelf) {
       openAddModal();
       document.querySelector('input[name="itemType"][value="book"]').checked = true;
+      document.getElementById('fieldIsEbook').checked = false;
       document.getElementById('fieldCabinet').value = String(cab);
       document.getElementById('fieldShelf').value = String(shelf);
       toggleLocationFields();
@@ -3306,6 +3245,7 @@
       const radio = document.querySelector(`input[name="itemType"][value="${item.type}"]`);
       if (radio) radio.checked = true;
 
+      document.getElementById('fieldIsEbook').checked = isEbook(item);
       document.getElementById('fieldTitle').value = item.title || '';
       document.getElementById('fieldAuthor').value = item.author || '';
       document.getElementById('fieldPublisher').value = item.publisher || '';
@@ -3313,13 +3253,13 @@
       document.getElementById('fieldTheme').value = item.type !== 'book' ? (item.theme || '') : '';
       document.getElementById('fieldCabinet').value = String(item.cabinet || 1);
       document.getElementById('fieldShelf').value = String(item.shelf || 1);
-      populateCubbySelect(item.cubby || 0);
+      populateCubbySelect(item.cubby ?? 0);
       document.getElementById('fieldNotes').value = item.notes || '';
 
       const loaned = isBookLoaned(item);
       document.getElementById('fieldLoaned').checked = loaned;
-      document.getElementById('fieldLoanedTo').value = item.loanedTo || '';
-      document.getElementById('fieldLoanedDate').value = item.loanedDate || '';
+      document.getElementById('fieldLoanedTo').value = loaned ? (item.loanedTo || '') : '';
+      document.getElementById('fieldLoanedDate').value = loaned ? (item.loanedDate || '') : '';
       toggleBookLoanFields();
 
       selectedColor = item.color || SPINE_COLORS[0].hex;
@@ -3329,6 +3269,7 @@
       refreshPositionSelector();
       document.getElementById('deleteItemBtn').classList.remove('hidden');
       showModal('itemModal');
+      setTimeout(() => document.getElementById('fieldTitle').focus(), 60);
     }
 
     function closeItemModal() {
@@ -3340,84 +3281,112 @@
       const editId = document.getElementById('editItemId').value;
       const type = document.querySelector('input[name="itemType"]:checked').value;
       const title = document.getElementById('fieldTitle').value.trim();
-      const author = type === 'tarot' ? '' : document.getElementById('fieldAuthor').value.trim();
+      if (!title) return;
+
+      const author = type !== 'tarot' ? document.getElementById('fieldAuthor').value.trim() : '';
       const publisher = type === 'book' ? document.getElementById('fieldPublisher').value.trim() : '';
       const theme = type === 'book'
         ? getSelectedBookCategories().join(', ')
         : document.getElementById('fieldTheme').value.trim();
       const notes = document.getElementById('fieldNotes').value.trim();
-      const posSelect = document.getElementById('fieldPositionSelect');
-      const desiredSlot = posSelect ? Number(posSelect.value) : null;
+      const ebookFlag = type === 'book' && Boolean(document.getElementById('fieldIsEbook')?.checked);
 
-      if (!title) return;
-
-      const isLoaned = type === 'book' && Boolean(document.getElementById('fieldLoaned')?.checked);
-      const loanedTo = isLoaned ? (document.getElementById('fieldLoanedTo')?.value || '').trim() : '';
-      const loanedDate = isLoaned ? (document.getElementById('fieldLoanedDate')?.value || getTodayISO()) : '';
-
-      const payload = {
-        id: editId || ('item_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6)),
-        type,
-        title,
-        author,
-        publisher,
-        theme,
-        color: selectedColor,
-        notes,
-        loaned: isLoaned,
-        loanedTo,
-        loanedDate
-      };
-
-      if (type === 'tarot') {
-        payload.cubby = Number(document.getElementById('fieldCubby').value);
-      } else {
-        payload.cabinet = Number(document.getElementById('fieldCabinet').value);
-        payload.shelf = Number(document.getElementById('fieldShelf').value);
-        if (type === 'object') {
-          payload.icon = selectedObjectIcon;
-        }
+      let loaned = false;
+      let loanedTo = '';
+      let loanedDate = '';
+      if (type === 'book' && !ebookFlag) {
+        loaned = Boolean(document.getElementById('fieldLoaned')?.checked);
+        loanedTo = loaned ? (document.getElementById('fieldLoanedTo')?.value.trim() || '') : '';
+        loanedDate = loaned ? (document.getElementById('fieldLoanedDate')?.value || getTodayISO()) : '';
       }
 
+      const posSelect = document.getElementById('fieldPositionSelect');
+      const desiredSlot = posSelect && posSelect.value !== '' ? Number(posSelect.value) : null;
+
+      let savedId = editId;
       if (editId) {
         const idx = state.items.findIndex(i => i.id === editId);
-        if (idx !== -1) state.items[idx] = payload;
-        const targetLoc = type === 'tarot'
-          ? { type: 'tarot', cubby: payload.cubby }
-          : { type: 'white', cabinet: payload.cabinet, shelf: payload.shelf };
-        if (desiredSlot !== null && !Number.isNaN(desiredSlot)) {
-          moveItemToLocationIndex(payload.id, targetLoc, desiredSlot);
-        }
-        showToast('✦ Cambios guardados');
-      } else {
-        const targetLoc = type === 'tarot'
-          ? { type: 'tarot', cubby: payload.cubby }
-          : { type: 'white', cabinet: payload.cabinet, shelf: payload.shelf };
-        const destItems = getContainerItems(targetLoc);
-        const insertAt = (desiredSlot !== null && !Number.isNaN(desiredSlot))
-          ? Math.max(0, Math.min(destItems.length, desiredSlot))
-          : destItems.length;
-
-        if (destItems.length === 0 || insertAt >= destItems.length) {
-          if (destItems.length > 0) {
-            const lastId = destItems[destItems.length - 1].id;
-            const pos = state.items.findIndex(i => i.id === lastId);
-            state.items.splice(pos + 1, 0, payload);
+        if (idx !== -1) {
+          const updated = {
+            ...state.items[idx],
+            type, title, author, publisher, theme,
+            color: selectedColor,
+            notes
+          };
+          if (type === 'tarot') {
+            updated.cubby = Number(document.getElementById('fieldCubby').value);
+            delete updated.cabinet;
+            delete updated.shelf;
+            delete updated.icon;
+            delete updated.isEbook;
+            delete updated.loaned;
+            delete updated.loanedTo;
+            delete updated.loanedDate;
           } else {
-            state.items.push(payload);
+            updated.cabinet = Number(document.getElementById('fieldCabinet').value);
+            updated.shelf = Number(document.getElementById('fieldShelf').value);
+            delete updated.cubby;
+            if (type === 'object') {
+              updated.icon = selectedObjectIcon;
+              delete updated.isEbook;
+              delete updated.loaned;
+              delete updated.loanedTo;
+              delete updated.loanedDate;
+            } else {
+              delete updated.icon;
+              updated.isEbook = ebookFlag;
+              updated.loaned = loaned;
+              updated.loanedTo = loanedTo;
+              updated.loanedDate = loanedDate;
+            }
           }
-        } else {
-          const anchorId = destItems[insertAt].id;
-          const pos = state.items.findIndex(i => i.id === anchorId);
-          state.items.splice(pos, 0, payload);
+          state.items[idx] = updated;
         }
-        showToast('✦ Añadido a tu biblioteca');
+      } else {
+        savedId = 'item_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
+        const newItem = {
+          id: savedId,
+          type, title, author, publisher, theme,
+          color: selectedColor,
+          notes
+        };
+        if (type === 'tarot') {
+          newItem.cubby = Number(document.getElementById('fieldCubby').value);
+        } else {
+          newItem.cabinet = Number(document.getElementById('fieldCabinet').value);
+          newItem.shelf = Number(document.getElementById('fieldShelf').value);
+          if (type === 'object') {
+            newItem.icon = selectedObjectIcon;
+          } else {
+            newItem.isEbook = ebookFlag;
+            newItem.loaned = loaned;
+            newItem.loanedTo = loanedTo;
+            newItem.loanedDate = loanedDate;
+          }
+        }
+        state.items.push(newItem);
       }
 
-      state.highlightedItemId = payload.id;
+      if (type !== 'tarot' && !ebookFlag && desiredSlot !== null && !Number.isNaN(desiredSlot)) {
+        const loc = {
+          type: 'white',
+          cabinet: Number(document.getElementById('fieldCabinet').value),
+          shelf: Number(document.getElementById('fieldShelf').value)
+        };
+        moveItemToLocationIndex(savedId, loc, desiredSlot);
+      } else if (type === 'tarot' && desiredSlot !== null && !Number.isNaN(desiredSlot)) {
+        const loc = {
+          type: 'tarot',
+          cubby: Number(document.getElementById('fieldCubby').value)
+        };
+        moveItemToLocationIndex(savedId, loc, desiredSlot);
+      }
+
+      state.highlightedItemId = savedId;
       saveState();
       renderAll();
       closeItemModal();
+      showToast(editId ? '✨ Pieza actualizada en tu biblioteca' : '✦ Nueva pieza añadida con éxito');
     }
 
     function deleteCurrentItem() {
@@ -3428,75 +3397,59 @@
       saveState();
       renderAll();
       closeItemModal();
-      showToast('🗑️ Pieza eliminada');
+      showToast('🗑️ Pieza retirada de la biblioteca');
     }
 
     // ==========================================
-    // ARMARIO INFERIOR PROTEGIDO CON PALABRA SECRETA
+    // ARMARIO INFERIOR PROTEGIDO Y CUBÍCULOS TAROT
     // ==========================================
-    const CUPBOARD_SECRET_WORD = 'samhain';
+    const CUPBOARD_SECRET = 'meiga';
     let cupboardUnlocked = false;
 
-    function syncCupboardModalViews() {
-      const lockView = document.getElementById('cupboardLockView');
-      const unlockedView = document.getElementById('cupboardUnlockedView');
-      const errEl = document.getElementById('cupboardSecretError');
-      if (!lockView || !unlockedView) return;
-
-      if (cupboardUnlocked) {
-        lockView.classList.add('hidden');
-        unlockedView.classList.remove('hidden');
-      } else {
-        unlockedView.classList.add('hidden');
-        lockView.classList.remove('hidden');
-        if (errEl) errEl.classList.add('hidden');
-      }
-    }
-
     function openCupboardModal(cab) {
-      document.getElementById('editCupboardCab').value = cab;
+      document.getElementById('editCupboardCab').value = String(cab);
       document.getElementById('cupboardModalTitle').textContent = `Armario Inferior · Vitrina ${ROMAN[cab - 1]}`;
       document.getElementById('cupboardNotesInput').value = state.cupboardNotes[cab - 1] || '';
-      const secretInput = document.getElementById('cupboardSecretInput');
-      if (secretInput) secretInput.value = '';
-      syncCupboardModalViews();
+      document.getElementById('cupboardSecretInput').value = '';
+      document.getElementById('cupboardSecretError').classList.add('hidden');
+      syncCupboardModalView();
       showModal('cupboardModal');
       setTimeout(() => {
-        if (cupboardUnlocked) {
-          document.getElementById('cupboardNotesInput').focus();
-        } else if (secretInput) {
-          secretInput.focus();
-        }
+        if (cupboardUnlocked) document.getElementById('cupboardNotesInput').focus();
+        else document.getElementById('cupboardSecretInput').focus();
       }, 60);
     }
 
-    function unlockCupboard(e) {
-      if (e) e.preventDefault();
-      const input = document.getElementById('cupboardSecretInput');
-      const errEl = document.getElementById('cupboardSecretError');
-      const attempt = (input ? input.value : '').trim().toLowerCase();
+    function syncCupboardModalView() {
+      const lockView = document.getElementById('cupboardLockView');
+      const unlockedView = document.getElementById('cupboardUnlockedView');
+      if (!lockView || !unlockedView) return;
+      lockView.classList.toggle('hidden', cupboardUnlocked);
+      unlockedView.classList.toggle('hidden', !cupboardUnlocked);
+    }
 
-      if (attempt === CUPBOARD_SECRET_WORD) {
+    function unlockCupboard(e) {
+      e.preventDefault();
+      const attempt = (document.getElementById('cupboardSecretInput').value || '').trim().toLowerCase();
+      const errEl = document.getElementById('cupboardSecretError');
+      if (attempt === CUPBOARD_SECRET) {
         cupboardUnlocked = true;
-        if (errEl) errEl.classList.add('hidden');
-        syncCupboardModalViews();
+        errEl.classList.add('hidden');
+        syncCupboardModalView();
         renderWhiteCabinets();
         showToast('🔓 Puertas del armario abiertas');
         setTimeout(() => document.getElementById('cupboardNotesInput').focus(), 60);
       } else {
-        if (errEl) errEl.classList.remove('hidden');
-        if (input) {
-          input.select();
-          input.focus();
-        }
+        errEl.classList.remove('hidden');
+        document.getElementById('cupboardSecretInput').select();
       }
     }
 
     function lockCupboardSession() {
       cupboardUnlocked = false;
-      const secretInput = document.getElementById('cupboardSecretInput');
-      if (secretInput) secretInput.value = '';
-      syncCupboardModalViews();
+      document.getElementById('cupboardSecretInput').value = '';
+      document.getElementById('cupboardSecretError').classList.add('hidden');
+      syncCupboardModalView();
       renderWhiteCabinets();
       showToast('🔒 Armario cerrado de nuevo');
     }
@@ -3511,14 +3464,11 @@
       state.cupboardNotes[cab - 1] = document.getElementById('cupboardNotesInput').value.trim();
       saveState();
       closeCupboardModal();
-      showToast(`🔒 Notas del armario ${ROMAN[cab - 1]} guardadas`);
+      showToast(`🗄️ Notas guardadas en armario de Vitrina ${ROMAN[cab - 1]}`);
     }
 
-    // ==========================================
-    // EDITAR PLACA DE CUBÍCULO
-    // ==========================================
     function openCubbyLabelModal(idx) {
-      document.getElementById('editCubbyIndex').value = idx;
+      document.getElementById('editCubbyIndex').value = String(idx);
       document.getElementById('cubbyLabelInput').value = state.cubbyLabels[idx] || '';
       showModal('cubbyLabelModal');
       setTimeout(() => document.getElementById('cubbyLabelInput').focus(), 60);
@@ -3536,47 +3486,47 @@
       saveState();
       renderAll();
       closeCubbyLabelModal();
-      showToast('🏷️ Placa actualizada');
+      showToast('🏷️ Placa del cubículo actualizada');
     }
 
     // ==========================================
-    // EXPORTAR / IMPORTAR CSV Y JSON
+    // EXPORTAR / IMPORTAR CSV
     // ==========================================
     function csvEscape(val) {
       const s = String(val ?? '');
-      if (/[",\n\r]/.test(s)) {
-        return `"${s.replace(/"/g, '""')}"`;
-      }
+      if (/[",\n\r]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
       return s;
     }
 
     function exportCSV() {
       const headers = [
-        'id', 'tipo', 'titulo', 'autor', 'editorial', 'tematica',
-        'vitrina', 'estante', 'cubiculo', 'etiqueta_cubiculo',
+        'id', 'tipo', 'soporte', 'titulo', 'autor', 'editorial', 'tematica',
+        'vitrina', 'estante', 'cubiculo_indice', 'cubiculo_nombre',
         'color', 'icono', 'prestado', 'prestado_a', 'fecha_prestamo', 'notas'
       ];
       const rows = [headers.map(csvEscape).join(',')];
 
       state.items.forEach(item => {
         const cubbyIdx = item.type === 'tarot' ? Number(item.cubby) : '';
-        const cubbyName = item.type === 'tarot' ? (state.cubbyLabels[cubbyIdx] || '') : '';
+        const cubbyName = item.type === 'tarot' ? (state.cubbyLabels[item.cubby] || '') : '';
+        const support = item.type === 'book' ? (isEbook(item) ? 'ebook' : 'vitrina') : 'vitrina';
         const row = [
-          item.id,
-          item.type,
-          item.title,
+          item.id || '',
+          item.type || '',
+          support,
+          item.title || '',
           item.author || '',
           item.publisher || '',
           item.theme || '',
-          item.type !== 'tarot' ? (item.cabinet || '') : '',
-          item.type !== 'tarot' ? (item.shelf || '') : '',
+          item.type !== 'tarot' && !isEbook(item) ? (item.cabinet || '') : '',
+          item.type !== 'tarot' && !isEbook(item) ? (item.shelf || '') : '',
           cubbyIdx,
           cubbyName,
           item.color || '',
-          item.type === 'object' ? (item.icon || 'orb') : '',
+          item.icon || '',
           isBookLoaned(item) ? 'si' : 'no',
-          item.loanedTo || '',
-          item.loanedDate || '',
+          isBookLoaned(item) ? (item.loanedTo || '') : '',
+          isBookLoaned(item) ? (item.loanedDate || '') : '',
           item.notes || ''
         ];
         rows.push(row.map(csvEscape).join(','));
@@ -3592,7 +3542,7 @@
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showToast('📊 Archivo CSV descargado');
+      showToast('📊 CSV exportado con todas tus piezas');
     }
 
     function triggerCSVImport() {
@@ -3603,188 +3553,132 @@
       }
     }
 
-    function parseCSVText(text) {
-      const cleanText = String(text || '').replace(/^\uFEFF/, '');
-      const firstLine = cleanText.split(/\r?\n/)[0] || '';
-      const semiCount = (firstLine.match(/;/g) || []).length;
-      const commaCount = (firstLine.match(/,/g) || []).length;
-      const delimiter = semiCount > commaCount ? ';' : ',';
-      const rows = [];
-      let currentRow = [];
-      let currentField = '';
+    function parseCSVLine(line, delimiter) {
+      const result = [];
+      let current = '';
       let inQuotes = false;
-
-      for (let i = 0; i < cleanText.length; i++) {
-        const ch = cleanText[i];
-        const next = cleanText[i + 1];
-
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
         if (inQuotes) {
-          if (ch === '"' && next === '"') {
-            currentField += '"';
-            i++;
-          } else if (ch === '"') {
-            inQuotes = false;
+          if (ch === '"') {
+            if (line[i + 1] === '"') {
+              current += '"';
+              i++;
+            } else {
+              inQuotes = false;
+            }
           } else {
-            currentField += ch;
+            current += ch;
           }
         } else {
           if (ch === '"') {
             inQuotes = true;
           } else if (ch === delimiter) {
-            currentRow.push(currentField);
-            currentField = '';
-          } else if (ch === '\r' && next === '\n') {
-            currentRow.push(currentField);
-            rows.push(currentRow);
-            currentRow = [];
-            currentField = '';
-            i++;
-          } else if (ch === '\n' || ch === '\r') {
-            currentRow.push(currentField);
-            rows.push(currentRow);
-            currentRow = [];
-            currentField = '';
+            result.push(current);
+            current = '';
           } else {
-            currentField += ch;
+            current += ch;
           }
         }
       }
-      if (currentField.length > 0 || currentRow.length > 0) {
-        currentRow.push(currentField);
-        rows.push(currentRow);
+      result.push(current);
+      return result;
+    }
+
+    function parseCSVText(text) {
+      const clean = String(text || '').replace(/^\uFEFF/, '');
+      const rawLines = clean.split(/\r\n|\n|\r/).filter(l => l.trim().length > 0);
+      if (rawLines.length < 2) return [];
+      const firstLine = rawLines[0];
+      const commaCount = (firstLine.match(/,/g) || []).length;
+      const semiCount = (firstLine.match(/;/g) || []).length;
+      const delimiter = semiCount > commaCount ? ';' : ',';
+      const headers = parseCSVLine(firstLine, delimiter).map(h => h.trim().toLowerCase());
+
+      const imported = [];
+      for (let i = 1; i < rawLines.length; i++) {
+        const cols = parseCSVLine(rawLines[i], delimiter);
+        const rec = {};
+        headers.forEach((h, idx) => { rec[h] = (cols[idx] ?? '').trim(); });
+
+        const rawType = (rec.tipo || rec.type || 'book').toLowerCase();
+        let type = 'book';
+        if (rawType.includes('tarot') || rawType.includes('oráculo') || rawType.includes('oraculo')) type = 'tarot';
+        else if (rawType.includes('objeto') || rawType.includes('object')) type = 'object';
+
+        const title = rec.titulo || rec.title || '';
+        if (!title) continue;
+
+        const soporteRaw = (rec.soporte || rec.support || '').toLowerCase();
+        const isEbookItem = type === 'book' && (soporteRaw === 'ebook' || soporteRaw === 'libro magico' || soporteRaw === 'libro mágico' || soporteRaw === 'libro electronico' || soporteRaw === 'libro electrónico' || rec.ebook === 'true' || rec.ebook === '1');
+
+        const item = {
+          id: rec.id || ('csv_imp_' + i + '_' + Math.random().toString(36).slice(2, 6)),
+          type,
+          title,
+          author: rec.autor || rec.author || '',
+          publisher: rec.editorial || rec.publisher || '',
+          theme: rec.tematica || rec.theme || '',
+          color: rec.color || '#5D3552',
+          notes: rec.notas || rec.notes || ''
+        };
+
+        if (type === 'tarot') {
+          let cubIdx = parseInt(rec.cubiculo_indice || rec.cubby, 10);
+          if (Number.isNaN(cubIdx) && (rec.cubiculo_nombre || rec.cubby_label)) {
+            const targetName = (rec.cubiculo_nombre || rec.cubby_label).toLowerCase();
+            const foundIdx = state.cubbyLabels.findIndex(lbl => lbl.toLowerCase() === targetName);
+            cubIdx = foundIdx !== -1 ? foundIdx : 0;
+          }
+          item.cubby = Number.isNaN(cubIdx) ? 0 : Math.max(0, Math.min(11, cubIdx));
+        } else {
+          if (type === 'book') {
+            item.isEbook = isEbookItem;
+          }
+          const cab = parseInt(rec.vitrina || rec.cabinet, 10);
+          const shf = parseInt(rec.estante || rec.shelf, 10);
+          item.cabinet = Number.isNaN(cab) ? 1 : Math.max(1, Math.min(4, cab));
+          item.shelf = Number.isNaN(shf) ? 1 : Math.max(1, Math.min(4, shf));
+          if (type === 'object') {
+            item.icon = rec.icono || rec.icon || 'orb';
+          } else if (!isEbookItem) {
+            const loanFlag = (rec.prestado || rec.loaned || '').toLowerCase();
+            const borrower = rec.prestado_a || rec.loaned_to || rec.loanedto || '';
+            const loanDate = rec.fecha_prestamo || rec.loaned_date || rec.loaneddate || '';
+            if (loanFlag === 'si' || loanFlag === 'sí' || loanFlag === 'yes' || loanFlag === 'true' || loanFlag === '1' || borrower) {
+              item.loaned = true;
+              item.loanedTo = borrower;
+              item.loanedDate = loanDate;
+            }
+          }
+        }
+        imported.push(item);
       }
-      return rows.filter(r => r.some(cell => String(cell).trim() !== ''));
+      return imported;
     }
 
     function handleCSVFileSelected(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
-
       const reader = new FileReader();
       reader.onload = (e) => {
         try {
-          const rows = parseCSVText(e.target.result);
-          if (rows.length < 2) {
-            showToast('⚠️ El CSV no contiene filas de datos');
+          const parsedItems = parseCSVText(e.target.result);
+          if (!Array.isArray(parsedItems) || parsedItems.length === 0) {
+            showToast('⚠️ El CSV no contiene filas válidas');
             return;
           }
-
-          const rawHeaders = rows[0].map(h => String(h || '').trim().toLowerCase());
-          const colIdx = (names) => {
-            for (const n of names) {
-              const idx = rawHeaders.indexOf(n);
-              if (idx !== -1) return idx;
-            }
-            return -1;
-          };
-
-          const iId = colIdx(['id']);
-          const iType = colIdx(['tipo', 'type']);
-          const iTitle = colIdx(['titulo', 'título', 'title', 'nombre']);
-          const iAuthor = colIdx(['autor', 'author']);
-          const iPub = colIdx(['editorial', 'publisher']);
-          const iTheme = colIdx(['tematica', 'temática', 'categoria', 'categoría', 'theme']);
-          const iCab = colIdx(['vitrina', 'cabinet', 'mueble']);
-          const iNumUb = colIdx(['numero_ubicacion', 'número_ubicación']);
-          const iShelf = colIdx(['estante', 'shelf', 'numero_ubicacion', 'número_ubicación']);
-          const iCubby = colIdx(['cubiculo', 'cubículo', 'cubby']);
-          const iCubbyLbl = colIdx(['etiqueta_cubiculo', 'etiqueta_cubículo', 'cubby_label']);
-          const iColor = colIdx(['color', 'color_lomo']);
-          const iIcon = colIdx(['icono', 'icon', 'icono_objeto']);
-          const iLoaned = colIdx(['prestado', 'loaned']);
-          const iLoanedTo = colIdx(['prestado_a', 'loaned_to', 'loanedto']);
-          const iLoanedDate = colIdx(['fecha_prestamo', 'fecha_préstamo', 'loaned_date', 'loaneddate']);
-          const iNotes = colIdx(['notas', 'notes']);
-
-          const importedItems = [];
-          const updatedCubbyLabels = [...state.cubbyLabels];
-
-          for (let r = 1; r < rows.length; r++) {
-            const row = rows[r];
-            const title = iTitle >= 0 ? String(row[iTitle] || '').trim() : '';
-            if (!title) continue;
-
-            let rawType = iType >= 0 ? String(row[iType] || '').trim().toLowerCase() : 'book';
-            if (['libro', 'book', 'libros'].includes(rawType)) rawType = 'book';
-            else if (['tarot', 'oraculo', 'oráculo', 'tarots'].includes(rawType)) rawType = 'tarot';
-            else if (['objeto', 'object', 'objetos', 'curiosidad'].includes(rawType)) rawType = 'object';
-            else rawType = 'book';
-
-            const item = {
-              id: (iId >= 0 && String(row[iId] || '').trim()) || ('csv_imp_' + r + '_' + Math.random().toString(36).slice(2, 6)),
-              type: rawType,
-              title,
-              author: iAuthor >= 0 ? String(row[iAuthor] || '').trim() : '',
-              publisher: iPub >= 0 ? String(row[iPub] || '').trim() : '',
-              theme: iTheme >= 0 ? String(row[iTheme] || '').trim() : '',
-              color: (iColor >= 0 && String(row[iColor] || '').trim()) || '#5D3552',
-              notes: iNotes >= 0 ? String(row[iNotes] || '').trim() : ''
-            };
-
-            if (rawType === 'tarot') {
-              let cIdx = iCubby >= 0 ? parseInt(row[iCubby], 10) : (iNumUb >= 0 ? parseInt(row[iNumUb], 10) - 1 : 0);
-              if (Number.isNaN(cIdx) || cIdx < 0 || cIdx > 11) cIdx = 0;
-              item.cubby = cIdx;
-              if (iCubbyLbl >= 0) {
-                const lbl = String(row[iCubbyLbl] || '').trim();
-                if (lbl) updatedCubbyLabels[cIdx] = lbl;
-              }
-            } else {
-              let cab = iCab >= 0 ? parseInt(row[iCab], 10) : 1;
-              let shelf = iShelf >= 0 ? parseInt(row[iShelf], 10) : 1;
-              if (Number.isNaN(cab) || cab < 1 || cab > 4) cab = 1;
-              if (Number.isNaN(shelf) || shelf < 1 || shelf > 4) shelf = 1;
-              item.cabinet = cab;
-              item.shelf = shelf;
-              if (rawType === 'object') {
-                item.icon = (iIcon >= 0 && String(row[iIcon] || '').trim()) || 'orb';
-              } else if (iLoaned >= 0) {
-                const loanRaw = String(row[iLoaned] || '').trim().toLowerCase();
-                if (['si', 'sí', 'true', '1', 'yes'].includes(loanRaw)) {
-                  item.loaned = true;
-                  item.loanedTo = iLoanedTo >= 0 ? String(row[iLoanedTo] || '').trim() : '';
-                  item.loanedDate = iLoanedDate >= 0 ? String(row[iLoanedDate] || '').trim() : '';
-                }
-              }
-            }
-
-            importedItems.push(item);
-          }
-
-          if (importedItems.length === 0) {
-            showToast('⚠️ No se encontraron piezas válidas en el CSV');
-            return;
-          }
-
-          state.items = importedItems;
-          state.cubbyLabels = updatedCubbyLabels;
-          state.highlightedItemId = null;
+          state.items = parsedItems;
+          clearAllFilters();
           saveState();
           renderAll();
-          showToast(`📂 Importadas ${importedItems.length} piezas desde CSV`);
+          showToast(`📂 Importadas ${parsedItems.length} piezas desde CSV`);
         } catch (err) {
           console.error(err);
-          showToast('❌ Error al leer el archivo CSV');
+          showToast('⚠️ Error al leer el archivo CSV');
         }
       };
-      reader.readAsText(file, 'UTF-8');
-    }
-
-    function exportBackupJSON() {
-      const dataStr = JSON.stringify({
-        exportedAt: new Date().toISOString(),
-        items: state.items,
-        cubbyLabels: state.cubbyLabels,
-        cupboardNotes: state.cupboardNotes
-      }, null, 2);
-      const blob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `biblioteca-de-la-meiga-${getTodayISO()}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast('💾 Copia JSON descargada');
+      reader.readAsText(file, 'utf-8');
     }
 
     function handleJSONFileSelected(event) {
@@ -3793,26 +3687,26 @@
       const reader = new FileReader();
       reader.onload = (e) => {
         try {
-          const parsed = JSON.parse(e.target.result);
-          if (!Array.isArray(parsed.items)) {
+          const data = JSON.parse(e.target.result);
+          if (!data || !Array.isArray(data.items)) {
             showToast('⚠️ Archivo JSON no válido');
             return;
           }
-          state.items = parsed.items;
-          if (Array.isArray(parsed.cubbyLabels) && parsed.cubbyLabels.length === 12) {
-            state.cubbyLabels = parsed.cubbyLabels;
+          state.items = data.items;
+          if (Array.isArray(data.cubbyLabels) && data.cubbyLabels.length === 12) {
+            state.cubbyLabels = data.cubbyLabels;
           }
-          if (Array.isArray(parsed.cupboardNotes) && parsed.cupboardNotes.length === 4) {
-            state.cupboardNotes = parsed.cupboardNotes;
+          if (Array.isArray(data.cupboardNotes) && data.cupboardNotes.length === 4) {
+            state.cupboardNotes = data.cupboardNotes;
           }
           saveState();
           renderAll();
-          showToast('📂 Copia JSON restaurada');
+          showToast('📥 Copia de seguridad restaurada');
         } catch (err) {
-          showToast('❌ Error al leer el archivo JSON');
+          showToast('⚠️ Error al leer el archivo JSON');
         }
       };
-      reader.readAsText(file);
+      reader.readAsText(file, 'utf-8');
     }
 
     function showModal(id) {
@@ -3828,23 +3722,23 @@
     }
 
     let toastTimer = null;
-    function showToast(msg) {
+    function showToast(message) {
       const box = document.getElementById('toastBox');
-      const txt = document.getElementById('toastMsg');
-      txt.textContent = msg;
+      const msg = document.getElementById('toastMsg');
+      msg.textContent = message;
       box.classList.remove('hidden');
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => {
         box.classList.add('hidden');
-      }, 2800);
+      }, 3000);
     }
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closeItemModal();
-        closeQuickLoanModal();
         closeCupboardModal();
         closeCubbyLabelModal();
+        closeQuickLoanModal();
         const menu = document.getElementById('categoryFilterMenu');
         if (menu) menu.classList.add('hidden');
       }
