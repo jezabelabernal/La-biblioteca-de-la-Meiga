@@ -635,8 +635,8 @@
         </svg>
       </div>
 
-      <!-- DECORACIÓN IZQUIERDA (A LA IZQUIERDA DE LA VITRINA I, CON ICONO DE LIBRO MÁGICO) -->
-      <div class="hidden xl:flex flex-col items-center justify-between absolute left-2 top-24 bottom-8 w-12 z-20 select-none">
+      <!-- DECORACIÓN IZQUIERDA (A LA IZQUIERDA DE LA VITRINA I: POCIÓN, CRISTALES, MESITA CON LIBRO MÁGICO Y GATO BLANCO) -->
+      <div class="hidden xl:flex flex-col items-center justify-between absolute left-1.5 top-24 bottom-7 w-[54px] z-20 select-none">
         <!-- Poción -->
         <svg class="w-10 h-16 pointer-events-none" viewBox="0 0 44 84" fill="none" aria-hidden="true">
           <rect x="8" y="24" width="28" height="52" rx="6" fill="#4E7566" stroke="#120D11" stroke-width="2.2"/>
@@ -657,54 +657,98 @@
           <line x1="3" y1="74" x2="45" y2="74" stroke="#5A4338" stroke-width="3" stroke-linecap="round"/>
         </svg>
 
-        <!-- ICONO INTERACTIVO: LIBRO MÁGICO -->
-        <button
-          id="ebookIconBtn"
-          type="button"
-          onclick="selectEbookScope()"
-          ondragover="handleEbookIconDragOver(event)"
-          ondragleave="handleEbookIconDragLeave(event)"
-          ondrop="handleEbookIconDrop(event)"
-          title="Libro Mágico — Pulsa para filtrar o ir a su apartado, o suelta un libro aquí para guardarlo en el Libro Mágico"
-          aria-label="Libro Mágico"
-          class="ebook-icon-btn flex flex-col items-center gap-0.5 py-1 px-1 rounded-xl focus:outline-none"
-        >
-          <svg class="w-10 h-14" viewBox="0 0 44 58" fill="none">
-            <!-- Cuerpo del Libro Mágico -->
-            <rect x="6" y="4" width="32" height="46" rx="4" fill="#2A222B" stroke="#120D11" stroke-width="2.2"/>
-            <!-- Bisel interior -->
-            <rect x="8.5" y="6.5" width="27" height="41" rx="2.5" fill="#1D171E" stroke="#463544" stroke-width="1"/>
-            <!-- Pantalla de tinta electrónica -->
-            <rect x="10.5" y="9" width="23" height="31" rx="1.5" fill="#DCECF0" stroke="#120D11" stroke-width="1.4"/>
-            <!-- Líneas de lectura en pantalla -->
-            <line x1="13.5" y1="14" x2="30.5" y2="14" stroke="#2B2429" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="13.5" y1="18.5" x2="29" y2="18.5" stroke="#3E353C" stroke-width="1.3" stroke-linecap="round"/>
-            <line x1="13.5" y1="22.5" x2="30" y2="22.5" stroke="#3E353C" stroke-width="1.3" stroke-linecap="round"/>
-            <line x1="13.5" y1="26.5" x2="25" y2="26.5" stroke="#3E353C" stroke-width="1.3" stroke-linecap="round"/>
-            <!-- Destello mágico en pantalla -->
-            <path d="M28.5 31.5 L29.4 34 L31.9 34.9 L29.4 35.8 L28.5 38.3 L27.6 35.8 L25.1 34.9 L27.6 34 Z" fill="#67E8F9" stroke="#120D11" stroke-width="0.9"/>
-            <!-- Botón inferior -->
-            <circle cx="22" cy="43.8" r="1.8" fill="#67E8F9" stroke="#120D11" stroke-width="1.1"/>
-            <!-- Repisa -->
-            <line x1="2" y1="53" x2="42" y2="53" stroke="#5A4338" stroke-width="3" stroke-linecap="round"/>
-          </svg>
-          <span class="px-1.5 py-0.2 rounded bg-[#15242B] border border-[#120D11] text-[8px] font-bold tracking-tight text-[#67E8F9] leading-tight text-center">
-            Libro Mágico
-          </span>
-        </button>
+        <!-- CONJUNTO: LIBRO MÁGICO APOYADO EN MESITA Y DEBAJO GATO BLANCO CON OREJAS Y COLA AMARILLAS -->
+        <div class="flex flex-col items-center w-full">
+          <!-- ICONO INTERACTIVO: LIBRO MÁGICO APOYADO SOBRE LA MESITA -->
+          <button
+            id="ebookIconBtn"
+            type="button"
+            onclick="selectEbookScope()"
+            ondragover="handleEbookIconDragOver(event)"
+            ondragleave="handleEbookIconDragLeave(event)"
+            ondrop="handleEbookIconDrop(event)"
+            title="Libro Mágico — Pulsa para filtrar o ir a su apartado, o suelta un libro aquí para guardarlo en el Libro Mágico"
+            aria-label="Libro Mágico"
+            class="ebook-icon-btn flex flex-col items-center gap-0.5 pt-1 px-0.5 rounded-t-xl focus:outline-none relative z-10 -mb-[3px]"
+          >
+            <span class="px-1.5 py-0.2 rounded bg-[#15242B] border border-[#120D11] text-[7.5px] font-bold tracking-tight text-[#67E8F9] leading-tight text-center shadow-xs">
+              Libro Mágico
+            </span>
+            <svg class="w-10 h-12" viewBox="0 0 44 52" fill="none">
+              <!-- Atril / soporte trasero -->
+              <path d="M13 48 L17 34 L27 34 L31 48" stroke="#8C5E3C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Cuerpo del Libro Mágico -->
+              <rect x="6" y="3" width="32" height="44" rx="4" fill="#2A222B" stroke="#120D11" stroke-width="2.2"/>
+              <!-- Bisel interior -->
+              <rect x="8.5" y="5.5" width="27" height="39" rx="2.5" fill="#1D171E" stroke="#463544" stroke-width="1"/>
+              <!-- Pantalla -->
+              <rect x="10.5" y="8" width="23" height="29" rx="1.5" fill="#DCECF0" stroke="#120D11" stroke-width="1.4"/>
+              <!-- Líneas de lectura en pantalla -->
+              <line x1="13.5" y1="12.5" x2="30.5" y2="12.5" stroke="#2B2429" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="13.5" y1="16.5" x2="29" y2="16.5" stroke="#3E353C" stroke-width="1.3" stroke-linecap="round"/>
+              <line x1="13.5" y1="20.5" x2="30" y2="20.5" stroke="#3E353C" stroke-width="1.3" stroke-linecap="round"/>
+              <line x1="13.5" y1="24.5" x2="25" y2="24.5" stroke="#3E353C" stroke-width="1.3" stroke-linecap="round"/>
+              <!-- Destello mágico en pantalla -->
+              <path d="M28.5 29 L29.4 31.3 L31.7 32.2 L29.4 33.1 L28.5 35.4 L27.6 33.1 L25.3 32.2 L27.6 31.3 Z" fill="#67E8F9" stroke="#120D11" stroke-width="0.9"/>
+              <!-- Botón inferior -->
+              <circle cx="22" cy="41" r="1.7" fill="#67E8F9" stroke="#120D11" stroke-width="1.1"/>
+            </svg>
+          </button>
 
-        <!-- Vela -->
-        <svg class="w-11 h-16 pointer-events-none" viewBox="0 0 48 92" fill="none" aria-hidden="true">
-          <rect x="12" y="34" width="14" height="40" rx="2" fill="#F5EAD6" stroke="#120D11" stroke-width="2.2"/>
-          <g class="flame-anim">
-            <path d="M19 10 C25 19, 26 27, 19 31 C12 27, 13 19, 19 10 Z" fill="#F6C453" stroke="#120D11" stroke-width="1.8"/>
-            <path d="M19 17 C22 22, 22 27, 19 29 C16 27, 16 22, 19 17 Z" fill="#FFF7D6"/>
-          </g>
-          <ellipse cx="19" cy="77" rx="15" ry="5" fill="#C8963E" stroke="#120D11" stroke-width="2"/>
-          <path d="M35 80 L36 68 L40 68 L41 80 Z" fill="#E8DCC8" stroke="#120D11" stroke-width="1.6"/>
-          <path d="M29 69 C29 59, 47 59, 47 69 Z" fill="#A64B4B" stroke="#120D11" stroke-width="1.8"/>
-          <line x1="2" y1="82" x2="46" y2="82" stroke="#5A4338" stroke-width="3" stroke-linecap="round"/>
-        </svg>
+          <!-- MESITA DE MADERA CON GATO BLANCO DE OREJAS Y COLA AMARILLAS DEBAJO -->
+          <svg class="w-[52px] h-[76px] pointer-events-none" viewBox="0 0 56 80" fill="none" aria-hidden="true">
+            <!-- Tablero superior de la mesita -->
+            <rect x="2" y="2" width="52" height="6.5" rx="2" fill="#8D5B3C" stroke="#120D11" stroke-width="2"/>
+            <line x1="5" y1="4.5" x2="51" y2="4.5" stroke="#B37D58" stroke-width="1.2" stroke-linecap="round"/>
+            <!-- Travesaño bajo el tablero -->
+            <rect x="7" y="8.5" width="42" height="4.5" fill="#6E442B" stroke="#120D11" stroke-width="1.7"/>
+            <!-- Pata izquierda de la mesita -->
+            <rect x="7" y="13" width="4.5" height="62" rx="1" fill="#7A4D32" stroke="#120D11" stroke-width="1.8"/>
+            <!-- Pata derecha de la mesita -->
+            <rect x="44.5" y="13" width="4.5" height="62" rx="1" fill="#7A4D32" stroke="#120D11" stroke-width="1.8"/>
+
+            <!-- GATO BLANCO SENTADO DEBAJO DE LA MESITA (CON OREJAS Y COLA AMARILLAS) -->
+            <g>
+              <!-- Cola amarilla curvada hacia la derecha -->
+              <path d="M34 69 C41 68, 43 60, 40 53 C38.5 49.5, 42 47, 43.5 50.5 C46.5 57.5, 44.5 71, 34 73 Z"
+                fill="#F6C453" stroke="#120D11" stroke-width="1.7" stroke-linejoin="round"/>
+              <!-- Cuerpo blanco sentado -->
+              <path d="M18 73 C17 62, 19.5 51, 26.5 51 C33.5 51, 36 62, 35 73 Z"
+                fill="#FFFDF9" stroke="#120D11" stroke-width="1.8" stroke-linejoin="round"/>
+              <!-- Patitas delanteras blancas -->
+              <ellipse cx="23.5" cy="72.5" rx="3" ry="2.2" fill="#FFFDF9" stroke="#120D11" stroke-width="1.5"/>
+              <ellipse cx="29.5" cy="72.5" rx="3" ry="2.2" fill="#FFFDF9" stroke="#120D11" stroke-width="1.5"/>
+              <line x1="26.5" y1="62" x2="26.5" y2="73" stroke="#D8CFC4" stroke-width="1.1" stroke-linecap="round"/>
+
+              <!-- Oreja izquierda amarilla -->
+              <polygon points="18.5,41 17.5,31 24.5,37.5" fill="#F6C453" stroke="#120D11" stroke-width="1.7" stroke-linejoin="round"/>
+              <!-- Oreja derecha amarilla -->
+              <polygon points="34.5,41 35.5,31 28.5,37.5" fill="#F6C453" stroke="#120D11" stroke-width="1.7" stroke-linejoin="round"/>
+
+              <!-- Cabeza blanca -->
+              <ellipse cx="26.5" cy="44" rx="9" ry="7.8" fill="#FFFDF9" stroke="#120D11" stroke-width="1.8"/>
+
+              <!-- Ojos expresivos -->
+              <circle cx="23.2" cy="43.5" r="1.35" fill="#120D11"/>
+              <circle cx="29.8" cy="43.5" r="1.35" fill="#120D11"/>
+              <circle cx="22.8" cy="43.1" r="0.45" fill="#FFFFFF"/>
+              <circle cx="29.4" cy="43.1" r="0.45" fill="#FFFFFF"/>
+
+              <!-- Naricita rosada y boca -->
+              <polygon points="26.5,46.2 25.4,45 27.6,45" fill="#E88D9C"/>
+              <path d="M24.8 47.4 Q26.5 48.8 28.2 47.4" stroke="#120D11" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+
+              <!-- Bigotitos -->
+              <line x1="15.5" y1="44.2" x2="19.5" y2="44.8" stroke="#120D11" stroke-width="0.9" stroke-linecap="round"/>
+              <line x1="15.5" y1="46.4" x2="19.5" y2="46.2" stroke="#120D11" stroke-width="0.9" stroke-linecap="round"/>
+              <line x1="33.5" y1="44.8" x2="37.5" y2="44.2" stroke="#120D11" stroke-width="0.9" stroke-linecap="round"/>
+              <line x1="33.5" y1="46.2" x2="37.5" y2="46.4" stroke="#120D11" stroke-width="0.9" stroke-linecap="round"/>
+            </g>
+
+            <!-- Línea de suelo -->
+            <line x1="2" y1="76" x2="54" y2="76" stroke="#5A4338" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
       </div>
 
       <!-- DECORACIÓN DERECHA -->
@@ -1829,52 +1873,289 @@
         case 'cthulhu':
           return `<svg class="w-7 h-8" viewBox="0 0 34 38" fill="none">
             <rect x="7" y="28" width="20" height="7.5" rx="1.5" fill="#9E7B3B" stroke="#120D11" stroke-width="1.8"/>
+            <line x1="10" y1="30.5" x2="14" y2="30.5" stroke="#120D11" stroke-width="1.1" stroke-dasharray="1.5 1.5"/>
+            <line x1="17" y1="30.5" x2="24" y2="30.5" stroke="#120D11" stroke-width="1.1" stroke-dasharray="2 1.5"/>
+            <line x1="10" y1="33.5" x2="23" y2="33.5" stroke="#120D11" stroke-width="1.1" stroke-dasharray="1.8 1.5"/>
             <path d="M9 12 C9 6, 25 6, 25 12 C27 16, 26 23, 24 28 L10 28 C8 23, 7 16, 9 12 Z" fill="${fill}" stroke="#120D11" stroke-width="1.9" stroke-linejoin="round"/>
+            <path d="M10 11 C13 8.5, 21 8.5, 24 11" stroke="#120D11" stroke-width="1.2"/>
             <circle cx="13" cy="15.5" r="2" fill="#1A1216" stroke="#120D11" stroke-width="1"/>
             <circle cx="21" cy="15.5" r="2" fill="#1A1216" stroke="#120D11" stroke-width="1"/>
             <path d="M17 16.5 L15.5 19.5 L18.5 19.5 Z" fill="#1A1216"/>
+            <path d="M11 20 C10 24, 11 27, 12.5 28" stroke="#120D11" stroke-width="1.7" stroke-linecap="round"/>
+            <path d="M14.5 20.5 C14 24.5, 14.5 27, 15.5 28" stroke="#120D11" stroke-width="1.7" stroke-linecap="round"/>
+            <path d="M19.5 20.5 C20 24.5, 19.5 27, 18.5 28" stroke="#120D11" stroke-width="1.7" stroke-linecap="round"/>
+            <path d="M23 20 C24 24, 23 27, 21.5 28" stroke="#120D11" stroke-width="1.7" stroke-linecap="round"/>
+            <path d="M7 18 C4.5 20, 5 24, 8 25" stroke="${fill}" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M7 18 C4.5 20, 5 24, 8 25" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M27 18 C29.5 20, 29 24, 26 25" stroke="${fill}" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M27 18 C29.5 20, 29 24, 26 25" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
           </svg>`;
+
         case 'dragon_green':
           return `<svg class="w-7 h-8" viewBox="0 0 34 36" fill="none">
+            <path d="M24 24 C29 23, 31 19, 28 17" stroke="#6B9E3B" stroke-width="3.2" stroke-linecap="round"/>
+            <path d="M24 24 C29 23, 31 19, 28 17" stroke="#120D11" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M18 19 L25 15 L23 22 Z" fill="#E8D8B0" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
             <ellipse cx="17" cy="24" rx="7.5" ry="7.5" fill="#9BCB4B" stroke="#120D11" stroke-width="1.8"/>
+            <ellipse cx="15.5" cy="24.5" rx="4.5" ry="5.5" fill="#F3EAD8"/>
+            <ellipse cx="12" cy="31" rx="3.2" ry="2.2" fill="#E88B2C" stroke="#120D11" stroke-width="1.5"/>
+            <ellipse cx="20.5" cy="31" rx="3.2" ry="2.2" fill="#E88B2C" stroke="#120D11" stroke-width="1.5"/>
+            <ellipse cx="11.5" cy="23.5" rx="2.6" ry="2" fill="#E88B2C" stroke="#120D11" stroke-width="1.4"/>
             <circle cx="15" cy="13.5" r="8.2" fill="#A4D452" stroke="#120D11" stroke-width="1.8"/>
+            <path d="M11 7 L13 3.5 L15.5 6.5 L18 3.5 L19.5 7.5" fill="#4B8B3B" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M21 10 C25 8.5, 25.5 13, 22 13.5" fill="#E88B2C" stroke="#120D11" stroke-width="1.5"/>
+            <path d="M22.5 13.5 C26 14, 25.5 18, 22 17" fill="#4B8B3B" stroke="#120D11" stroke-width="1.4"/>
             <circle cx="12.5" cy="13.5" r="1.7" fill="#120D11"/>
+            <circle cx="12" cy="12.9" r="0.6" fill="#FFFFFF"/>
+            <path d="M10 16.5 Q11.5 17.5 13 16.5" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
           </svg>`;
+
+        case 'dragon_grey':
+          return `<svg class="w-7 h-8" viewBox="0 0 34 36" fill="none">
+            <path d="M23 25 C28 25, 30 22, 28 19" stroke="#6B7D8C" stroke-width="3.2" stroke-linecap="round"/>
+            <path d="M23 25 C28 25, 30 22, 28 19" stroke="#120D11" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M19 19 L27 14 L25 22 Z" fill="#7D8E9E" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M21 19 L26.5 16 L24.5 21 Z" fill="#7D3B6E"/>
+            <ellipse cx="16.5" cy="24.5" rx="7.5" ry="7.5" fill="#7D8E9E" stroke="#120D11" stroke-width="1.8"/>
+            <ellipse cx="14.5" cy="25" rx="4.5" ry="5.5" fill="#EEDBC0"/>
+            <ellipse cx="11.5" cy="31.5" rx="3.3" ry="2.1" fill="#6B7D8C" stroke="#120D11" stroke-width="1.5"/>
+            <ellipse cx="20" cy="31.5" rx="3.3" ry="2.1" fill="#6B7D8C" stroke="#120D11" stroke-width="1.5"/>
+            <rect x="6" y="10" width="18" height="10.5" rx="5.2" fill="#7D8E9E" stroke="#120D11" stroke-width="1.8"/>
+            <path d="M7 16.5 Q15 19.5 23.5 16.5 L23.5 20 Q15 21.5 7 20 Z" fill="#EEDBC0" stroke="#120D11" stroke-width="1.2"/>
+            <path d="M17 10.5 L19 6.5 L21.5 10.5" fill="#4A3832" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle cx="11.5" cy="14" r="1.7" fill="#120D11"/>
+            <circle cx="11" cy="13.4" r="0.6" fill="#FFFFFF"/>
+          </svg>`;
+
+        case 'dragon_white':
+          return `<svg class="w-7 h-8" viewBox="0 0 34 36" fill="none">
+            <path d="M23 25 C28 24, 30 20, 28 17" stroke="#EAE6DF" stroke-width="3.2" stroke-linecap="round"/>
+            <path d="M23 25 C28 24, 30 20, 28 17" stroke="#120D11" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M18 19 L29 12 L24 22 Z" fill="#F8F6F2" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
+            <ellipse cx="16.5" cy="24.5" rx="7" ry="7.5" fill="#F8F6F2" stroke="#120D11" stroke-width="1.8"/>
+            <ellipse cx="11.5" cy="31.5" rx="3" ry="2" fill="#F8F6F2" stroke="#120D11" stroke-width="1.5"/>
+            <ellipse cx="19.5" cy="31.5" rx="3" ry="2" fill="#F8F6F2" stroke="#120D11" stroke-width="1.5"/>
+            <ellipse cx="15" cy="13.5" rx="8" ry="7.5" fill="#F8F6F2" stroke="#120D11" stroke-width="1.8"/>
+            <path d="M11 7 L12 3.5 L14.5 6.8" fill="#F8F6F2" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M18 7 L19.5 3.5 L21.5 7.5" fill="#F8F6F2" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
+            <ellipse cx="11.5" cy="13.8" rx="2.4" ry="2.8" fill="#5CA4D6" stroke="#120D11" stroke-width="1.1"/>
+            <ellipse cx="11.8" cy="13.8" rx="1.1" ry="1.8" fill="#120D11"/>
+            <circle cx="11" cy="12.7" r="0.6" fill="#FFFFFF"/>
+            <path d="M8.5 16.5 Q11.5 17.5 14 16.5" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>`;
+
+        case 'dragon_black':
+          return `<svg class="w-7 h-8" viewBox="0 0 34 36" fill="none">
+            <path d="M23 25 C28 24, 30 20, 28 17" stroke="#262229" stroke-width="3.2" stroke-linecap="round"/>
+            <path d="M23 25 C28 24, 30 20, 28 17" stroke="#120D11" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M18 19 L29 12 L24 22 Z" fill="#2B262E" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
+            <ellipse cx="16.5" cy="24.5" rx="7" ry="7.5" fill="#262229" stroke="#120D11" stroke-width="1.8"/>
+            <ellipse cx="11.5" cy="31.5" rx="3" ry="2" fill="#262229" stroke="#120D11" stroke-width="1.5"/>
+            <ellipse cx="19.5" cy="31.5" rx="3" ry="2" fill="#262229" stroke="#120D11" stroke-width="1.5"/>
+            <ellipse cx="15" cy="13.5" rx="8" ry="7.5" fill="#262229" stroke="#120D11" stroke-width="1.8"/>
+            <path d="M11 7 L12 3.5 L14.5 6.8" fill="#262229" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M18 7 L19.5 3.5 L21.5 7.5" fill="#262229" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
+            <ellipse cx="11.5" cy="13.8" rx="2.4" ry="2.8" fill="#9ED656" stroke="#120D11" stroke-width="1.1"/>
+            <ellipse cx="11.8" cy="13.8" rx="1.1" ry="1.8" fill="#120D11"/>
+            <circle cx="11" cy="12.7" r="0.6" fill="#FFFFFF"/>
+            <path d="M8.5 16.5 Q11.5 17.5 14 16.5" stroke="#5A5261" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>`;
+
+        case 'photoframe':
+          return `<svg class="w-7 h-8" viewBox="0 0 32 36" fill="none">
+            <path d="M22 25 L26 32 L21 32" stroke="#120D11" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="5" y="4" width="22" height="28" rx="3.5" fill="${fill}" stroke="#120D11" stroke-width="2"/>
+            <circle cx="7.5" cy="6.5" r="1.3" fill="#FFF3C4" stroke="#120D11" stroke-width="0.9"/>
+            <circle cx="24.5" cy="6.5" r="1.3" fill="#FFF3C4" stroke="#120D11" stroke-width="0.9"/>
+            <circle cx="7.5" cy="29.5" r="1.3" fill="#FFF3C4" stroke="#120D11" stroke-width="0.9"/>
+            <circle cx="24.5" cy="29.5" r="1.3" fill="#FFF3C4" stroke="#120D11" stroke-width="0.9"/>
+            <rect x="9" y="8" width="14" height="20" rx="1.5" fill="#231B2E" stroke="#120D11" stroke-width="1.4"/>
+            <path d="M18.5 11.5 C16.3 11.8 14.8 13.7 14.8 16 C14.8 18.3 16.3 20.2 18.5 20.5 C16 20.8 13.5 18.9 13.5 16 C13.5 13.1 16 11.2 18.5 11.5 Z" fill="#F6C453"/>
+            <circle cx="19.5" cy="13" r="0.8" fill="#FFF3C4"/>
+            <path d="M9.5 27.5 Q14 22.5 17.5 25 Q20 22 22.5 24.5 L22.5 27.5 Z" fill="#3B5249" stroke="#120D11" stroke-width="0.9"/>
+          </svg>`;
+
         case 'orrery':
           return `<svg class="w-8 h-8" viewBox="0 0 36 34" fill="none">
             <ellipse cx="18" cy="30.5" rx="8" ry="2.2" fill="${fill}" stroke="#120D11" stroke-width="1.7"/>
+            <path d="M15.5 29.5 L16.8 24 L19.2 24 L20.5 29.5 Z" fill="#C8963E" stroke="#120D11" stroke-width="1.5" stroke-linejoin="round"/>
             <line x1="18" y1="24" x2="18" y2="14" stroke="#120D11" stroke-width="2" stroke-linecap="round"/>
             <ellipse cx="18" cy="14" rx="14" ry="5.5" transform="rotate(-14 18 14)" stroke="${fill}" stroke-width="2.4"/>
+            <ellipse cx="18" cy="14" rx="14" ry="5.5" transform="rotate(-14 18 14)" stroke="#120D11" stroke-width="1.2"/>
+            <ellipse cx="18" cy="14" rx="9.5" ry="3.6" transform="rotate(18 18 14)" stroke="#120D11" stroke-width="1.1" stroke-dasharray="2.5 2"/>
+            <line x1="18" y1="14" x2="7.5" y2="11.5" stroke="#120D11" stroke-width="1.4"/>
+            <line x1="18" y1="14" x2="29" y2="15.5" stroke="#120D11" stroke-width="1.4"/>
             <circle cx="18" cy="14" r="4" fill="#F6C453" stroke="#120D11" stroke-width="1.6"/>
+            <circle cx="16.8" cy="12.8" r="1" fill="#FFF7D6"/>
+            <circle cx="7" cy="11.5" r="2.2" fill="#4E8098" stroke="#120D11" stroke-width="1.3"/>
+            <circle cx="29.5" cy="15.5" r="2.5" fill="#B85D43" stroke="#120D11" stroke-width="1.3"/>
+            <ellipse cx="29.5" cy="15.5" rx="4.2" ry="1.1" transform="rotate(-20 29.5 15.5)" stroke="#F3EAD8" stroke-width="1"/>
+            <circle cx="23.5" cy="9.2" r="1.6" fill="#9D65D0" stroke="#120D11" stroke-width="1.2"/>
           </svg>`;
+
         case 'canopo':
           return `<svg class="w-7 h-8" viewBox="0 0 32 36" fill="none">
             <path d="M10 14 C8 18, 9 27, 11 32 L21 32 C23 27, 24 18, 22 14 Z" fill="${fill}" stroke="#120D11" stroke-width="1.9" stroke-linejoin="round"/>
+            <rect x="9.5" y="31.5" width="13" height="2.5" rx="1" fill="#C8963E" stroke="#120D11" stroke-width="1.5"/>
+            <rect x="9.2" y="18" width="13.6" height="3.2" fill="#D4A84F" stroke="#120D11" stroke-width="1.3"/>
+            <line x1="13" y1="18" x2="13" y2="21.2" stroke="#1D4ED8" stroke-width="1.6"/>
+            <line x1="16" y1="18" x2="16" y2="21.2" stroke="#1D4ED8" stroke-width="1.6"/>
+            <line x1="19" y1="18" x2="19" y2="21.2" stroke="#1D4ED8" stroke-width="1.6"/>
+            <line x1="14" y1="23.5" x2="14" y2="29" stroke="#5C4938" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="18" y1="23.5" x2="18" y2="29" stroke="#5C4938" stroke-width="1.2" stroke-linecap="round"/>
+            <circle cx="16" cy="25.5" r="1" fill="#5C4938"/>
             <path d="M11 14 L12 8.5 L11 3.5 L14 7.5 L18 7.5 L21 3.5 L20 8.5 L21 14 Z" fill="#2A2630" stroke="#120D11" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M18.5 9.5 L23.5 11 L22.5 13 L18.5 12.5 Z" fill="#2A2630" stroke="#120D11" stroke-width="1.4" stroke-linejoin="round"/>
+            <circle cx="17.2" cy="9.6" r="1" fill="#F6C453"/>
           </svg>`;
+
+        case 'compass':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="4" r="2.2" stroke="#120D11" stroke-width="1.6"/>
+            <circle cx="16" cy="17" r="10.5" fill="${fill}" stroke="#120D11" stroke-width="2"/>
+            <circle cx="16" cy="17" r="7.5" fill="#F6EFE2" stroke="#120D11" stroke-width="1.3"/>
+            <polygon points="16,10.5 18.2,17 16,23.5 13.8,17" fill="#9E2A2B" stroke="#120D11" stroke-width="1"/>
+            <circle cx="16" cy="17" r="1.4" fill="#120D11"/>
+          </svg>`;
+
+        case 'sundial':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <ellipse cx="16" cy="22" rx="12" ry="5.5" fill="${fill}" stroke="#120D11" stroke-width="2"/>
+            <ellipse cx="16" cy="21" rx="9" ry="3.5" fill="#F3EAD8" stroke="#120D11" stroke-width="1.2"/>
+            <polygon points="16,21 16,10 23,21" fill="#C8963E" stroke="#120D11" stroke-width="1.6" stroke-linejoin="round"/>
+            <line x1="9" y1="21" x2="12" y2="20" stroke="#120D11" stroke-width="1.2"/>
+            <line x1="20" y1="20" x2="23" y2="21" stroke="#120D11" stroke-width="1.2"/>
+          </svg>`;
+
+        case 'sextant':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <path d="M7 22 Q16 28 25 22 L16 7 Z" fill="${fill}" fill-opacity="0.35" stroke="#120D11" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M6 21 Q16 27.5 26 21" stroke="${fill}" stroke-width="3" stroke-linecap="round"/>
+            <path d="M6 21 Q16 27.5 26 21" stroke="#120D11" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="16" y1="7" x2="19" y2="24.5" stroke="#120D11" stroke-width="2" stroke-linecap="round"/>
+            <rect x="9" y="13" width="6" height="2.8" transform="rotate(-25 9 13)" fill="#2B2429" stroke="#120D11" stroke-width="1.2"/>
+          </svg>`;
+
+        case 'scrollholder':
+          return `<svg class="w-8 h-7" viewBox="0 0 36 30" fill="none">
+            <rect x="6" y="12" width="24" height="8" rx="2" fill="${fill}" stroke="#120D11" stroke-width="1.8"/>
+            <rect x="4" y="11" width="4" height="10" rx="1.5" fill="#D4A84F" stroke="#120D11" stroke-width="1.6"/>
+            <rect x="28" y="11" width="4" height="10" rx="1.5" fill="#D4A84F" stroke="#120D11" stroke-width="1.6"/>
+            <path d="M31 13.5 C34 13.5, 34 18.5, 31 18.5" stroke="#F5EAD6" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="14" y1="12" x2="14" y2="20" stroke="#120D11" stroke-width="1.4"/>
+            <line x1="22" y1="12" x2="22" y2="20" stroke="#120D11" stroke-width="1.4"/>
+          </svg>`;
+
+        case 'octopusorb':
+          return `<svg class="w-8 h-8" viewBox="0 0 34 34" fill="none">
+            <circle cx="17" cy="11" r="7.5" fill="${fill}" stroke="#120D11" stroke-width="1.8"/>
+            <path d="M13.5 8.5 C15 7, 17 6.5, 19 7" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/>
+            <ellipse cx="17" cy="21" rx="5.5" ry="4.2" fill="#8C583A" stroke="#120D11" stroke-width="1.7"/>
+            <circle cx="15" cy="20.5" r="1" fill="#F6C453"/>
+            <circle cx="19" cy="20.5" r="1" fill="#F6C453"/>
+            <path d="M12 22 C8 20, 7 15, 10 14" stroke="#8C583A" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M12 22 C8 20, 7 15, 10 14" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M22 22 C26 20, 27 15, 24 14" stroke="#8C583A" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M22 22 C26 20, 27 15, 24 14" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M13 24 C10 27, 7 27, 6 25" stroke="#8C583A" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M21 24 C24 27, 27 27, 28 25" stroke="#8C583A" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M16 25 L15 29 M18 25 L19 29" stroke="#120D11" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>`;
+
+        case 'operaglasses':
+          return `<svg class="w-8 h-7" viewBox="0 0 36 30" fill="none">
+            <path d="M10 10 L8 22 L15 22 L15 10 Z" fill="${fill}" stroke="#120D11" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M21 10 L21 22 L28 22 L26 10 Z" fill="${fill}" stroke="#120D11" stroke-width="1.8" stroke-linejoin="round"/>
+            <rect x="9" y="13" width="5" height="5" fill="#F6EFE2" stroke="#120D11" stroke-width="1.1"/>
+            <rect x="22" y="13" width="5" height="5" fill="#F6EFE2" stroke="#120D11" stroke-width="1.1"/>
+            <line x1="15" y1="14" x2="21" y2="14" stroke="#120D11" stroke-width="2.2"/>
+            <line x1="27" y1="18" x2="33" y2="26" stroke="#D4A84F" stroke-width="2.6" stroke-linecap="round"/>
+            <line x1="27" y1="18" x2="33" y2="26" stroke="#120D11" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>`;
+
+        case 'silver_box':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <rect x="6" y="13" width="20" height="13" rx="2" fill="#B8C0C8" stroke="#120D11" stroke-width="1.9"/>
+            <rect x="5" y="9" width="22" height="5" rx="1.5" fill="#E3E8ED" stroke="#120D11" stroke-width="1.8"/>
+            <path d="M8 10.8 H24" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round"/>
+            <rect x="8.5" y="16" width="15" height="7" rx="1" fill="#CFD6DD" stroke="#120D11" stroke-width="1.1"/>
+            <circle cx="16" cy="13.5" r="1.5" fill="#F8FAFC" stroke="#120D11" stroke-width="1.1"/>
+            <path d="M11 19.5 L16 17.5 L21 19.5 L16 21.5 Z" fill="#E6ECF2" stroke="#120D11" stroke-width="0.9"/>
+          </svg>`;
+
+        case 'motherofpearl_box':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <rect x="6" y="13" width="20" height="13" rx="2" fill="#2A2129" stroke="#120D11" stroke-width="1.9"/>
+            <rect x="5" y="9" width="22" height="5" rx="1.5" fill="#F5EFE6" stroke="#120D11" stroke-width="1.8"/>
+            <rect x="8.5" y="16" width="6.5" height="7" rx="1" fill="#E8F4F2" stroke="#120D11" stroke-width="1.1"/>
+            <rect x="17" y="16" width="6.5" height="7" rx="1" fill="#F6E6F2" stroke="#120D11" stroke-width="1.1"/>
+            <circle cx="16" cy="13.5" r="1.4" fill="#F6C453" stroke="#120D11" stroke-width="1"/>
+          </svg>`;
+
+        case 'wooden_box':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <rect x="6" y="13" width="20" height="13" rx="1.8" fill="#8B5A36" stroke="#120D11" stroke-width="1.9"/>
+            <rect x="5" y="9" width="22" height="5" rx="1.5" fill="#A46D43" stroke="#120D11" stroke-width="1.8"/>
+            <line x1="10" y1="13" x2="10" y2="26" stroke="#120D11" stroke-width="1.4"/>
+            <line x1="22" y1="13" x2="22" y2="26" stroke="#120D11" stroke-width="1.4"/>
+            <rect x="14.2" y="12.5" width="3.6" height="4" rx="0.8" fill="#D4A84F" stroke="#120D11" stroke-width="1.1"/>
+          </svg>`;
+
+        case 'shell':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <path d="M16 5 C9 5, 5 11, 6 18 C7 23, 12 27, 16 27 C20 27, 25 23, 26 18 C27 11, 23 5, 16 5 Z" fill="${fill}" stroke="#120D11" stroke-width="2"/>
+            <path d="M16 26 L10 9 M16 26 L16 6 M16 26 L22 9" stroke="#120D11" stroke-width="1.3"/>
+          </svg>`;
+
         case 'jar':
           return `<svg class="w-6 h-8" viewBox="0 0 28 34" fill="none">
             <rect x="6" y="10" width="16" height="20" rx="4" fill="${fill}" stroke="#120D11" stroke-width="2"/>
             <rect x="10" y="4" width="8" height="6" rx="1" fill="#C49A6C" stroke="#120D11" stroke-width="1.8"/>
+            <rect x="9" y="15" width="10" height="8" fill="#F3EAD8" stroke="#120D11" stroke-width="1.2"/>
           </svg>`;
+
         case 'crystal':
           return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
             <polygon points="8,27 12,11 17,27" fill="${fill}" stroke="#120D11" stroke-width="1.8"/>
             <polygon points="14,27 19,6 24,27" fill="#C084FC" stroke="#120D11" stroke-width="1.8"/>
+            <polygon points="5,27 8,16 11,27" fill="#7E22CE" stroke="#120D11" stroke-width="1.6"/>
           </svg>`;
+
         case 'candle':
           return `<svg class="w-6 h-8" viewBox="0 0 26 34" fill="none">
             <rect x="8" y="14" width="10" height="15" rx="1.5" fill="#F5EAD6" stroke="#120D11" stroke-width="1.8"/>
             <path d="M13 4 C16 8, 16 11, 13 13 C10 11, 10 8, 13 4 Z" fill="#F6C453" stroke="#120D11" stroke-width="1.5"/>
+            <ellipse cx="13" cy="30" rx="8" ry="2.5" fill="#C8963E" stroke="#120D11" stroke-width="1.6"/>
           </svg>`;
+
+        case 'cauldron':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <path d="M7 12 L25 12 C27 20, 24 27, 16 27 C8 27, 5 20, 7 12 Z" fill="#262025" stroke="#120D11" stroke-width="2"/>
+            <rect x="6" y="10" width="20" height="3.5" rx="1.5" fill="#3B3139" stroke="#120D11" stroke-width="1.6"/>
+            <path d="M10 26 L8 30 M22 26 L24 30" stroke="#120D11" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>`;
+
+        case 'skull':
+          return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
+            <path d="M16 5 C10 5, 7 9, 7 15 C7 18, 9 20, 11 21 L11 26 L21 26 L21 21 C23 20, 25 18, 25 15 C25 9, 22 5, 16 5 Z" fill="#EFE4D2" stroke="#120D11" stroke-width="2"/>
+            <circle cx="12.5" cy="15" r="2.2" fill="#120D11"/>
+            <circle cx="19.5" cy="15" r="2.2" fill="#120D11"/>
+            <line x1="14" y1="22" x2="14" y2="26" stroke="#120D11" stroke-width="1.4"/>
+            <line x1="18" y1="22" x2="18" y2="26" stroke="#120D11" stroke-width="1.4"/>
+          </svg>`;
+
         case 'plant':
           return `<svg class="w-7 h-8" viewBox="0 0 30 34" fill="none">
             <polygon points="9,20 21,20 19,31 11,31" fill="#A65A3E" stroke="#120D11" stroke-width="1.8"/>
+            <path d="M15 20 C11 13, 6 11, 5 14 C8 17, 11 19, 15 20 Z" fill="#5E8563" stroke="#120D11" stroke-width="1.5"/>
+            <path d="M15 20 C19 13, 24 11, 25 14 C22 17, 19 19, 15 20 Z" fill="#5E8563" stroke="#120D11" stroke-width="1.5"/>
             <path d="M15 19 C13 12, 14 6, 15 4 C16 6, 17 12, 15 19 Z" fill="#73A179" stroke="#120D11" stroke-width="1.5"/>
           </svg>`;
+
         default:
           return `<svg class="w-7 h-7" viewBox="0 0 32 32" fill="none">
             <circle cx="16" cy="14" r="9" fill="${fill}" stroke="#120D11" stroke-width="2"/>
+            <path d="M12 10 C13 8, 16 7, 18 8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
             <polygon points="10,23 22,23 24,28 8,28" fill="#2B1F27" stroke="#120D11" stroke-width="1.8"/>
           </svg>`;
       }
@@ -2211,10 +2492,33 @@
         }
 
         html += `
-          <article id="whiteCabinet-${cab}" class="white-cabinet flex flex-col overflow-hidden ${isCabSelected ? 'cabinet-selected' : ''}">
+          <article id="whiteCabinet-${cab}" class="white-cabinet flex flex-col relative ${isCabSelected ? 'cabinet-selected' : ''}">
+            ${cab === 2 ? `
+              <!-- Velitas brillantes y setita apoyadas sobre la Vitrina II -->
+              <div class="pointer-events-none absolute -top-[42px] right-4 z-30 select-none drop-shadow-[0_2px_6px_rgba(246,196,83,0.45)]" aria-hidden="true">
+                <svg class="w-12 h-11" viewBox="0 0 54 48" fill="none">
+                  <!-- Resplandor cálido detrás de la llama -->
+                  <circle cx="20" cy="12" r="9" fill="#F6C453" opacity="0.22"/>
+                  <!-- Vela principal -->
+                  <rect x="14" y="21" width="12" height="21" rx="1.8" fill="#F5EAD6" stroke="#120D11" stroke-width="1.9"/>
+                  <path d="M16 21 Q18 25 20 21 Q22 24 24 21" fill="#FFFDF8"/>
+                  <g class="flame-anim">
+                    <path d="M20 5 C24.5 11.5, 25.5 17, 20 19.5 C14.5 17, 15.5 11.5, 20 5 Z" fill="#F6C453" stroke="#120D11" stroke-width="1.6"/>
+                    <path d="M20 10 C22.2 13.5, 22.2 17, 20 18.2 C17.8 17, 17.8 13.5, 20 10 Z" fill="#FFF7D6"/>
+                  </g>
+                  <!-- Platillo dorado -->
+                  <ellipse cx="20" cy="43.5" rx="13" ry="3.5" fill="#C8963E" stroke="#120D11" stroke-width="1.8"/>
+                  <!-- Velita pequeña / setita compañera -->
+                  <path d="M35 45 L36 35 L40 35 L41 45 Z" fill="#E8DCC8" stroke="#120D11" stroke-width="1.5"/>
+                  <path d="M30 36 C30 28, 46 28, 46 36 Z" fill="#A64B4B" stroke="#120D11" stroke-width="1.6"/>
+                  <circle cx="35.5" cy="32.5" r="1.1" fill="#FFF7D6"/>
+                  <circle cx="40.5" cy="33" r="1" fill="#FFF7D6"/>
+                </svg>
+              </div>
+            ` : ''}
             <button onclick="selectWhiteCabinetScope(${cab}, event)"
               title="Clic para listar toda la Vitrina ${ROMAN[cab - 1]}"
-              class="cabinet-cornice w-full px-3 py-1.5 flex items-center justify-between cursor-pointer hover:brightness-95 transition">
+              class="cabinet-cornice rounded-t-[7px] w-full px-3 py-1.5 flex items-center justify-between cursor-pointer hover:brightness-95 transition">
               <span class="font-witchy text-xs font-bold text-[#2A1F24] tracking-wider">Vitrina ${ROMAN[cab - 1]}</span>
               <span class="text-[10px] font-semibold text-[#5E4D47]">Ver todo ▾</span>
             </button>
@@ -2238,7 +2542,7 @@
                   <div class="w-full h-full border-[1.5px] border-[#3B2D28]/65 rounded-xs"></div>
                 </div>
               </div>
-              <div class="mt-1.5 h-2.5 -mx-2 -mb-2 bg-[var(--cabinet-shade)] border-t-2 border-[#120D11] flex items-center justify-center">
+              <div class="mt-1.5 h-2.5 -mx-2 -mb-2 rounded-b-[2px] bg-[var(--cabinet-shade)] border-t-2 border-[#120D11] flex items-center justify-center">
                 <span class="text-[7px] uppercase tracking-wider text-stone-700 font-bold">
                   ${cupboardUnlocked ? '🔓 Armario abierto' : '🔒 Armario cerrado'}
                 </span>
